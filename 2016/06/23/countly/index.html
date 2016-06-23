@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+  <title>countly-sdk-android 源码解析 | 振之的博客</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="振之的博客">
+    <meta name="author" content="振之(炊事班程序猿小谢)">
+    <meta name="description" content="我们应该多和厨子和程序猿交朋友" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="振之的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+	
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+    
+
+    <!-- Custom stylesheet, (add custom styles here, always load last) -->
+    <!-- Load our stylesheet for IE8 -->
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- Google Webfonts (Monserrat 400/700, Open Sans 400/600) -->
+    <link href='//fonts.useso.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.useso.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Load our fonts individually if IE8+, to avoid faux bold & italic rendering -->
+    <!--[if IE]>
+    <link href='http://fonts.useso.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+       <!-- <ul class="sb-menu secondary">
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li> -->
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.jpg" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">振之的博客</a></li>
+                            <li class="nolink">我们应该多和厨子和程序猿交朋友</li>
+                            
+                            <li><a href="https://github.com/Labmem003" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <!-- ============================ Hero Image =========================== -->
+
+        <section id="hero" class="scrollme">
+            <div class="container-fluid element-img" style="background: url() no-repeat center center fixed;background-size: cover">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                        <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                            <div>
+                            	
+                                <h2>About Cook and Code</h2>
+                                <p></p>
+				    			
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // .col-md-12 -->
+                </div>
+                <div class="herofade beige-dk"></div>
+            </div>
+        </section>
+
+        <!-- Height spacing helper -->
+        <div class="heightblock"></div>
+        <!-- // End height spacing helper -->
+
+        <!-- ============================ END Hero Image =========================== -->
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-06-23T15:15:09.000Z" itemprop="datePublished">
+          2016-06-23
+      </time>
+    
+</span>
+                <h1>countly-sdk-android 源码解析</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>工作需要用到了一个叫Countly的开源移动应用实时统计分析系统，类似于友盟。挺好奇这类统计系统的实现机制的，于是读了一下源码。项目其实十分简单，功能性代码比较多。原理上并没有什么特别高深莫测的地方，跟我们平常写业务代码的套路是一样一样的。</p>
+<p>笔记如下，有需要／好奇的可以看看。</p>
+<p>读完大概需要15分钟。</p>
+<h3 id="1-功能介绍"><a href="#1-功能介绍" class="headerlink" title="1. 功能介绍"></a>1. 功能介绍</h3><h4 id="1-1-Countly"><a href="#1-1-Countly" class="headerlink" title="1.1 Countly"></a>1.1 Countly</h4><p>Countly 是一款类似于友盟的移动&amp;Web应用通用的实时统计分析系统，专注于易用性、扩展性和功能丰富程度。不同之处是 Countly 是开源的，任何人都可以将 Countly 客户端部署在自己的服务器并将开发工具包整合到他们的应用程序中。比友盟要简洁干净，关键是数据和程序都完全处于自己掌控之下，不愿被第三方掌握数据，或者有什么特殊需求的，可以自己满足自己了。</p>
+<p>这里分析的是其 Android 端的 sdk, 以了解和学习移动应用统计类的工具收集 App 的使用情况和终端用户的行为的机制。主要功能包括 App 基本数据收集、自定义事件记录、崩溃报告。</p>
+<h4 id="1-2-基本使用"><a href="#1-2-基本使用" class="headerlink" title="1.2 基本使用"></a>1.2 基本使用</h4><p>（1）将 Countly SDK 添加到您的项目<br>Android Studio<br>添加二进制 Maven 存储库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        maven &#123;</span><br><span class="line">            url  &quot;http://dl.bintray.com/countly/maven&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>添加 Countly SDK 依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile &apos;ly.count.android:sdk:15.06&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然也可以直接下载 Jar 使用, 这里分析的是 <a href="https://github.com/Countly/countly-sdk-android/releases/download/16.02.01/sdk-16.02.01.jar" target="_blank" rel="external">sdk-16.02.01.jar</a>。</p>
+<p>（2）服务器端程序的安装和使用<br>篇幅和重点所限，不详细介绍服务端安装使用，在<a href="https://cloud.count.ly" target="_blank" rel="external"> Countly 体验</a>创建一个应用试用即可。</p>
+<p>（3）具体使用</p>
+<p>设置 SDK，AppKey 在（2）的“管理－应用”中查看: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Countly.sharedInstance().init(this, &quot;https://YOUR_SERVER&quot;, &quot;YOUR_APP_KEY&quot;);</span><br></pre></td></tr></table></figure>
+<p>记录事件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Countly.sharedInstance().recordEvent(&quot;purchase&quot;, 1);</span><br></pre></td></tr></table></figure>
+<p>设置崩溃报告：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Countly.sharedInstance().enableCrashReporting()</span><br></pre></td></tr></table></figure>
+<p>更详细的使用，可参照我写的小 <a href="https://github.com/Labmem003/zhenzhi-open-project-analysis/tree/master/countly-sdk-android-demo" target="_blank" rel="external">Demo</a>。</p>
+<h3 id="2-总体设计"><a href="#2-总体设计" class="headerlink" title="2. 总体设计"></a>2. 总体设计</h3><p><a href="http://blog.qiji.tech/wp-content/uploads/2016/06/CountlyDesign.png" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/06/CountlyDesign.png" alt="总体设计"></a></p>
+<p>上面是 Countly SDK 的总体设计图。</p>
+<p>SDK 主要处理 Event、Crash 和会话流（Session）3种数据记录请求。其中 Crash 和 Session 自动记录，并作为 Connection 持久存储到ConnectionQueue, 等待提交到服务器；Event 则由开发者调用，并配有一个 EventQueue 存储，但是在上报给服务器的时候依然是通过加入到 ConnectionQueue。也就是说，所有请求，最后都是 Connection。<br>ConnectionQueue 和 EventQueue 不是平常意义的 FIFO 队列，而是本地存储队列。包装了基于 SharePreference 实现的持久层 Store，每个请求会被字符串化，加上分隔符，添加到对应的SP键值后面。</p>
+<p>最终存储在SP的 ConnectionQueue，大概长这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;app_key=appKey_×tamp=3482759874&amp;hour=6&amp;dow=2&amp;session_duration=24&amp;location=3，8:::app_key=appKey_×tamp=345567773&amp;hour=8&amp;dow=3&amp;session_duration=12&amp;location=3，8&quot;</span><br></pre></td></tr></table></figure>
+<p>OK, 接口地址知道，数据在手, 取出来按接口要求拼装好，fire the hole。</p>
+<h3 id="3-流程图"><a href="#3-流程图" class="headerlink" title="3.流程图"></a>3.流程图</h3><p><a href="http://blog.qiji.tech/wp-content/uploads/2016/06/CountlyFlowchartDiagram.png" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/06/CountlyFlowchartDiagram.png" alt="流程图"></a></p>
+<h3 id="4-详细设计"><a href="#4-详细设计" class="headerlink" title="4.详细设计"></a>4.详细设计</h3><h4 id="4-1类关系图"><a href="#4-1类关系图" class="headerlink" title="4.1类关系图"></a>4.1类关系图</h4><p><a href="http://blog.qiji.tech/wp-content/uploads/2016/06/classship.png" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/06/classship.png" alt="classship"></a>  </p>
+<h4 id="4-2类详细介绍"><a href="#4-2类详细介绍" class="headerlink" title="4.2类详细介绍"></a>4.2类详细介绍</h4><p>结构很简单，一共就两个包，countly 核心包和 openudid 包。</p>
+<p><a href="http://blog.qiji.tech/wp-content/uploads/2016/06/structure.png" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/06/structure.png" alt="structure"></a></p>
+<p>countly 包解决统计什么，怎么实施统计；而 openudid 包解决如何标记统计的数据来自何方。</p>
+<h5 id="4-2-1-openudid-包"><a href="#4-2-1-openudid-包" class="headerlink" title="4.2.1 openudid 包"></a>4.2.1 openudid 包</h5><p>先来看看比较简单的 openudid 包，她是一个设备标识方案，能提供一个设备通用统一标识符（Unique Device IDentifier/UDID）。如果同一台设备上有多个 App 都用了这个包来生成 UDID，他们获取的 UDID 是一致的（即所谓设备标识）。当我们将统计数据发送给服务端时，会将 UDID 附上。不难想到，之后服务端算日活、描述用户特征、事件追踪等等各种后续的数据分析肯定都离不开 UDID ，算是很必要的基础设施。实际上她也是一个开源包<a href="https://github.com/vieux/OpenUDID" target="_blank" rel="external">OpenUDID</a>。</p>
+<h6 id="4-2-1-1-OpenUDID-service-java"><a href="#4-2-1-1-OpenUDID-service-java" class="headerlink" title="4.2.1.1 OpenUDID_service.java"></a>4.2.1.1 OpenUDID_service.java</h6><p>这个类很简单，就是一个只重写了 onTransact 方法的 Service，支持跨进程调用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class OpenUDID_service extends Service &#123;</span><br><span class="line">  @Override public IBinder onBind(Intent arg0) &#123;</span><br><span class="line">    return new Binder() &#123;</span><br><span class="line">      @Override</span><br><span class="line">      public boolean onTransact(int code, android.os.Parcel data, android.os.Parcel reply,</span><br><span class="line">          int flags) &#123;</span><br><span class="line">        final SharedPreferences preferences =</span><br><span class="line">            getSharedPreferences(OpenUDID_manager.PREFS_NAME, Context.MODE_PRIVATE);</span><br><span class="line"></span><br><span class="line">        reply.writeInt(data.readInt()); //Return to the sender the input random number</span><br><span class="line">        reply.writeString(preferences.getString(OpenUDID_manager.PREF_KEY, null));</span><br><span class="line">        return true;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它给调用者返回了两个值：</p>
+<p>（1）把调用者传过来的 data 中的 int 参数又传回去了，起的是标识发起者的作用，类似于 startActivityForResult() 中的 requestCode。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reply.writeInt(data.readInt()); //Return to the sender the input random number</span><br></pre></td></tr></table></figure>
+<p>（2）返回本进程获取到的 OpenUDID。还可以看到 OpenUDID 是用 SharePreferences 保存的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reply.writeString(preferences.getString(OpenUDID_manager.PREF_KEY, null));</span><br></pre></td></tr></table></figure>
+<h6 id="4-2-1-2-OpenUDID-manager-java"><a href="#4-2-1-2-OpenUDID-manager-java" class="headerlink" title="4.2.1.2 OpenUDID_manager.java"></a>4.2.1.2 OpenUDID_manager.java</h6><p>调用 sync(Context context) 来初始化一个 udid, 策略是先看自己有木有，木有的话就从好基友那里拿，好基友也没有就只能自己撸一个出来。</p>
+<p>一切都撸完之后，调用 getOpenUDID 就可以得到一枚 UDID 了。</p>
+<p>（1）public static void sync(Context context)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//先尝试从本地 SharePreference 中获取</span><br><span class="line">OpenUDID=manager.mPreferences.getString(PREF_KEY,null);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">if (OpenUDID == null) //本地没有</span><br><span class="line">&#123;</span><br><span class="line">  //获取设备上所有的使用了该包的 OpenUDID_service 的 services 列表, intent 形式保存在 mMatchingIntents</span><br><span class="line">  manager.mMatchingIntents =</span><br><span class="line">      context.getPackageManager().queryIntentServices(new Intent(&quot;org.OpenUDID.GETUDID&quot;), 0);</span><br><span class="line"></span><br><span class="line">  if (manager.mMatchingIntents != null)</span><br><span class="line">  //尝试从别的使用了 OpenUDID_service 的进程获取</span><br><span class="line">  &#123;</span><br><span class="line">    manager.startService();</span><br><span class="line">  &#125;</span><br><span class="line">&#125; else &#123;//本地存在 UDID, 初始化完成，即可以直接调用 getOpenUDID() 来获取了</span><br><span class="line">  mInitialized = true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(2)startService()<br>启动 mMatchingIntents 的首个 intent 并移除；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> private void startService() &#123;</span><br><span class="line">  if (mMatchingIntents.size() &gt; 0) &#123; //There are some Intents untested</span><br><span class="line">    if (LOG) &#123;</span><br><span class="line">      Log.d(TAG,</span><br><span class="line">          &quot;Trying service &quot; + mMatchingIntents.get(0).loadLabel(mContext.getPackageManager()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    final ServiceInfo servInfo = mMatchingIntents.get(0).serviceInfo;</span><br><span class="line">    final Intent i = new Intent();</span><br><span class="line">    i.setComponent(new ComponentName(servInfo.applicationInfo.packageName, servInfo.name));</span><br><span class="line">    mMatchingIntents.remove(0);</span><br><span class="line">    try &#123;  // try added by Lionscribe</span><br><span class="line">      mContext.bindService(i, this, Context.BIND_AUTO_CREATE);</span><br><span class="line">    &#125; catch (SecurityException e) &#123;</span><br><span class="line">      startService();  // ignore this one, and start next one</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; else &#123; //No more service to test</span><br><span class="line"></span><br><span class="line">    getMostFrequentOpenUDID(); //Choose the most frequent</span><br><span class="line"></span><br><span class="line">    if (OpenUDID == null) //No OpenUDID was chosen, generate one			</span><br><span class="line">    &#123;</span><br><span class="line">      generateOpenUDID();</span><br><span class="line">    &#125;</span><br><span class="line">    if (LOG) Log.d(TAG, &quot;OpenUDID: &quot; + OpenUDID);</span><br><span class="line"></span><br><span class="line">    storeOpenUDID();//Store it locally</span><br><span class="line">    mInitialized = true;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若启动成功则可以拿到被启动进程的 UDID, 以 UDID 为键，次数为值存入 HashMap 中；然后再次 startService(); 结果是递归地启动了 mMatchingIntents 的所有 intent，得到一张记录着各个进程的不相同的 udid 及其次数的 Map。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public void onServiceConnected(ComponentName className, IBinder service) &#123;</span><br><span class="line">  //Get the OpenUDID from the remote service</span><br><span class="line">  ...</span><br><span class="line">  final String _openUDID = reply.readString();</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  if (mReceivedOpenUDIDs.containsKey(_openUDID)) &#123;</span><br><span class="line">    mReceivedOpenUDIDs.put(_openUDID, mReceivedOpenUDIDs.get(_openUDID) + 1);</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    mReceivedOpenUDIDs.put(_openUDID, 1);</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">  startService(); //Try the next one</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）private void getMostFrequentOpenUDID() ，返回 Map 中次数最多的 UDID</p>
+<p>（4）private void generateOpenUDID() ，没有从其他进程领到 UDID，就生成一个</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">* Generate a new OpenUDID</span><br><span class="line">*/</span><br><span class="line">private void generateOpenUDID() &#123;</span><br><span class="line">  if (LOG) Log.d(TAG, &quot;Generating openUDID&quot;);</span><br><span class="line">  //Try to get the ANDROID_ID</span><br><span class="line">  OpenUDID = Secure.getString(mContext.getContentResolver(), Secure.ANDROID_ID);</span><br><span class="line">  if (OpenUDID == null || OpenUDID.equals(&quot;9774d56d682e549c&quot;) || OpenUDID.length() &lt; 15) &#123;</span><br><span class="line">    //if ANDROID_ID is null, or it&apos;s equals to the GalaxyTab generic ANDROID_ID or bad, generates a new one</span><br><span class="line">    final SecureRandom random = new SecureRandom();</span><br><span class="line">    OpenUDID = new BigInteger(64, random).toString(16);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直接使用了 Android ID 来做 UDID，其实有点不靠谱。因为如果你恢复了出厂设置，那他就会改变的。而且如果你 root 了手机，你也可以改变这个 ID。不过如果不需要太精确的统计，也够用了。看你的需求吧。</p>
+<p>可以参考<a href="http://www.bkjia.com/Androidjc/1036506.html" target="_blank" rel="external">这篇文章</a>来修改适合你的 UDID。</p>
+<p>(5)public static String getOpenUDID(),就是getOpenUDID。</p>
+<h5 id="4-2-2-countly-包"><a href="#4-2-2-countly-包" class="headerlink" title="4.2.2 countly 包"></a>4.2.2 countly 包</h5><p>概念解释</p>
+<p>Event，事件，以键值方式记录，键为事件名，值记录次数。</p>
+<p>Session，会话，定时更新；形成的会话流，代表应用的一次使用过程。</p>
+<p>Crash，崩溃。</p>
+<p>Connection，连接；以上请求（事件、会话、崩溃）都会转换为 Connection 提交给服务器。</p>
+<h6 id="4-2-2-1-OpenUDIDAdapter-java"><a href="#4-2-2-1-OpenUDIDAdapter-java" class="headerlink" title="4.2.2.1 OpenUDIDAdapter.java"></a>4.2.2.1 OpenUDIDAdapter.java</h6><p>包装了 UDID 包，提供 sync（），getOpenUDID（）。但是是用动态反射的方法封装的，不明白为什么。官方的 commit message 说了一句：call OpenUDID dynamically so that including the OpenUDID source is not necessary to get the Countly Android SDK to work when an app provides it’s own deviceID。<br>看懂的请告诉我。</p>
+<h6 id="4-2-2-2-DeviceId-java"><a href="#4-2-2-2-DeviceId-java" class="headerlink" title="4.2.2.2 DeviceId.java"></a>4.2.2.2 DeviceId.java</h6><p>代表设备 ID 的类。 </p>
+<p>（1）主要属性是</p>
+<p>private String id;//设备标识ID</p>
+<p>private Type type;//ID类型</p>
+<p>（2）ID类型分为3种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static enum Type &#123;</span><br><span class="line">  DEVELOPER_SUPPLIED,//开发者自行定义和提供</span><br><span class="line">  OPEN_UDID,//openUDID</span><br><span class="line">  ADVERTISING_ID,//谷歌广告平台设备标识符</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>openUDID 前面已介绍过，其他两种也是类似，不累述。</p>
+<h6 id="4-2-2-3-DeviceInfo-java"><a href="#4-2-2-3-DeviceInfo-java" class="headerlink" title="4.2.2.3 DeviceInfo.java"></a>4.2.2.3 DeviceInfo.java</h6><p>一个纯 POJO 类，用来存放设备信息，如设备名称、设备分辨率、版本号等。</p>
+<p>主要方法：<br>static String getMetrics(final Context context)，返回 url-encoded 的属性 json 字符串。</p>
+<h6 id="4-2-2-4-CrashDetails-java"><a href="#4-2-2-4-CrashDetails-java" class="headerlink" title="4.2.2.4 CrashDetails.java"></a>4.2.2.4 CrashDetails.java</h6><p>提供了一些静态方法来获取运行时环境信息，结合 DeviceInfo 类, 为 Crash 时提供详细的参考信息。</p>
+<p>主要方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">static String getCrashData(final Context context, String error, Boolean nonfatal) &#123;</span><br><span class="line">  final JSONObject json = new JSONObject();</span><br><span class="line"></span><br><span class="line">  fillJSONIfValuesNotEmpty(json, &quot;_error&quot;, error, &quot;_nonfatal&quot;, Boolean.toString(nonfatal),</span><br><span class="line">      &quot;_logs&quot;, getLogs(), &quot;_device&quot;, DeviceInfo.getDevice(), &quot;_os&quot;, DeviceInfo.getOS(),</span><br><span class="line">      &quot;_os_version&quot;, DeviceInfo.getOSVersion(), &quot;_resolution&quot;, DeviceInfo.getResolution(context),</span><br><span class="line">      &quot;_app_version&quot;, DeviceInfo.getAppVersion(context), &quot;_manufacture&quot;, getManufacturer(),</span><br><span class="line">      &quot;_cpu&quot;, getCpu(), &quot;_opengl&quot;, getOpenGL(context), &quot;_ram_current&quot;, getRamCurrent(context),</span><br><span class="line">      &quot;_ram_total&quot;, getRamTotal(context), &quot;_disk_current&quot;, getDiskCurrent(), &quot;_disk_total&quot;,</span><br><span class="line">      getDiskTotal(), &quot;_bat&quot;, getBatteryLevel(context), &quot;_run&quot;, getRunningTime(), &quot;_orientation&quot;,</span><br><span class="line">      getOrientation(context), &quot;_root&quot;, isRooted(), &quot;_online&quot;, isOnline(context), &quot;_muted&quot;,</span><br><span class="line">      isMuted(context), &quot;_background&quot;, isInBackground());</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  json.put(&quot;_custom&quot;, getCustomSegments());</span><br><span class="line">  ...</span><br><span class="line">  String result = json.toString();</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  result = java.net.URLEncoder.encode(result, &quot;UTF-8&quot;);</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-2-2-5-UserData-java"><a href="#4-2-2-5-UserData-java" class="headerlink" title="4.2.2.5 UserData.java"></a>4.2.2.5 UserData.java</h6><p>类似 CrashDetail。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> *Send provided values to server</span><br><span class="line"> */</span><br><span class="line">public void save() &#123;</span><br><span class="line">  connectionQueue_.sendUserData();</span><br><span class="line">  UserData.clear();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-2-2-6-Event-java"><a href="#4-2-2-6-Event-java" class="headerlink" title="4.2.2.6 Event.java"></a>4.2.2.6 Event.java</h6><p>定义了一个事件的数据结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public String key;//键，识别事件</span><br><span class="line">public int count;//发生此事件的次数</span><br><span class="line">public double sum;//事件的全部数值数据，比如一次支付事件的支付金额，可选</span><br><span class="line">public Map&lt;String, String&gt; segmentation;//分段键值对，用来扩展自定义数据，数量不受限制</span><br></pre></td></tr></table></figure>
+<p>由于多个事件可结合在单一请求中，为了正确报告和处理数据（特别是排队数据），还有下面3个属性用来提供数据记录时间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public int timestamp;//时间戳</span><br><span class="line">public int hour;//本地时间，0-23</span><br><span class="line">public int dow;//星期几</span><br><span class="line"></span><br><span class="line">JSONObject toJSON()</span><br><span class="line">static Event fromJSON(final JSONObject json)</span><br></pre></td></tr></table></figure>
+<p>还有 fromJson 和 toJson 函数来在事件对象和 json 表示之间转换。</p>
+<h6 id="4-2-2-7-EventQueue-java"><a href="#4-2-2-7-EventQueue-java" class="headerlink" title="4.2.2.7 EventQueue.java"></a>4.2.2.7 EventQueue.java</h6><p>这个类用来队列化 event，并且可以将 event 转化为 json，方便提交到服务器。</p>
+<p>（1）主要属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private final CountlyStore countlyStore_;</span><br></pre></td></tr></table></figure>
+<p>CountlyStore 是一个持久化存储类，EventQueue 类其实就是对 CountlyStore 的一个封装，每次有 Event 添加进 queue，就会通过 CountlyStore 直接持久化存储到本地（本地队列的末尾）；出 queue 的时候也是直接从本地队列中移除。CountlyStore 在后面还会详细介绍。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Constructs an EventQueue.</span><br><span class="line"> *</span><br><span class="line"> * @param countlyStore backing store to be used for local event queue persistence</span><br><span class="line"> */</span><br><span class="line">EventQueue(final CountlyStore countlyStore) &#123;</span><br><span class="line">  countlyStore_ = countlyStore;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（2）主要方法：<br>并不是真正意义上的 queue，使用 recordEvent 入队一个 Event 到本地，使用 events() 直接把整个队列提取出来并且转换为 urlEncoded的json串，可以直接用于提交给服务器。好处是合并请求，方便一次提交多个 event，当然也是因为配合 api。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">String events() &#123;</span><br><span class="line">  String result;</span><br><span class="line">  //从CountlyStore取回EventQueue</span><br><span class="line">  final List&lt;Event&gt; events = countlyStore_.eventsList();</span><br><span class="line"></span><br><span class="line">  //Json化</span><br><span class="line">  final JSONArray eventArray = new JSONArray();</span><br><span class="line">  for (Event e : events) &#123;</span><br><span class="line">    eventArray.put(e.toJSON());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  result = eventArray.toString();</span><br><span class="line"></span><br><span class="line">  countlyStore_.removeEvents(events);</span><br><span class="line"></span><br><span class="line">  //UrlEncode</span><br><span class="line">  try &#123;</span><br><span class="line">    result = java.net.URLEncoder.encode(result, &quot;UTF-8&quot;);</span><br><span class="line">  &#125; catch (UnsupportedEncodingException e) &#123;</span><br><span class="line">    // should never happen because Android guarantees UTF-8 support</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void recordEvent(final String key, final Map&lt;String, String&gt; segmentation, final int count,</span><br><span class="line">    final double sum) &#123;</span><br><span class="line">  ...</span><br><span class="line">  //直接持久化存入本地 Event 队列</span><br><span class="line">  countlyStore_.addEvent(key, segmentation, timestamp, hour, dow, count, sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-2-2-8-CountlyStore-java"><a href="#4-2-2-8-CountlyStore-java" class="headerlink" title="4.2.2.8 CountlyStore.java"></a>4.2.2.8 CountlyStore.java</h6><p>该类使用 SharePreference 为 Event, Connection, Location 3类数据提供持久化服务.<br>介绍存储方式。</p>
+<p>以 Event 为例，每次有新来的 Event，会先读取本地的 events, 把新来的 event 加到末尾，然后整个队列重新被 json 化存储到 Shareference。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void addEvent(final Event event) &#123;</span><br><span class="line">  final List&lt;Event&gt; events = eventsList();</span><br><span class="line">  events.add(event);</span><br><span class="line">  preferences_.edit().putString(EVENTS_PREFERENCE, joinEvents(events, DELIMITER)).commit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直接从 SharePreference 取出所有 json 表示的 events。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public String[] events()</span><br></pre></td></tr></table></figure>
+<p>将 json 表示的 events 反序列化，并排序，返回。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;Event&gt; eventsList() &#123;</span><br><span class="line">  final String[] array = events();</span><br><span class="line">  final List&lt;Event&gt; events = new ArrayList&lt;&gt;(array.length);</span><br><span class="line">  for (String s : array) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      final Event event = Event.fromJSON(new JSONObject(s));</span><br><span class="line">      if (event != null) &#123;</span><br><span class="line">        events.add(event);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; catch (JSONException ignored) &#123;</span><br><span class="line">      // should not happen since JSONObject is being constructed from previously stringified JSONObject</span><br><span class="line">      // events -&gt; json objects -&gt; json strings -&gt; storage -&gt; json strings -&gt; here</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  // order the events from least to most recent</span><br><span class="line">  Collections.sort(events, new Comparator&lt;Event&gt;() &#123;</span><br><span class="line">    @Override public int compare(final Event e1, final Event e2) &#123;</span><br><span class="line">      return e1.timestamp - e2.timestamp;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  return events;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public String[] connections()</span><br><span class="line">public String[] events()</span><br><span class="line">public List&lt;Event&gt; eventsList()</span><br></pre></td></tr></table></figure>
+<h6 id="4-2-2-9-Countly-java"><a href="#4-2-2-9-Countly-java" class="headerlink" title="4.2.2.9 Countly.java"></a>4.2.2.9 Countly.java</h6><p>暴露接口和驱动各个类工作的入口类。主要的属性是<br>EventQueue，ConnectionQueue，和ScheduledExecutorService。<br>（1）构造和 init<br>调用其他接口前需先调用 init() 来初始化，主要是参数检验、初始化和配置 EventQueue，ConnectionQueue。构造的时候就开启了一个 1 分钟 1 次的定时任务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Countly() &#123;</span><br><span class="line">  connectionQueue_ = new ConnectionQueue();</span><br><span class="line">  Countly.userData = new UserData(connectionQueue_);</span><br><span class="line">  timerService_ = Executors.newSingleThreadScheduledExecutor();</span><br><span class="line">  timerService_.scheduleWithFixedDelay(new Runnable() &#123;</span><br><span class="line">    @Override public void run() &#123;</span><br><span class="line">      onTimer();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, TIMER_DELAY_IN_SECONDS, TIMER_DELAY_IN_SECONDS, TimeUnit.SECONDS);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">    deviceIdInstance.init(context,countlyStore,true);</span><br><span class="line"></span><br><span class="line">connectionQueue_.setServerURL(serverURL);</span><br><span class="line">connectionQueue_.setAppKey(appKey);</span><br><span class="line">connectionQueue_.setCountlyStore(countlyStore);</span><br><span class="line">connectionQueue_.setDeviceId(deviceIdInstance);</span><br><span class="line"></span><br><span class="line">eventQueue_=new</span><br><span class="line"></span><br><span class="line">EventQueue(countlyStore);</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>（2）定时任务<br>记录 session 和 event 到 connectionqueue，并触发发送数据行为，所有的数据都是从 connectionqueue 的 store 中取得。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">synchronized void onTimer() &#123;</span><br><span class="line">  final boolean hasActiveSession = activityCount_ &gt; 0;</span><br><span class="line">  if (hasActiveSession) &#123;</span><br><span class="line">    if (!disableUpdateSessionRequests_) &#123;</span><br><span class="line">      connectionQueue_.updateSession(roundedSecondsSinceLastSessionDurationUpdate());</span><br><span class="line">    &#125;</span><br><span class="line">    if (eventQueue_.size() &gt; 0) &#123;</span><br><span class="line">      connectionQueue_.recordEvents(eventQueue_.events());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(3) Session 流开始和退出，利用 activityCount<br>Android 没有很好的办法监听应用开始和结束，所以每个 Activity 都需要调用 Countly.shareInstance().onStart() 和 onStop 方法，方法内部用一个 int 变量 activityCount<em> 来记录当前 Activity 数量。onStart时activityCount</em>＋1, onStop 时 －1。</p>
+<p>onStart 中，当 activityCount_＝＝1 时，应用启动， 开始 Session 流；</p>
+<p>onStop 中，当 activityCount_＝＝0 时，应用退出前台， 结束 Session 流。</p>
+<p>(4)异常捕获,使用 UncaughtExceptionHandler</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"> /**</span><br><span class="line"> * Enable crash reporting to send unhandled crash reports to server</span><br><span class="line"> */</span><br><span class="line">public synchronized Countly enableCrashReporting() &#123;</span><br><span class="line">  //get default handler</span><br><span class="line">  final Thread.UncaughtExceptionHandler oldHandler = Thread.getDefaultUncaughtExceptionHandler();</span><br><span class="line"></span><br><span class="line">  Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() &#123;</span><br><span class="line"></span><br><span class="line">    @Override public void uncaughtException(Thread t, Throwable e) &#123;</span><br><span class="line">      StringWriter sw = new StringWriter();</span><br><span class="line">      PrintWriter pw = new PrintWriter(sw);</span><br><span class="line">      e.printStackTrace(pw);</span><br><span class="line">      Countly.sharedInstance().connectionQueue_.sendCrashReport(sw.toString(), false);</span><br><span class="line"></span><br><span class="line">      //if there was another handler before</span><br><span class="line">      if (oldHandler != null) &#123;</span><br><span class="line">        //notify it also</span><br><span class="line">        oldHandler.uncaughtException(t, e);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  Thread.setDefaultUncaughtExceptionHandler(handler);</span><br><span class="line">  return this;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（5）记录事件</p>
+<p>事件先被记录在 eventQueue, 到了需要被发送的时候会被全部取出放入 connectionQueue。connectionQueue 有发送数据的能力，系统定时把 connectionQueue 中的多条数据合并发送到服务器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public synchronized void recordEvent(final String key, final Map&lt;String, String&gt; segmentation,</span><br><span class="line">    final int count, final double sum) &#123;</span><br><span class="line">  ...</span><br><span class="line">  eventQueue_.recordEvent(key, segmentation, count, sum);</span><br><span class="line">  sendEventsIfNeeded();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void sendEventsIfNeeded() &#123;</span><br><span class="line">  if (eventQueue_.size() &gt;= EVENT_QUEUE_SIZE_THRESHOLD) &#123;</span><br><span class="line">    connectionQueue_.recordEvents(eventQueue_.events());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-2-2-10-ConnectionQueue-java"><a href="#4-2-2-10-ConnectionQueue-java" class="headerlink" title="4.2.2.10 ConnectionQueue.java"></a>4.2.2.10 ConnectionQueue.java</h6><p>需要被发送的各种数据，包括前面说过的 event 和 crash 等，都在此提供发送接口，实际发送的时候都会被转换为 connection,持久化添加到connectionQueue 中，Tick 的时候由 ConnectionProcessor 从 Store 中取出发送到服务端。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//该方法会被定时触发</span><br><span class="line">void recordEvents(final String events) &#123;</span><br><span class="line">  checkInternalState();</span><br><span class="line">  final String data = &quot;app_key=&quot;</span><br><span class="line">      + appKey_</span><br><span class="line">      + &quot;×tamp=&quot;</span><br><span class="line">      + Countly.currentTimestamp()</span><br><span class="line">      + &quot;&amp;hour=&quot;</span><br><span class="line">      + Countly.currentHour()</span><br><span class="line">      + &quot;&amp;dow=&quot;</span><br><span class="line">      + Countly.currentDayOfWeek()</span><br><span class="line">      + &quot;&amp;events=&quot;</span><br><span class="line">      + events;</span><br><span class="line"></span><br><span class="line">  store_.addConnection(data);</span><br><span class="line"></span><br><span class="line">  tick();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>tick，持久层有待发送连接且当前没有正在提交数据，则启动一个 ConnectionProcessor 来提交数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void tick() &#123;</span><br><span class="line">  if (!store_.isEmptyConnections() &amp;&amp; (connectionProcessorFuture_ == null</span><br><span class="line">      || connectionProcessorFuture_.isDone())) &#123;</span><br><span class="line">    ensureExecutor();</span><br><span class="line">    connectionProcessorFuture_ =</span><br><span class="line">        executor_.submit(new ConnectionProcessor(serverURL_, store_, deviceId_, sslContext_));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其他数据也跟 Events 类似，包括 session, location, userData, CrashReport</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void beginSession()</span><br><span class="line">void updateSession(final int duration)</span><br><span class="line">void endSession(final int duration)</span><br><span class="line"></span><br><span class="line">void sendCrashReport(String error, boolean nonfatal)</span><br><span class="line">void sendUserData()</span><br></pre></td></tr></table></figure>
+<h6 id="4-2-2-11-ConnectionProcessor-java"><a href="#4-2-2-11-ConnectionProcessor-java" class="headerlink" title="4.2.2.11 ConnectionProcessor.java"></a>4.2.2.11 ConnectionProcessor.java</h6><p>是个 Runnable，每次被 Run 的时候，从 Store 中取出当前所有的 Connections，用 http 发送。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">URLConnection urlConnectionForEventData(final String eventData)</span><br></pre></td></tr></table></figure>
+<p>拼装 url 并打开 Conn</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public void run() &#123;</span><br><span class="line">  while (true) &#123;</span><br><span class="line">    ...</span><br><span class="line">    conn = urlConnectionForEventData(eventData);</span><br><span class="line">    conn.connect();</span><br><span class="line">  &#125;</span><br><span class="line">  // consume response stream</span><br><span class="line">  responseStream = new BufferedInputStream(conn.getInputStream());</span><br><span class="line">  final ByteArrayOutputStream responseData = new ByteArrayOutputStream(</span><br><span class="line">      256); // big enough to handle success response without reallocating</span><br><span class="line">  int c;</span><br><span class="line">  while ((c = responseStream.read()) != -1) &#123;</span><br><span class="line">    responseData.write(c);</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从 Store 中取出数据，调用 urlConnectionForEventData（）生成 conn, 发起请求。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+            
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &uarr;<br>
+		   欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/weixin.png" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+        </div>
+        
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/06/05/test/">
+        test1 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="/2016/06/23/countly/" data-title="countly-sdk-android 源码解析" data-url="http://www.greens1995.com/2016/06/23/countly/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"greens1995"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By 振之(炊事班程序猿小谢). All Rights Reserved.
+                </p>
+                <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/Labmem003" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+        
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+    
+    resizeHero();
+    
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/jquery.flexslider-min.js"></script><!-- Flexslider plugin -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+<!-- Initiate flexslider plugin -->
+<script type="text/javascript">
+    $(document).ready(function($) {
+      $('.flexslider').flexslider({
+        animation: "fade",
+        prevText: "",
+        nextText: "",
+        directionNav: true
+      });
+    });
+</script>
+
+</body>
+</html>

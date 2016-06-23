@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>test | 振之的博客</title>
+  <title>test1 | 振之的博客</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -198,7 +198,7 @@
       </time>
     
 </span>
-                <h1>test</h1>
+                <h1>test1</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
@@ -206,16 +206,50 @@
 
             <div class="clearfix"></div>
             <hr class="nogutter">
+            
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &uarr;<br>
+		   欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/weixin.png" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
         </div>
+        
         <nav class="pagination" role="pagination">
+    
+    <a class="pull-left" href="/2016/06/23/countly/" style="float: left;">
+        ← countly-sdk-android 源码解析
+    </a>
     
     
 </nav>
 
         <div class="duoshuo">
-<div class="ds-thread" data-thread-key="/2016/06/05/test/" data-title="test" data-url="http://www.greens1995.com/2016/06/05/test/"></div>
+<div class="ds-thread" data-thread-key="/2016/06/05/test/" data-title="test1" data-url="http://www.greens1995.com/2016/06/05/test/"></div>
 <script type="text/javascript">
-var duoshuoQuery = {short_name:"greens1995.duoshuo.com"};
+var duoshuoQuery = {short_name:"greens1995"};
 (function() {
 	var ds = document.createElement('script');
 	ds.type = 'text/javascript';ds.async = true;
@@ -254,8 +288,12 @@ var duoshuoQuery = {short_name:"greens1995.duoshuo.com"};
             </div>
             <div class="clearfix"> </div>
         </div>
+        <span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
 </footer>
-
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
 <!-- ============================ END Footer =========================== -->
       <!-- Load our scripts -->
         
