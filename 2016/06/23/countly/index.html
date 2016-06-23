@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>countly-sdk-android 源码解析 | 振之的博客</title>
+  <title>countly-sdk-android 源码解析——移动统计工具是怎么炼成的 | 振之的博客</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -198,7 +198,7 @@
       </time>
     
 </span>
-                <h1>countly-sdk-android 源码解析</h1>
+                <h1>countly-sdk-android 源码解析——移动统计工具是怎么炼成的</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
@@ -206,7 +206,7 @@
 <p>笔记如下，有需要／好奇的可以看看。</p>
 <p>读完大概需要15分钟。</p>
 <h3 id="1-功能介绍"><a href="#1-功能介绍" class="headerlink" title="1. 功能介绍"></a>1. 功能介绍</h3><h4 id="1-1-Countly"><a href="#1-1-Countly" class="headerlink" title="1.1 Countly"></a>1.1 Countly</h4><p>Countly 是一款类似于友盟的移动&amp;Web应用通用的实时统计分析系统，专注于易用性、扩展性和功能丰富程度。不同之处是 Countly 是开源的，任何人都可以将 Countly 客户端部署在自己的服务器并将开发工具包整合到他们的应用程序中。比友盟要简洁干净，关键是数据和程序都完全处于自己掌控之下，不愿被第三方掌握数据，或者有什么特殊需求的，可以自己满足自己了。</p>
-<p>这里分析的是其 Android 端的 sdk, 以了解和学习移动应用统计类的工具收集 App 的使用情况和终端用户的行为的机制。主要功能包括 App 基本数据收集、自定义事件记录、崩溃报告。</p>
+<p>篇幅所限，服务端部分会另起一篇分析，这里分析的是其 Android 端的 sdk, 以了解和学习移动应用统计类的工具收集 App 的使用情况和终端用户的行为的机制。主要功能包括 App 基本数据收集、自定义事件记录、崩溃报告。</p>
 <h4 id="1-2-基本使用"><a href="#1-2-基本使用" class="headerlink" title="1.2 基本使用"></a>1.2 基本使用</h4><p>（1）将 Countly SDK 添加到您的项目<br>Android Studio<br>添加二进制 Maven 存储库：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        maven &#123;</span><br><span class="line">            url  &quot;http://dl.bintray.com/countly/maven&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>添加 Countly SDK 依赖：</p>
@@ -359,7 +359,7 @@
 </nav>
 
         <div class="duoshuo">
-<div class="ds-thread" data-thread-key="/2016/06/23/countly/" data-title="countly-sdk-android 源码解析" data-url="http://www.greens1995.com/2016/06/23/countly/"></div>
+<div class="ds-thread" data-thread-key="/2016/06/23/countly/" data-title="countly-sdk-android 源码解析——移动统计工具是怎么炼成的" data-url="http://www.greens1995.com/2016/06/23/countly/"></div>
 <script type="text/javascript">
 var duoshuoQuery = {short_name:"greens1995"};
 (function() {
