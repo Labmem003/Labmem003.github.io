@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+  <title>LoganSquare的简单使用——快到爆炸地解析和序列化大JSON | 振之的博客</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="振之的博客">
+    <meta name="author" content="振之(炊事班程序猿小谢)">
+    <meta name="description" content="我们应该多和厨子和程序猿交朋友" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="振之的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+	
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+    
+
+    <!-- Custom stylesheet, (add custom styles here, always load last) -->
+    <!-- Load our stylesheet for IE8 -->
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- Google Webfonts (Monserrat 400/700, Open Sans 400/600) -->
+    <link href='//fonts.useso.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.useso.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Load our fonts individually if IE8+, to avoid faux bold & italic rendering -->
+    <!--[if IE]>
+    <link href='http://fonts.useso.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a href="http://dudu.zhihu.com/circle/163395" class="animsition-link">Cook</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+       <!-- <ul class="sb-menu secondary">
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li> -->
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.jpg" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">振之的博客</a></li>
+                            <li class="nolink">我们应该多和厨子和程序猿交朋友</li>
+                            
+                            <li><a href="https://github.com/Labmem003" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <!-- ============================ Hero Image =========================== -->
+
+        <section id="hero" class="scrollme">
+            <div class="container-fluid element-img" style="background: url() no-repeat center center fixed;background-size: cover">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                        <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                            <div>
+                            	
+                                <h2>About Cook and Code</h2>
+                                <p></p>
+				    			
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // .col-md-12 -->
+                </div>
+                <div class="herofade beige-dk"></div>
+            </div>
+        </section>
+
+        <!-- Height spacing helper -->
+        <div class="heightblock"></div>
+        <!-- // End height spacing helper -->
+
+        <!-- ============================ END Hero Image =========================== -->
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-06-29T07:11:45.000Z" itemprop="datePublished">
+          2016-06-29
+      </time>
+    
+</span>
+                <h1>LoganSquare的简单使用——快到爆炸地解析和序列化大JSON</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>安卓上解析和序列化JSON的类库不少了，比较常用的是Google出品的GSON。但是其实还有个速度超快的LoganSquare，在解析大JSON文件的时候性能比GSON好太多，但是国内资料可能有点少，有需要的人可能并不知道如何去使用和配置这个库。我在这里向大家介绍一下。<br>第一次写这种教程，很多地方其实是英文文档直接翻译过来的，肯定会有写得不好的地方，欢迎关注或者吐槽。<br>【开源库不停止维护期间该资料同步更新】</p>
+<p>#LoganSquare简介<br>GITHUB地址：<a href="https://github.com/bluelinelabs/LoganSquare" target="_blank" rel="external">https://github.com/bluelinelabs/LoganSquare</a><br>LoganSquare是Android上解析和序列化JSON最快的开源库。它的快速主要得益自Jackson’s streaming API。<br>Jackson的json库提供了3种API： </p>
+<ul>
+<li>Streaming API ： 性能最好（LoganSquare所基于的API）  </li>
+<li>Tree Model ： 最灵活</li>
+<li>Data Binding ： 最方便</li>
+</ul>
+<p>LoganSquare依靠编译时注释处理来生成代码，结果LoganSquare实际上既兼顾了性能，也具备Data Binding的易用性。<br>即是像我这样的初鸡程序猿，也只需在model对象上使用@JsonObject注释，在字段上使用@JsonField注释，就可以无脑地解放Jackson’s streaming API的潜力。</p>
+<blockquote>
+<p>按照作者在*2nd gen Moto X这支手机的测试来看，比GSON和Jackson Databind快了整整400%，个人觉得简直快到爆炸~<br><img src="http://ww2.sinaimg.cn/large/005GTQK5gw1evexqd5e0nj30v40iwgtg.jpg" alt=""><br>另外LoganSquare这个跟JSON毫无关系的奇怪的命名，其实是代码作者最喜欢的城市芝加哥的一个高人气车站的名字，也是有情调到爆炸~</p>
+</blockquote>
+<p>#下载安装<br> 还在使用Eclipse的同学，很遗憾，无法使用LoganSquare 。Gradle 是 LoganSquare 唯一支持的配置方法。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath <span class="string">'com.neenbedankt.gradle.plugins:android-apt:1.4'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'com.neenbedankt.android-apt'</span></span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    apt <span class="string">'com.bluelinelabs:logansquare-compiler:1.1.0'</span></span><br><span class="line">    compile <span class="string">'com.bluelinelabs:logansquare:1.1.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除了加入了LoganSquare依赖（只有19kb，真心小）还有apt插件，apt插件是用于运行时的注解处理的。</p>
+<hr>
+<p>#使用</p>
+<ul>
+<li>##Step1 对要转换的实体类注解<br>提供了3种类型的注解方案，主要是默认的接受转换的类属性范围有些微不同。空值的属性默认忽略。</li>
+</ul>
+<p>1.全属性注解方案</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> *所有属性接受解析和序列化。</span><br><span class="line"> * 作者推荐的方案，更少错误，但要打更多的注解。</span><br><span class="line"> */</span><br><span class="line">@JsonObject</span><br><span class="line">public class Image &#123;</span><br><span class="line"></span><br><span class="line">    /*</span><br><span class="line">     * 标准的属性注解</span><br><span class="line">     */</span><br><span class="line">    @JsonField</span><br><span class="line">    public String format;</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * 解析和序列化时，该属性的key用&quot;_id&quot;代替&quot;imageId&quot;</span><br><span class="line">     */</span><br><span class="line">    @JsonField(name = &quot;_id&quot;)</span><br><span class="line">    public int imageId;</span><br><span class="line"></span><br><span class="line">    @JsonField</span><br><span class="line">    public String url;</span><br><span class="line"></span><br><span class="line">    @JsonField</span><br><span class="line">    public String description;</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * 注意虽然该属性只有包访问权限，但LoganSquare可毫无障碍地处理</span><br><span class="line">     */</span><br><span class="line">    @JsonField(name = &quot;similar_images&quot;)</span><br><span class="line">    List&lt;Image&gt; similarImages;</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * 不注解的属性默认被LoganSquare忽略</span><br><span class="line">     */</span><br><span class="line">    public int nonJsonField;</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * ！！！强烈注意private权限的属性必须提供getter和setter， 不然你会后悔的</span><br><span class="line">     */</span><br><span class="line">    @JsonField</span><br><span class="line">    private int privateInt;</span><br><span class="line">    </span><br><span class="line">    public int getPrivateInt() &#123;</span><br><span class="line">        return privateInt;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void setPrivateInt(int i) &#123;</span><br><span class="line">        privateInt = i;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * 还贴心地提供了解析完成后和序列化前的回调接口，当然是可选的</span><br><span class="line">     */</span><br><span class="line">    @OnJsonParseComplete void onParseComplete() &#123;</span><br><span class="line">        // 解析完成后干点什么</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @OnPreJsonSerialize void onPreSerialize() &#123;</span><br><span class="line">        //序列化前干点什么</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  2.非private属性注解方案<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*非private属性都会接受解析和序列化，即使属性没有写@JsonFields注解，但要先配置 fieldDetectionPolicy</span><br><span class="line"> * 这个方案比第一个方案写少点注解</span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@JsonObject</span>(fieldDetectionPolicy = FieldDetectionPolicy.NONPRIVATE_FIELDS)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Image</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span><br><span class="line">     *普通声明的属性默认会被解析和序列化</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> String format;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*</span><br><span class="line">     *重命名key还是需要注解来指出的</span><br><span class="line">     */</span></span><br><span class="line">    <span class="meta">@JsonField</span>(name = <span class="string">"_id"</span>)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> imageId;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String url;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String description;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*</span><br><span class="line">     * 包访问权限的处理是没问题的</span><br><span class="line">     */</span></span><br><span class="line">    List&lt;Image&gt; similarImages;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*</span><br><span class="line">     * 用@JsonIgnore来忽略不想被解析和序列化的属性</span><br><span class="line">     */</span></span><br><span class="line">    <span class="meta">@JsonIgnore</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> nonJsonField;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*</span><br><span class="line">     * 该策略下private属性默认忽略</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> privateInt;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPrivateInt</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> privateInt;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrivateInt</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        privateInt = i;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">  <span class="meta">@OnJsonParseComplete</span> <span class="function"><span class="keyword">void</span> <span class="title">onParseComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 解析完成后干点什么</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@OnPreJsonSerialize</span> <span class="function"><span class="keyword">void</span> <span class="title">onPreSerialize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//序列化前干点什么</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>  3.非private+Accessor注解方案<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> * 与第2种类似，非private属性和所有有getter和setter的属性都会被解析和序列化。可以让某些private属性</span><br><span class="line"> * 也接受转换;</span><br><span class="line"> * 将 fieldDetectionPolicy 设置为FieldDetectionPolicy.NONPRIVATE_FIELDS_AND_ACCESSORS即可</span><br><span class="line"> */</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>##Step2 解析&amp;序列化</p>
+<ul>
+<li><h3 id="将JSON对象解析为实体类"><a href="#将JSON对象解析为实体类" class="headerlink" title="将JSON对象解析为实体类"></a>将JSON对象解析为实体类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 支持直接从InputStream解析</span></span><br><span class="line">InputStream is = ...;</span><br><span class="line">Image imageFromInputStream = LoganSquare.parse(is, Image.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从Json字符串解析</span></span><br><span class="line">String jsonString = ...;</span><br><span class="line">Image imageFromString = LoganSquare.parse(jsonString, Image.class);</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="实体类序列化为JSON对象"><a href="#实体类序列化为JSON对象" class="headerlink" title="实体类序列化为JSON对象"></a>实体类序列化为JSON对象</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Serialize it to an OutputStream</span></span><br><span class="line">OutputStream os = ...;</span><br><span class="line">LoganSquare.serialize(image, os);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Serialize it to a String</span></span><br><span class="line">String jsonString = LoganSquare.serialize(image);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>#混淆<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-keep class com.bluelinelabs.logansquare.** &#123; *; &#125;</span><br><span class="line">-keep @com.bluelinelabs.logansquare.annotation.JsonObject class *</span><br><span class="line">-keep class **$$JsonObjectMapper &#123; *; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>#License</p>
+<pre><code>Copyright 2015 BlueLine Labs, Inc.
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre><p>#注意事项<br>LoganSquare在ART模式下才能表现出高性能，在Dalvik模式下似乎跟其他类库没有太大差距。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+            
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &uarr;<br>
+		   欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/weixin.png" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+        </div>
+        
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/06/29/readme-sample/">
+        怎么给GitHub项目写一份易读的 README.md →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="/2016/06/29/LoganSquare/" data-title="LoganSquare的简单使用——快到爆炸地解析和序列化大JSON" data-url="http://www.greens1995.com/2016/06/29/LoganSquare/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"greens1995"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By 振之(炊事班程序猿小谢). All Rights Reserved.
+                </p>
+                <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/Labmem003" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+        
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+    
+    resizeHero();
+    
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/jquery.flexslider-min.js"></script><!-- Flexslider plugin -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+<!-- Initiate flexslider plugin -->
+<script type="text/javascript">
+    $(document).ready(function($) {
+      $('.flexslider').flexslider({
+        animation: "fade",
+        prevText: "",
+        nextText: "",
+        directionNav: true
+      });
+    });
+</script>
+
+</body>
+</html>
