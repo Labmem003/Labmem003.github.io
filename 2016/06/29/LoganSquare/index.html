@@ -94,11 +94,11 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#将JSON对象解析为实体类"><span class="toc-number">1.</span> <span class="toc-text">将JSON对象解析为实体类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实体类序列化为JSON对象"><span class="toc-number">2.</span> <span class="toc-text">实体类序列化为JSON对象</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LoganSquare简介"><span class="toc-number">1.</span> <span class="toc-text">LoganSquare简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#下载安装"><span class="toc-number">2.</span> <span class="toc-text">下载安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-number">3.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#将JSON对象解析为实体类"><span class="toc-number">3.0.1.</span> <span class="toc-text">将JSON对象解析为实体类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实体类序列化为JSON对象"><span class="toc-number">3.0.2.</span> <span class="toc-text">实体类序列化为JSON对象</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#混淆"><span class="toc-number">4.</span> <span class="toc-text">混淆</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#License"><span class="toc-number">5.</span> <span class="toc-text">License</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注意事项"><span class="toc-number">6.</span> <span class="toc-text">注意事项</span></a></li></ol>
 		</div>
 		
 		<p>安卓上解析和序列化JSON的类库不少了，比较常用的是Google出品的GSON。但是其实还有个速度超快的LoganSquare，在解析大JSON文件的时候性能比GSON好太多，但是国内资料可能有点少，有需要的人可能并不知道如何去使用和配置这个库。我在这里向大家介绍一下。<br>第一次写这种教程，很多地方其实是英文文档直接翻译过来的，肯定会有写得不好的地方，欢迎关注或者吐槽。<br>【开源库不停止维护期间该资料同步更新】</p>
-<p>#LoganSquare简介<br>GITHUB地址：<a href="https://github.com/bluelinelabs/LoganSquare" target="_blank" rel="external">https://github.com/bluelinelabs/LoganSquare</a><br>LoganSquare是Android上解析和序列化JSON最快的开源库。它的快速主要得益自Jackson’s streaming API。<br>Jackson的json库提供了3种API： </p>
+<h1 id="LoganSquare简介"><a href="#LoganSquare简介" class="headerlink" title="LoganSquare简介"></a>LoganSquare简介</h1><p>GITHUB地址：<a href="https://github.com/bluelinelabs/LoganSquare" target="_blank" rel="external">https://github.com/bluelinelabs/LoganSquare</a><br>LoganSquare是Android上解析和序列化JSON最快的开源库。它的快速主要得益自Jackson’s streaming API。<br>Jackson的json库提供了3种API： </p>
 <ul>
 <li>Streaming API ： 性能最好（LoganSquare所基于的API）  </li>
 <li>Tree Model ： 最灵活</li>
@@ -108,12 +108,11 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>按照作者在*2nd gen Moto X这支手机的测试来看，比GSON和Jackson Databind快了整整400%，个人觉得简直快到爆炸~<br><img src="http://ww2.sinaimg.cn/large/005GTQK5gw1evexqd5e0nj30v40iwgtg.jpg" alt=""><br>另外LoganSquare这个跟JSON毫无关系的奇怪的命名，其实是代码作者最喜欢的城市芝加哥的一个高人气车站的名字，也是有情调到爆炸~</p>
 </blockquote>
-<p>#下载安装<br> 还在使用Eclipse的同学，很遗憾，无法使用LoganSquare 。Gradle 是 LoganSquare 唯一支持的配置方法。</p>
+<h1 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h1><p> 还在使用Eclipse的同学，很遗憾，无法使用LoganSquare 。Gradle 是 LoganSquare 唯一支持的配置方法。</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath <span class="string">'com.neenbedankt.gradle.plugins:android-apt:1.4'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'com.neenbedankt.android-apt'</span></span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    apt <span class="string">'com.bluelinelabs:logansquare-compiler:1.1.0'</span></span><br><span class="line">    compile <span class="string">'com.bluelinelabs:logansquare:1.1.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>除了加入了LoganSquare依赖（只有19kb，真心小）还有apt插件，apt插件是用于运行时的注解处理的。</p>
 <hr>
-<p>#使用</p>
-<ul>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><ul>
 <li>##Step1 对要转换的实体类注解<br>提供了3种类型的注解方案，主要是默认的接受转换的类属性范围有些微不同。空值的属性默认忽略。</li>
 </ul>
 <p>1.全属性注解方案</p>
@@ -131,9 +130,8 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <hr>
-<p>#混淆<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-keep class com.bluelinelabs.logansquare.** &#123; *; &#125;</span><br><span class="line">-keep @com.bluelinelabs.logansquare.annotation.JsonObject class *</span><br><span class="line">-keep class **$$JsonObjectMapper &#123; *; &#125;</span><br></pre></td></tr></table></figure></p>
-<p>#License</p>
-<pre><code>Copyright 2015 BlueLine Labs, Inc.
+<h1 id="混淆"><a href="#混淆" class="headerlink" title="混淆"></a>混淆</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-keep class com.bluelinelabs.logansquare.** &#123; *; &#125;</span><br><span class="line">-keep @com.bluelinelabs.logansquare.annotation.JsonObject class *</span><br><span class="line">-keep class **$$JsonObjectMapper &#123; *; &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="License"><a href="#License" class="headerlink" title="License"></a>License</h1><pre><code>Copyright 2015 BlueLine Labs, Inc.
 
 Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
 you may not use this file except in compliance with the License.
@@ -146,7 +144,7 @@ distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-</code></pre><p>#注意事项<br>LoganSquare在ART模式下才能表现出高性能，在Dalvik模式下似乎跟其他类库没有太大差距。</p>
+</code></pre><h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><p>LoganSquare在ART模式下才能表现出高性能，在Dalvik模式下似乎跟其他类库没有太大差距。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
