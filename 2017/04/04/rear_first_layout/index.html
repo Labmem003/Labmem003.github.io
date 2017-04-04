@@ -1,0 +1,371 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>rear_first_layout | 一旬一题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="振之(炊事班程序猿小谢)">
+    
+    <meta name="description" content="控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件本文是一种奇怪又常见的布局需求实现方案的记录。具体需求长样子的：
+
+
+显示用户名和用户ID
+整体宽度不能固定，要跟随内容变化
+空间不够的话优先显示ID，截取用户名过长部分显示为“…”抽象起来就是多个元素横向排列，在空间不足的小屏手">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/profile.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.jpg">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="一旬一题">一旬一题</a></h1>
+				<h2 class="blog-motto">在一成不变的内容中，找到自我磨练的题目</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/2017/02/03/1q15d/">专题</a></li>
+					
+						<li><a href="http://www.jianshu.com/u/8a035c29436c">简书</a></li>
+					
+					<li>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/04/04/rear_first_layout/" title="rear_first_layout" itemprop="url">rear_first_layout</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-04-04T04:09:39.000Z" itemprop="datePublished">2017-04-04</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件"><span class="toc-number">1.</span> <span class="toc-text">控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RTL属性"><span class="toc-number">1.1.</span> <span class="toc-text">RTL属性</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件"><a href="#控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件" class="headerlink" title="控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件"></a>控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件</h1><p>本文是一种奇怪又常见的布局需求实现方案的记录。<br>具体需求长样子的：</p>
+<p><img src="http://i2.muimg.com/567571/3a34dbfa01164f62.png" alt=""></p>
+<ul>
+<li>显示用户名和用户ID</li>
+<li>整体宽度不能固定，要跟随内容变化</li>
+<li>空间不够的话优先显示ID，截取用户名过长部分显示为“…”<br>抽象起来就是多个元素横向排列，在空间不足的小屏手机上，保证显示右边的元素，挤压左边的。</li>
+</ul>
+<p><strong>怎么实现呢？</strong></p>
+<p>好简单啊，一开始我是这样想，脑子里已经瞬间想好两个方法——RTL属性，Weight属性。然而真正实现的时候发现它们都有些小缺陷，最后两个都没采用，而是重写了measure。过程颇费周折。</p>
+<p>把这3种方法和对应的缺点记录在了本文，作为备忘。如果能顺便帮到你，那再好不过了。</p>
+<h2 id="RTL属性"><a href="#RTL属性" class="headerlink" title="RTL属性"></a>RTL属性</h2><p>简单来说，从Android 4.2开始，Android SDK支持一种从右到左（RTL，Right-to-Left）UI布局的方式，尽管这种布局方式经常被使用在诸如阿拉伯语、希伯来语等环境中，中国用户很少使用。不过在某些特殊用途中还是很方便的…<em>才怪！</em></p>
+<p>很多机子不能很好地支持RTL，无法得到一致的外观。启用RTL也有点麻烦的，而且在写很多布局属性如padding时都要注意做一些转换计算。<a href="http://droidyue.com/blog/2014/07/07/support-rtl-in-android/" target="_blank" rel="external">关于RTL的详细介绍和使用点这里。</a></p>
+<p>所以，RTL，扑街了。<br><img src="http://i2.muimg.com/567571/f7cf72f28ad9fb3e.jpg" alt=""></p>
+<p>##Weight<br>LinearLayout中的控件可以添加layout_weight属性。LinearLayout在分配空间时会先分配没有设置Weight的元素，然后对当前剩余空间按Weight比例分配给设置了Weight的元素。</p>
+<p>这个属性可以很好的应对那些内容会动态变化的布局结构。属于Android布局的基础，再具体的不在这里叙述。</p>
+<p>至此一切都很顺利，问题出在把她放在RecyclerView中的时候，假如不固定LinearLayout的宽度（wrap_content），因为一些View重用的机制，notify adapter 时宽度偶尔会乱套。一些长的内容会误设到之前的短内容宽度的LinearLayout中。</p>
+<p>如果是非列表布局，或者是可以确定LinearLayout宽度的情况下，Weight属性其实非常好用。</p>
+<p>但是很遗憾，这次Weight，也扑街。<br><img src="http://i1.piimg.com/567571/76d65a9ad3605a98.jpg" alt=""></p>
+<p>##重写measure</p>
+<p>没办法，只能自己做点处理了。<br>仔细想想，LinearLayout本来就是从左到右布局，空间不够时挤压右边，我们只要反过来就可以了。</p>
+<p><strong>那就先继承LinearLayout:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class RearFirstLinearlayout extends LinearLayout &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>调用父类的onMeasure方法以正常使用各种好用的layout属性，如layout_gravity:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java</span><br><span class="line"> protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</span><br><span class="line">        super.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>然后在Measure的时候优先分配右边元素的空间:</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line"><span class="comment">//        非横排和不开启RearFirst，则用系统默认measure</span></span><br><span class="line">        <span class="keyword">if</span> (!isHorizon() || !isRearFirst) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> mWidth = MeasureSpec.getSize(widthMeasureSpec);<span class="comment">//可用宽度</span></span><br><span class="line">        <span class="keyword">int</span> mHeight = getMeasuredHeight();</span><br><span class="line">        <span class="keyword">int</span> mCount = getChildCount();<span class="comment">//子view数量</span></span><br><span class="line">        <span class="comment">//计算预计总宽</span></span><br><span class="line">        <span class="keyword">int</span> preComputeWidth = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//临时记录位置</span></span><br><span class="line">        mLeft = <span class="number">0</span>;</span><br><span class="line">        mRight = <span class="number">0</span>;</span><br><span class="line">        mTop = <span class="number">0</span>;</span><br><span class="line">        mBottom = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        rest = mWidth;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = mCount - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;<span class="comment">//从后往前算</span></span><br><span class="line">            Log.i(<span class="string">"measure-i:"</span>, <span class="string">""</span> + i);</span><br><span class="line">            <span class="keyword">final</span> View child = getChildAt(i);</span><br><span class="line">            <span class="keyword">int</span> spec = MeasureSpec.makeMeasureSpec(rest, MeasureSpec.AT_MOST);</span><br><span class="line">            child.measure(spec, MeasureSpec.UNSPECIFIED);</span><br><span class="line">            <span class="keyword">int</span> childw = child.getMeasuredWidth();</span><br><span class="line">            <span class="keyword">int</span> childh = child.getMeasuredHeight();</span><br><span class="line">            preComputeWidth += childw;</span><br><span class="line"></span><br><span class="line"><span class="comment">//          计算rest</span></span><br><span class="line">            mRight = getPositionRight(i, mCount, mWidth);</span><br><span class="line">            mLeft = mRight - childw;</span><br><span class="line">            mBottom = mTop + childh;</span><br><span class="line">            rest = mLeft;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//保存最终的测量结果</span></span><br><span class="line">        <span class="keyword">if</span> (preComputeWidth&lt;=mWidth)&#123;</span><br><span class="line">            setMeasuredDimension(preComputeWidth, mHeight);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            setMeasuredDimension(mWidth, mHeight);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>欧了。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android/">Android</a><a href="/tags/UI/">UI</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.greens1995.com/2017/04/04/rear_first_layout/" data-title="rear_first_layout | 一旬一题" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/02/18/how_to_test_service/"  title="实战 - 如何测试 Service ?">
+ <strong>Old:</strong><br/> 
+ <span>实战 - 如何测试 Service ?
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="rear_first_layout" data-thread-key="rear_first_layout" data-author-key="振之(炊事班程序猿小谢)" data-url="http://www.greens1995.com/post/rear_first_layout"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© 振之-Android工程师 @ Nonolive 直播</span>
+		
+	<div>
+ <div align="center"><a href="http://www.amazingcounters.com"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3212273&c=9637132" alt="AmazingCounters.com"></a></div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"greens1995"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
