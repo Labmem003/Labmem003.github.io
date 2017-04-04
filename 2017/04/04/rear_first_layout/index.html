@@ -4,17 +4,17 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>rear_first_layout | 一旬一题</title>
+    <title>控制 LinearLayout 优先显示右边的布局，空间不足时挤压左边控件 | 一旬一题</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="振之(炊事班程序猿小谢)">
     
-    <meta name="description" content="控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件本文是一种奇怪又常见的布局需求实现方案的记录。具体需求长样子的：
+    <meta name="description" content="控制 LinearLayout 优先显示右边的布局，空间不足时挤压左边控件本文是一种奇怪又常见的布局需求实现方案的记录。具体需求长样子的：
 
 
-显示用户名和用户ID
+显示用户名和用户 ID
 整体宽度不能固定，要跟随内容变化
-空间不够的话优先显示ID，截取用户名过长部分显示为“…”抽象起来就是多个元素横向排列，在空间不足的小屏手">
+空间不够的话优先显示ID，截取用户名过长部分显示为“…”抽象起来就是多个元素横向排列，在空间不足的">
     
     
     
@@ -90,7 +90,7 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/04/04/rear_first_layout/" title="rear_first_layout" itemprop="url">rear_first_layout</a>
+      <a href="/2017/04/04/rear_first_layout/" title="控制 LinearLayout 优先显示右边的布局，空间不足时挤压左边控件" itemprop="url">控制 LinearLayout 优先显示右边的布局，空间不足时挤压左边控件</a>
   </h1>
   <p class="article-time">
     <time datetime="2017-04-04T04:09:39.000Z" itemprop="datePublished">2017-04-04</time>
@@ -101,34 +101,33 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件"><span class="toc-number">1.</span> <span class="toc-text">控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RTL属性"><span class="toc-number">1.1.</span> <span class="toc-text">RTL属性</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#控制-LinearLayout-优先显示右边的布局，空间不足时挤压左边控件"><span class="toc-number">1.</span> <span class="toc-text">控制 LinearLayout 优先显示右边的布局，空间不足时挤压左边控件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RTL属性"><span class="toc-number">1.1.</span> <span class="toc-text">RTL属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Weight"><span class="toc-number">1.2.</span> <span class="toc-text">Weight</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重写-measure"><span class="toc-number">1.3.</span> <span class="toc-text">重写 measure</span></a></li></ol></li></ol>
 		</div>
 		
-		<h1 id="控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件"><a href="#控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件" class="headerlink" title="控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件"></a>控制LinearLayout优先显示右边的布局，空间不足时挤压左边控件</h1><p>本文是一种奇怪又常见的布局需求实现方案的记录。<br>具体需求长样子的：</p>
+		<h1 id="控制-LinearLayout-优先显示右边的布局，空间不足时挤压左边控件"><a href="#控制-LinearLayout-优先显示右边的布局，空间不足时挤压左边控件" class="headerlink" title="控制 LinearLayout 优先显示右边的布局，空间不足时挤压左边控件"></a>控制 LinearLayout 优先显示右边的布局，空间不足时挤压左边控件</h1><p>本文是一种奇怪又常见的布局需求实现方案的记录。<br>具体需求长样子的：</p>
 <p><img src="http://i2.muimg.com/567571/3a34dbfa01164f62.png" alt=""></p>
 <ul>
-<li>显示用户名和用户ID</li>
+<li>显示用户名和用户 ID</li>
 <li>整体宽度不能固定，要跟随内容变化</li>
 <li>空间不够的话优先显示ID，截取用户名过长部分显示为“…”<br>抽象起来就是多个元素横向排列，在空间不足的小屏手机上，保证显示右边的元素，挤压左边的。</li>
 </ul>
 <p><strong>怎么实现呢？</strong></p>
-<p>好简单啊，一开始我是这样想，脑子里已经瞬间想好两个方法——RTL属性，Weight属性。然而真正实现的时候发现它们都有些小缺陷，最后两个都没采用，而是重写了measure。过程颇费周折。</p>
+<p>好简单啊，一开始我是这样想，脑子里已经瞬间想好两个方法 —— RTL 属性， Weight 属性。然而真正实现的时候发现它们都有些小缺陷，最后两个都没采用，而是重写了 measure。过程颇费周折。</p>
 <p>把这3种方法和对应的缺点记录在了本文，作为备忘。如果能顺便帮到你，那再好不过了。</p>
-<h2 id="RTL属性"><a href="#RTL属性" class="headerlink" title="RTL属性"></a>RTL属性</h2><p>简单来说，从Android 4.2开始，Android SDK支持一种从右到左（RTL，Right-to-Left）UI布局的方式，尽管这种布局方式经常被使用在诸如阿拉伯语、希伯来语等环境中，中国用户很少使用。不过在某些特殊用途中还是很方便的…<em>才怪！</em></p>
-<p>很多机子不能很好地支持RTL，无法得到一致的外观。启用RTL也有点麻烦的，而且在写很多布局属性如padding时都要注意做一些转换计算。<a href="http://droidyue.com/blog/2014/07/07/support-rtl-in-android/" target="_blank" rel="external">关于RTL的详细介绍和使用点这里。</a></p>
+<h2 id="RTL属性"><a href="#RTL属性" class="headerlink" title="RTL属性"></a>RTL属性</h2><p>简单来说，从 Android 4.2开始，Android SDK 支持一种从右到左（RTL，Right-to-Left）UI 布局的方式，尽管这种布局方式经常被使用在诸如阿拉伯语、希伯来语等环境中，中国用户很少使用。不过在某些特殊用途中还是很方便的…<em>才怪！</em></p>
+<p>很多机子不能很好地支持 RTL，无法得到一致的外观。启用 RTL 也有点麻烦的，而且在写很多布局属性如padding时都要注意做一些转换计算。<a href="http://droidyue.com/blog/2014/07/07/support-rtl-in-android/" target="_blank" rel="external">关于RTL的详细介绍和使用点这里。</a></p>
 <p>所以，RTL，扑街了。<br><img src="http://i2.muimg.com/567571/f7cf72f28ad9fb3e.jpg" alt=""></p>
-<p>##Weight<br>LinearLayout中的控件可以添加layout_weight属性。LinearLayout在分配空间时会先分配没有设置Weight的元素，然后对当前剩余空间按Weight比例分配给设置了Weight的元素。</p>
-<p>这个属性可以很好的应对那些内容会动态变化的布局结构。属于Android布局的基础，再具体的不在这里叙述。</p>
-<p>至此一切都很顺利，问题出在把她放在RecyclerView中的时候，假如不固定LinearLayout的宽度（wrap_content），因为一些View重用的机制，notify adapter 时宽度偶尔会乱套。一些长的内容会误设到之前的短内容宽度的LinearLayout中。</p>
-<p>如果是非列表布局，或者是可以确定LinearLayout宽度的情况下，Weight属性其实非常好用。</p>
-<p>但是很遗憾，这次Weight，也扑街。<br><img src="http://i1.piimg.com/567571/76d65a9ad3605a98.jpg" alt=""></p>
-<p>##重写measure</p>
-<p>没办法，只能自己做点处理了。<br>仔细想想，LinearLayout本来就是从左到右布局，空间不够时挤压右边，我们只要反过来就可以了。</p>
-<p><strong>那就先继承LinearLayout:</strong></p>
+<h2 id="Weight"><a href="#Weight" class="headerlink" title="Weight"></a>Weight</h2><p>LinearLayout 中的控件可以添加 layout_weight 属性。LinearLayout 在分配空间时会先分配没有设置 Weight 的元素，然后对当前剩余空间按Weight比例分配给设置了 Weight 的元素。</p>
+<p>这个属性可以很好的应对那些内容会动态变化的布局结构。属于 Android 布局的基础，再具体的不在这里叙述。</p>
+<p>至此一切都很顺利，问题出在把她放在 RecyclerView 中的时候，假如不固定 LinearLayout 的宽度（wrap_content），因为一些 View 重用的机制，notify adapter 时宽度偶尔会乱套。一些长的内容会误设到之前的短内容宽度的 LinearLayout 中。</p>
+<p>如果是非列表布局，或者是可以确定 LinearLayout 宽度的情况下，Weight 属性其实非常好用。</p>
+<p>但是很遗憾，这次 Weight，也扑街。<br><img src="http://i1.piimg.com/567571/76d65a9ad3605a98.jpg" alt=""></p>
+<h2 id="重写-measure"><a href="#重写-measure" class="headerlink" title="重写 measure"></a>重写 measure</h2><p>没办法，只能自己做点处理了。<br>仔细想想，LinearLayout 本来就是从左到右布局，空间不够时挤压右边，我们只要反过来就可以了。</p>
+<p><strong>那就先继承 LinearLayout:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class RearFirstLinearlayout extends LinearLayout &#123;&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>调用父类的onMeasure方法以正常使用各种好用的layout属性，如layout_gravity:</strong></p>
+<p><strong>调用父类的 onMeasure 方法以正常使用各种好用的 layout 属性，如 layout_gravity:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java</span><br><span class="line"> protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</span><br><span class="line">        super.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<p><strong>然后在Measure的时候优先分配右边元素的空间:</strong></p>
+<p><strong>然后在 Measure 的时候优先分配右边元素的空间:</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line"><span class="comment">//        非横排和不开启RearFirst，则用系统默认measure</span></span><br><span class="line">        <span class="keyword">if</span> (!isHorizon() || !isRearFirst) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> mWidth = MeasureSpec.getSize(widthMeasureSpec);<span class="comment">//可用宽度</span></span><br><span class="line">        <span class="keyword">int</span> mHeight = getMeasuredHeight();</span><br><span class="line">        <span class="keyword">int</span> mCount = getChildCount();<span class="comment">//子view数量</span></span><br><span class="line">        <span class="comment">//计算预计总宽</span></span><br><span class="line">        <span class="keyword">int</span> preComputeWidth = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//临时记录位置</span></span><br><span class="line">        mLeft = <span class="number">0</span>;</span><br><span class="line">        mRight = <span class="number">0</span>;</span><br><span class="line">        mTop = <span class="number">0</span>;</span><br><span class="line">        mBottom = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        rest = mWidth;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = mCount - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;<span class="comment">//从后往前算</span></span><br><span class="line">            Log.i(<span class="string">"measure-i:"</span>, <span class="string">""</span> + i);</span><br><span class="line">            <span class="keyword">final</span> View child = getChildAt(i);</span><br><span class="line">            <span class="keyword">int</span> spec = MeasureSpec.makeMeasureSpec(rest, MeasureSpec.AT_MOST);</span><br><span class="line">            child.measure(spec, MeasureSpec.UNSPECIFIED);</span><br><span class="line">            <span class="keyword">int</span> childw = child.getMeasuredWidth();</span><br><span class="line">            <span class="keyword">int</span> childh = child.getMeasuredHeight();</span><br><span class="line">            preComputeWidth += childw;</span><br><span class="line"></span><br><span class="line"><span class="comment">//          计算rest</span></span><br><span class="line">            mRight = getPositionRight(i, mCount, mWidth);</span><br><span class="line">            mLeft = mRight - childw;</span><br><span class="line">            mBottom = mTop + childh;</span><br><span class="line">            rest = mLeft;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//保存最终的测量结果</span></span><br><span class="line">        <span class="keyword">if</span> (preComputeWidth&lt;=mWidth)&#123;</span><br><span class="line">            setMeasuredDimension(preComputeWidth, mHeight);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            setMeasuredDimension(mWidth, mHeight);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>欧了。</p>
   
@@ -145,7 +144,7 @@ var _hmt = _hmt || [];
 
 <div class="article-share" id="share">
 
-  <div data-url="http://www.greens1995.com/2017/04/04/rear_first_layout/" data-title="rear_first_layout | 一旬一题" data-tsina="null" class="share clearfix">
+  <div data-url="http://www.greens1995.com/2017/04/04/rear_first_layout/" data-title="控制 LinearLayout 优先显示右边的布局，空间不足时挤压左边控件 | 一旬一题" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -168,7 +167,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="rear_first_layout" data-thread-key="rear_first_layout" data-author-key="振之(炊事班程序猿小谢)" data-url="http://www.greens1995.com/post/rear_first_layout"></div>
+	<div class="ds-thread" data-title="控制 LinearLayout 优先显示右边的布局，空间不足时挤压左边控件" data-thread-key="rear_first_layout" data-author-key="振之(炊事班程序猿小谢)" data-url="http://www.greens1995.com/post/rear_first_layout"></div>
 	
 </section>
 
