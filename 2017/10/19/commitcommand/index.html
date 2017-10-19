@@ -10,7 +10,7 @@
     <meta name="author" content="振之(炊事班程序猿小谢)">
     
     <meta name="description" content="一般场景的Git使用流程就不多说，多数公司都是基于 Git 用 Git Flow 模型来组织代码协作。下面记录两个在工作中觉得很称手的小命令。
-##修改刚刚提交的 Commit Message：commit –amend  刚刚提交代码忘记或者写错了 Commit Message，想改一下。git ">
+修改刚刚提交的 Commit Message：commit –amend  刚刚提交代码忘记或者写错了 Commit Message，想改一下。git co">
     
     
     
@@ -55,7 +55,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="一旬一题">一旬一题</a></h1>
 				<h2 class="blog-motto">在一成不变的内容中，找到自我磨练的题目</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -72,7 +72,7 @@ var _hmt = _hmt || [];
 					<li>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -95,12 +95,12 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改刚刚提交的-Commit-Message：commit-–amend"><span class="toc-number">1.</span> <span class="toc-text">修改刚刚提交的 Commit Message：commit –amend</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合并前几条-Commit-为-1-个-Commit：git-rebase-i-HEAD-x"><span class="toc-number">2.</span> <span class="toc-text">合并前几条 Commit 为 1 个 Commit：git rebase -i HEAD~x</span></a></li></ol>
 		</div>
 		
 		<p>一般场景的Git使用流程就不多说，多数公司都是基于 Git 用 Git Flow 模型来组织代码协作。下面记录两个在工作中觉得很称手的小命令。</p>
-<p>##修改刚刚提交的 Commit Message：commit –amend<br>  刚刚提交代码忘记或者写错了 Commit Message，想改一下。git commit –amend ，然后修改 message 即可，只会改变 message，代码不会受到影响。</p>
-<p>##合并前几条 Commit 为 1 个 Commit：git rebase -i HEAD~x<br> 有时候提交了太多 Commit（比如在功能分支中途切去 bug 分支修 bug，切之前肯定 Commit 保存下功能分支的进度，不知不觉制造了很多零碎 Commit），想把它们合并一下。<br>git rebase -i HEAD~4 ,就会弹出类似下面的编辑界面。<br>可以看到有 4 条 pick xxx xxx ，每条就对应着你的一条 Commit。下面还有注释的文本写了 pick 这些命令代表什么意思。最实用的就是 pick（使用/保留 这个 Commit） 和 squash（合并这个 Commit 到上次 Commit）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">pick 5e187c7dbe8    add center style indent  </span><br><span class="line">pick 6d577eb3440    add center style  </span><br><span class="line">pick f9b9508a3ab    add center style  </span><br><span class="line">pick 111ab9cc261    update templates  </span><br><span class="line"># Rebase 150a643..2fad1ae onto 150a643  </span><br><span class="line">#  </span><br><span class="line"># Commands:  </span><br><span class="line">#  p, pick = use commit  </span><br><span class="line">#  r, reword = use commit, but edit the commit message  </span><br><span class="line">#  e, edit = use commit, but stop for amending  </span><br><span class="line">#  s, squash = use commit, but meld into previous commit  </span><br><span class="line">#  f, fixup = like &quot;squash&quot;, but discard this commit&apos;s log message  </span><br><span class="line">#  x, exec = run command (the rest of the line) using shell  </span><br><span class="line">#  </span><br><span class="line"># These lines can be re-ordered; they are executed from top to bottom.  </span><br><span class="line">#  </span><br><span class="line"># If you remove a line here THAT COMMIT WILL BE LOST.  </span><br><span class="line">#  </span><br><span class="line"># However, if you remove everything, the rebase will be aborted.  </span><br><span class="line">#  </span><br><span class="line"># Note that empty commits are commented out</span><br></pre></td></tr></table></figure></p>
+<h2 id="修改刚刚提交的-Commit-Message：commit-–amend"><a href="#修改刚刚提交的-Commit-Message：commit-–amend" class="headerlink" title="修改刚刚提交的 Commit Message：commit –amend"></a>修改刚刚提交的 Commit Message：commit –amend</h2><p>  刚刚提交代码忘记或者写错了 Commit Message，想改一下。git commit –amend ，然后修改 message 即可，只会改变 message，代码不会受到影响。</p>
+<h2 id="合并前几条-Commit-为-1-个-Commit：git-rebase-i-HEAD-x"><a href="#合并前几条-Commit-为-1-个-Commit：git-rebase-i-HEAD-x" class="headerlink" title="合并前几条 Commit 为 1 个 Commit：git rebase -i HEAD~x"></a>合并前几条 Commit 为 1 个 Commit：git rebase -i HEAD~x</h2><p> 有时候提交了太多 Commit（比如在功能分支中途切去 bug 分支修 bug，切之前肯定 Commit 保存下功能分支的进度，不知不觉制造了很多零碎 Commit），想把它们合并一下。<br>git rebase -i HEAD~4 ,就会弹出类似下面的编辑界面。<br>可以看到有 4 条 pick xxx xxx ，每条就对应着你的一条 Commit。下面还有注释的文本写了 pick 这些命令代表什么意思。最实用的就是 pick（使用/保留 这个 Commit） 和 squash（合并这个 Commit 到上次 Commit）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">pick 5e187c7dbe8    add center style indent  </span><br><span class="line">pick 6d577eb3440    add center style  </span><br><span class="line">pick f9b9508a3ab    add center style  </span><br><span class="line">pick 111ab9cc261    update templates  </span><br><span class="line"># Rebase 150a643..2fad1ae onto 150a643  </span><br><span class="line">#  </span><br><span class="line"># Commands:  </span><br><span class="line">#  p, pick = use commit  </span><br><span class="line">#  r, reword = use commit, but edit the commit message  </span><br><span class="line">#  e, edit = use commit, but stop for amending  </span><br><span class="line">#  s, squash = use commit, but meld into previous commit  </span><br><span class="line">#  f, fixup = like &quot;squash&quot;, but discard this commit&apos;s log message  </span><br><span class="line">#  x, exec = run command (the rest of the line) using shell  </span><br><span class="line">#  </span><br><span class="line"># These lines can be re-ordered; they are executed from top to bottom.  </span><br><span class="line">#  </span><br><span class="line"># If you remove a line here THAT COMMIT WILL BE LOST.  </span><br><span class="line">#  </span><br><span class="line"># However, if you remove everything, the rebase will be aborted.  </span><br><span class="line">#  </span><br><span class="line"># Note that empty commits are commented out</span><br></pre></td></tr></table></figure></p>
 <p>所以如下编辑一下，:wq 保存并退出就合并到只剩 5e187c7dbe8 那条了，如果有冲突的话按平常 merge 和 rebase 那样解决即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pick 5e187c7dbe8    add center style indent  </span><br><span class="line">squash 6d577eb3440  add center style  </span><br><span class="line">squash f9b9508a3ab  add center style  </span><br><span class="line">squash 111ab9cc261  update templates</span><br></pre></td></tr></table></figure></p>
   
 	</div>
@@ -128,7 +128,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2017/07/30/fakeboldtext/"  title="如何实现 “中间这几个字要加粗，但是不要太粗，比较纤细的那种粗” ？">
- <strong>旧一篇:</strong><br/> 
+ <strong>Old:</strong><br/> 
  <span>如何实现 “中间这几个字要加粗，但是不要太粗，比较纤细的那种粗” ？
 </span>
 </a>
