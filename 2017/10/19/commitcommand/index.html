@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>怎么给GitHub项目写一份易读的 README.md | 一旬一题</title>
+    <title>两个好用的 Git 树 Commit 信息整理命令 | 一旬一题</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="振之(炊事班程序猿小谢)">
     
-    <meta name="description" content="README.md SampleGithub项目README.md模板README作为说明文件，作用是让浏览者快速、鸟瞰式地了解项目。为了做到这点，写README的时候应该注意层次和格式，用Markdown书写为佳。一般至少包含三大部分，第一是介绍项目背景和用处，第二是使用方法（包括导入/安装，暴露">
+    <meta name="description" content="一般场景的Git使用流程就不多说，多数公司都是基于 Git 用 Git Flow 模型来组织代码协作。下面记录两个在工作中觉得很称手的小命令。
+##修改刚刚提交的 Commit Message：commit –amend  刚刚提交代码忘记或者写错了 Commit Message，想改一下。git ">
     
     
     
@@ -83,10 +84,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/06/29/readme-sample/" title="怎么给GitHub项目写一份易读的 README.md" itemprop="url">怎么给GitHub项目写一份易读的 README.md</a>
+      <a href="/2017/10/19/commitcommand/" title="两个好用的 Git 树 Commit 信息整理命令" itemprop="url">两个好用的 Git 树 Commit 信息整理命令</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-06-29T06:56:48.000Z" itemprop="datePublished">2016-06-29</time>
+    <time datetime="2017-10-19T06:57:34.000Z" itemprop="datePublished">2017-10-19</time>
   </p>
 </header>
 	<div class="article-content">
@@ -94,39 +95,20 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#README-md-Sample"><span class="toc-number">1.</span> <span class="toc-text">README.md Sample</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目名称"><span class="toc-number"></span> <span class="toc-text">项目名称</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#示例"><span class="toc-number">0.0.1.</span> <span class="toc-text">示例:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新日志"><span class="toc-number">0.1.</span> <span class="toc-text">更新日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特性（可选）"><span class="toc-number">0.2.</span> <span class="toc-text">特性（可选）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原理说明（可选）"><span class="toc-number">0.3.</span> <span class="toc-text">原理说明（可选）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载安装"><span class="toc-number">0.4.</span> <span class="toc-text">下载安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用方法"><span class="toc-number">0.5.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注意事项"><span class="toc-number">0.6.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TODO（可选）"><span class="toc-number">0.7.</span> <span class="toc-text">TODO（可选）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#License"><span class="toc-number">1.</span> <span class="toc-text">License</span></a></li></ol>
+		
 		</div>
 		
-		<h2 id="README-md-Sample"><a href="#README-md-Sample" class="headerlink" title="README.md Sample"></a>README.md Sample</h2><p>Github项目README.md模板<br>README作为说明文件，作用是让浏览者快速、鸟瞰式地了解项目。<br>为了做到这点，写README的时候应该注意层次和格式，用Markdown书写为佳。<br>一般至少包含三大部分，第一是介绍项目背景和用处，第二是使用方法（包括导入/安装，暴露的调用接口等），第三遵守的协议。</p>
-<p>具体可以参照这份模板，模板本身已放到<a href="https://github.com/Labman003/README.md-Sample" target="_blank" rel="external">Github</a>。</p>
-<hr>
-<h1 id="项目名称"><a href="#项目名称" class="headerlink" title="项目名称"></a>项目名称</h1><hr>
-<blockquote>
-<p>关于我，欢迎关注<br> 博客：<a href="http://greens1995.com/" target="_blank" rel="external">振之的博客</a><br> (如果你想打造个人品牌，把自己的介绍放在这里也是可以的)</p>
-</blockquote>
-<p>Github项目README.md模板<br>（项目背景/作用介绍）</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例:"></a>示例:</h4><p>把使用了该项目的案例放在这里。可以放APK下载链接，或者简单放几张截图。<br>如果项目是个上架的App，直接把各应用市场（应用宝、小米应用市场、360应用市场、android play）的对应下载链接放上来。<br>（示例一开始就放出来，方便浏览者一眼就看出是不是想找的东西）</p>
-<h3 id="更新日志"><a href="#更新日志" class="headerlink" title="更新日志"></a>更新日志</h3><p>每次正式发布的版本信息及更新说明。</p>
-<h3 id="特性（可选）"><a href="#特性（可选）" class="headerlink" title="特性（可选）"></a>特性（可选）</h3><ul>
-<li><p>特性A</p>
-</li>
-<li><p>特性B</p>
-</li>
-</ul>
-<h3 id="原理说明（可选）"><a href="#原理说明（可选）" class="headerlink" title="原理说明（可选）"></a>原理说明（可选）</h3><p>阐述项目是基于什么思路设计的</p>
-<h3 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h3><p>Gradle:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile 'xxx'</span><br></pre></td></tr></table></figure></p>
-<p>(说明项目的配置方法，android开源库多用Gradle导入)</p>
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>怎么使用，有哪些步骤哪些接口。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>比如混淆方法等</p>
-<h3 id="TODO（可选）"><a href="#TODO（可选）" class="headerlink" title="TODO（可选）"></a>TODO（可选）</h3><p>接下来的开发/维护计划。</p>
-<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>遵守的协议</p>
+		<p>一般场景的Git使用流程就不多说，多数公司都是基于 Git 用 Git Flow 模型来组织代码协作。下面记录两个在工作中觉得很称手的小命令。</p>
+<p>##修改刚刚提交的 Commit Message：commit –amend<br>  刚刚提交代码忘记或者写错了 Commit Message，想改一下。git commit –amend ，然后修改 message 即可，只会改变 message，代码不会受到影响。</p>
+<p>##合并前几条 Commit 为 1 个 Commit：git rebase -i HEAD~x<br> 有时候提交了太多 Commit（比如在功能分支中途切去 bug 分支修 bug，切之前肯定 Commit 保存下功能分支的进度，不知不觉制造了很多零碎 Commit），想把它们合并一下。<br>git rebase -i HEAD~4 ,就会弹出类似下面的编辑界面。<br>可以看到有 4 条 pick xxx xxx ，每条就对应着你的一条 Commit。下面还有注释的文本写了 pick 这些命令代表什么意思。最实用的就是 pick（使用/保留 这个 Commit） 和 squash（合并这个 Commit 到上次 Commit）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">pick 5e187c7dbe8    add center style indent  </span><br><span class="line">pick 6d577eb3440    add center style  </span><br><span class="line">pick f9b9508a3ab    add center style  </span><br><span class="line">pick 111ab9cc261    update templates  </span><br><span class="line"># Rebase 150a643..2fad1ae onto 150a643  </span><br><span class="line">#  </span><br><span class="line"># Commands:  </span><br><span class="line">#  p, pick = use commit  </span><br><span class="line">#  r, reword = use commit, but edit the commit message  </span><br><span class="line">#  e, edit = use commit, but stop for amending  </span><br><span class="line">#  s, squash = use commit, but meld into previous commit  </span><br><span class="line">#  f, fixup = like &quot;squash&quot;, but discard this commit&apos;s log message  </span><br><span class="line">#  x, exec = run command (the rest of the line) using shell  </span><br><span class="line">#  </span><br><span class="line"># These lines can be re-ordered; they are executed from top to bottom.  </span><br><span class="line">#  </span><br><span class="line"># If you remove a line here THAT COMMIT WILL BE LOST.  </span><br><span class="line">#  </span><br><span class="line"># However, if you remove everything, the rebase will be aborted.  </span><br><span class="line">#  </span><br><span class="line"># Note that empty commits are commented out</span><br></pre></td></tr></table></figure></p>
+<p>所以如下编辑一下，:wq 保存并退出就合并到只剩 5e187c7dbe8 那条了，如果有冲突的话按平常 merge 和 rebase 那样解决即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pick 5e187c7dbe8    add center style indent  </span><br><span class="line">squash 6d577eb3440  add center style  </span><br><span class="line">squash f9b9508a3ab  add center style  </span><br><span class="line">squash 111ab9cc261  update templates</span><br></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/GitHub/">GitHub</a>
+  <span></span> <a href="/tags/Git/">Git</a>
   </div>
 
 
@@ -134,7 +116,7 @@ var _hmt = _hmt || [];
 
 <div class="article-share" id="share">
 
-  <div data-url="http://www.greens1995.com/2016/06/29/readme-sample/" data-title="怎么给GitHub项目写一份易读的 README.md | 一旬一题" data-tsina="null" class="share clearfix">
+  <div data-url="http://www.greens1995.com/2017/10/19/commitcommand/" data-title="两个好用的 Git 树 Commit 信息整理命令 | 一旬一题" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -143,19 +125,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/06/29/LoganSquare/" title="LoganSquare的简单使用——快到爆炸地解析和序列化大JSON">
-  <strong>新一篇:</strong><br/>
-  <span>
-  LoganSquare的简单使用——快到爆炸地解析和序列化大JSON</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/06/23/countly/"  title="countly-sdk-android 源码解析——移动统计工具是怎么炼成的(1)">
+<a href="/2017/07/30/fakeboldtext/"  title="如何实现 “中间这几个字要加粗，但是不要太粗，比较纤细的那种粗” ？">
  <strong>旧一篇:</strong><br/> 
- <span>countly-sdk-android 源码解析——移动统计工具是怎么炼成的(1)
+ <span>如何实现 “中间这几个字要加粗，但是不要太粗，比较纤细的那种粗” ？
 </span>
 </a>
 </div>
