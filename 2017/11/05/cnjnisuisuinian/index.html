@@ -1,0 +1,340 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>个人速查用碎碎念笔记——C、JNI、NDK | 一旬一题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="振之(炊事班程序猿小谢)">
+    
+    <meta name="description" content="C编译运行在 UNIX 操作系统中， 首先必须在某个文件中建立这个源程序，并以“.c”作为文件的扩展名，例如 hello.c，然后再通过下列命令进行编译:cc hello.c如果源程序没有什么错误(例如漏掉字符或拼错字符)，编译过程将顺利进行，并生成一个可 执行文件 a.out。然后，我们输入:a.">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/profile.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.jpg">
+    
+
+  
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="一旬一题">一旬一题</a></h1>
+				<h2 class="blog-motto">在一成不变的内容中，找到自我磨练的题目</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/2017/02/03/1q15d/">专题</a></li>
+					
+						<li><a href="https://juejin.im/user/57ff552d5bbb50005b4e9ef9">掘金</a></li>
+					
+					<li>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/05/cnjnisuisuinian/" title="个人速查用碎碎念笔记——C、JNI、NDK" itemprop="url">个人速查用碎碎念笔记——C、JNI、NDK</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-11-05T01:15:38.000Z" itemprop="datePublished">2017-11-05</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#C"><span class="toc-number">1.</span> <span class="toc-text">C</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#编译运行"><span class="toc-number">1.1.</span> <span class="toc-text">编译运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#头文件"><span class="toc-number">1.2.</span> <span class="toc-text">头文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-的变量"><span class="toc-number">1.3.</span> <span class="toc-text">C 的变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#int-长度"><span class="toc-number">1.3.1.</span> <span class="toc-text">int 长度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-是指针世界"><span class="toc-number">1.4.</span> <span class="toc-text">C 是指针世界</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指针为什么需要类型"><span class="toc-number">1.4.1.</span> <span class="toc-text">指针为什么需要类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无权限函数，参数，指针作为参数"><span class="toc-number">1.4.2.</span> <span class="toc-text">无权限函数，参数，指针作为参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2级指针、多级指针，应用场景-以后你就懂了"><span class="toc-number">1.4.3.</span> <span class="toc-text">2级指针、多级指针，应用场景(以后你就懂了)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数指针"><span class="toc-number">1.4.4.</span> <span class="toc-text">函数指针</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态内存分配"><span class="toc-number">1.5.</span> <span class="toc-text">动态内存分配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#内存分配的几个注意细节："><span class="toc-number">1.5.1.</span> <span class="toc-text">内存分配的几个注意细节：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符操作"><span class="toc-number">1.6.</span> <span class="toc-text">字符操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符数组，字符指针。"><span class="toc-number">1.6.1.</span> <span class="toc-text">字符数组，字符指针。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串函数"><span class="toc-number">1.6.2.</span> <span class="toc-text">字符串函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结构体——C语言中结构化数据类型的核心"><span class="toc-number">1.7.</span> <span class="toc-text">结构体——C语言中结构化数据类型的核心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型别名"><span class="toc-number">1.8.</span> <span class="toc-text">类型别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件IO编写步骤："><span class="toc-number">1.9.</span> <span class="toc-text">文件IO编写步骤：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JNI概念及开发流程"><span class="toc-number">1.10.</span> <span class="toc-text">JNI概念及开发流程</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="C"><a href="#C" class="headerlink" title="C"></a>C</h1><h2 id="编译运行"><a href="#编译运行" class="headerlink" title="编译运行"></a>编译运行</h2><p>在 UNIX 操作系统中， 首先必须在某个文件中建立这个源程序，并以“.c”作为文件的扩展名，例如 hello.c，然<br>后再通过下列命令进行编译:<br>cc hello.c<br>如果源程序没有什么错误(例如漏掉字符或拼错字符)，编译过程将顺利进行，并生成一个可 执行文件 a.out。然后，我们输入:<br>a.out<br>即可运行 a.out，打印出下列信息:<br>hello, world<br>在其它操作系统中，编译、加载、运行等规则会有所不同。</p>
+<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><p>编写C的时候 , 首先我们需要引入头文件 ， 就像我们写JAVA的时候 ， 需要引入包一样 ， 但C语言他不会帮你自动引入 ， 所有头文件 ， 必须你自己手动引入， 最常用的两个头文件是<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>C语言中的xxx.h的头文件 ， 里面只有函数声明 ， 没有函数实现 ， 函数实现都在xxx.c里面 。</p>
+<h2 id="C-的变量"><a href="#C-的变量" class="headerlink" title="C 的变量"></a>C 的变量</h2><p>C语言中的变量类型 ， 和变量大小 。 和JAVA不同的是 ， C语言变量的大小 ， 是随着操作系统变化而变化的 ， 不同的操作系统 ， 变量的大小可能不一样 。</p>
+<h3 id="int-长度"><a href="#int-长度" class="headerlink" title="int 长度"></a>int 长度</h3><p>四个字节只是在x86上面 大多数编译器的一种做法，目的自然是操作内存更方便;<br>int是最基本的类型，一般和CPU的字宽一致。，提高处理速度。。。<br>不一定是 4个字节的 和你操作系统有关系<br>是intel设计cpu时的规定,做16位cpu 8086时是这样的(ax寄存器可分为2个8位的ah和al),<br>在做32位嫌太麻烦,就没做.比如eax寄存器,可拆分为ax,ah,al使用,<br>高16位得通过特殊的方法使用.<br>如果想知道底层的实现 看看汇编相关数据吧！<br>一般地，short类型为半个机器字(word)长，int类型为一个机器字长，而long类型为一个或两个机器字长(在32位机器中，int类型和long类型通常字长是相同的)。<br>其实这是个历史遗留问题，16位时期  long就是32位的，为了兼容。而int应该是最适合当前机器的字长，所以也是32位的</p>
+<h2 id="C-是指针世界"><a href="#C-是指针世界" class="headerlink" title="C 是指针世界"></a>C 是指针世界</h2><p> C语言的世界就是一个指针的世界 ， 就如同JAVA的世界就是一个对象的世界一样 ， 两者都是其各自的核心 ， 所以我们一定要把指针弄懂 ， 学透 。</p>
+<h3 id="指针为什么需要类型"><a href="#指针为什么需要类型" class="headerlink" title="指针为什么需要类型"></a>指针为什么需要类型</h3><p>指针是存储的地址是开始读取的位置 ， 类型是读取的长度 ， 操作类型必须一致 。</p>
+<h3 id="无权限函数，参数，指针作为参数"><a href="#无权限函数，参数，指针作为参数" class="headerlink" title="无权限函数，参数，指针作为参数"></a>无权限函数，参数，指针作为参数</h3><h3 id="2级指针、多级指针，应用场景-以后你就懂了"><a href="#2级指针、多级指针，应用场景-以后你就懂了" class="headerlink" title="2级指针、多级指针，应用场景(以后你就懂了)"></a>2级指针、多级指针，应用场景(以后你就懂了)</h3><p> 函数和java中的方法类似 ， 只是缺少了访问控制符 ， 二级指针也就是指针的指针 ， 指针里面存储的是指针的地址 ， 可以通过*操作符不断往上追溯 ， 然后通过内存地址操作内存空间 。场景可以先不管，以后用到自然懂了。</p>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>定义指向函数得指针，这个指针还可作为函数的参数。<br> void(*func_p)() = &message;</p>
+<h2 id="动态内存分配"><a href="#动态内存分配" class="headerlink" title="动态内存分配"></a>动态内存分配</h2><p>栈区，堆区，全局区或静态区，程序代码区。<br><a href="http://www.jianshu.com/p/93db7c692d1b" target="_blank" rel="external">http://www.jianshu.com/p/93db7c692d1b</a></p>
+<h3 id="内存分配的几个注意细节："><a href="#内存分配的几个注意细节：" class="headerlink" title="内存分配的几个注意细节："></a>内存分配的几个注意细节：</h3><p>1.不能多次释放<br>2.释放完之后 ， 给指针置NULL，标志释放完成<br>3.内存泄漏 （p重新赋值之后 ， 再free ， 并没有真正释放 ， 要在赋值之前释放前一个内存空间）</p>
+<h2 id="字符操作"><a href="#字符操作" class="headerlink" title="字符操作"></a>字符操作</h2><h3 id="字符数组，字符指针。"><a href="#字符数组，字符指针。" class="headerlink" title="字符数组，字符指针。"></a>字符数组，字符指针。</h3><p><a href="http://www.jianshu.com/p/b7e6fc094087" target="_blank" rel="external">http://www.jianshu.com/p/b7e6fc094087</a><br>字符指针与字符数组 ， 最大的区别是一个定义了就不可以修改 ， 一个可以任意修改里面的字符 ， 就和String和StringBuilder一样 ， String定义了就无法增加或修改里面的内容 ， 一个是可以增加和修改里面的内容 。</p>
+<h3 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h3><p><a href="http://www.kuqin.com/clib/string/strpbrk.html" target="_blank" rel="external">http://www.kuqin.com/clib/string/strpbrk.html</a></p>
+<h2 id="结构体——C语言中结构化数据类型的核心"><a href="#结构体——C语言中结构化数据类型的核心" class="headerlink" title="结构体——C语言中结构化数据类型的核心"></a>结构体——C语言中结构化数据类型的核心</h2><p>如果说类是java中结构化数据类型的核心 ， 那么结构体就是C语言中结构化数据类型的核心 。<br>在学习C语言的结构体的时候 ， 我们可以类比成java中的类 ， 只是这个类比较特殊，结构体中只有声明 ， 函数没有实现 ， 属性也不能初始化 ， 一般定义在头文件中 。就好比声明了一个抽象类 ， 里面什么动作也不做 ， 属性只是声明一样 ， 都需要继承或是外部去赋值 。</p>
+<h2 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*类型别名 关键字：typedef*/</span></span><br><span class="line"><span class="comment">/*</span><br><span class="line">    1.不同名称代表在做不同的事情typedef int jint;</span><br><span class="line">    2.不同情况下，使用不同的别名</span><br><span class="line">    3.书写简洁</span><br><span class="line">*/</span></span><br><span class="line"><span class="comment">// 简单别名</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span>* Name;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结构体别名</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> ImageInfo &#123;</span><br><span class="line">    <span class="keyword">char</span>* name;</span><br><span class="line">    <span class="keyword">int</span> size;</span><br><span class="line">    <span class="keyword">char</span>* path;</span><br><span class="line">&#125;ImageInfo , *ImageInfo_P;</span><br></pre></td></tr></table></figure>
+<h2 id="文件IO编写步骤："><a href="#文件IO编写步骤：" class="headerlink" title="文件IO编写步骤："></a>文件IO编写步骤：</h2><p>1.使用fopen函数 ， 得到文件指针<br>2.指定fopen的操作模式r,w （指定输入输出流）<br>3.创建缓冲区 ， 缓存读写数据（将流数据读入到内存或写入到磁盘）<br>3.关闭流 （关闭文件流）</p>
+<p>#JNI</p>
+<h2 id="JNI概念及开发流程"><a href="#JNI概念及开发流程" class="headerlink" title="JNI概念及开发流程"></a>JNI概念及开发流程</h2><p>JNI的开发流程 ， .h头文件的分析 ， 生成头文件javah命令 ， 以及java类型在C语言中的表现形式 ， 值得注意的是 ， java中的所有引用类型都是jobject类型 ， native生成的函数 ， 以Java<em>全类名</em>方法名表示，包名的.以_表示 。</p>
+<p>##C 调用Java对象的构造方法</p>
+<p>#NDK</p>
+<p>##使用Android Studio编写NDK<br>随着Android Studio的越来越完善 ， 我们编写NDK就会越来越方便，使用Android Studio 2.2 RC2 ， 编写NDK的时候 ， 不需要使用javah命令来生成头文件 ， 创建一个native方法 ， 使用alt + enter会提示要你创建一个JNI函数 ， C/C++语法提示也相对比较完善了， 减少了一些重复代码的编写。<br><a href="http://www.jianshu.com/c/a25bf14495d7" target="_blank" rel="external">http://www.jianshu.com/c/a25bf14495d7</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android/">Android</a><a href="/tags/C/">C</a><a href="/tags/JNI/">JNI</a><a href="/tags/NDK/">NDK</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.greens1995.com/2017/11/05/cnjnisuisuinian/" data-title="个人速查用碎碎念笔记——C、JNI、NDK | 一旬一题" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/10/22/listui/"  title="列表型布局套路总结">
+ <strong>Old:</strong><br/> 
+ <span>列表型布局套路总结
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© 振之-Android工程师 @ Nonolive 直播</span>
+		
+	<div>
+ <div align="center"><a href="http://www.amazingcounters.com"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3212273&c=9637132" alt="AmazingCounters.com"></a></div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
