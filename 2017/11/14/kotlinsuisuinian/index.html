@@ -1,0 +1,351 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>个人速查用碎碎念笔记——Kotlin | 一旬一题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="振之(炊事班程序猿小谢)">
+    
+    <meta name="description" content="基本类型接近Java，但——
+类型转换没有了隐式转换，必须使用显式转换
+同一性和相等性基本类型装箱不保留同一性，只保留相等性。 如果显示转换过，那么同一性和相等性都失去 。
+字符串支持模版导包出现冲突，支持用 as 做本地重命名控制流基本控制结构（循环，条件）if,else,for,whilewhe">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/profile.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.jpg">
+    
+
+  
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="一旬一题">一旬一题</a></h1>
+				<h2 class="blog-motto">在一成不变的内容中，找到自我磨练的题目</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/2017/02/03/1q15d/">专题</a></li>
+					
+						<li><a href="https://juejin.im/user/57ff552d5bbb50005b4e9ef9">掘金</a></li>
+					
+					<li>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/14/kotlinsuisuinian/" title="个人速查用碎碎念笔记——Kotlin" itemprop="url">个人速查用碎碎念笔记——Kotlin</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-11-14T12:31:22.000Z" itemprop="datePublished">2017-11-14</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本类型"><span class="toc-number">1.</span> <span class="toc-text">基本类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换"><span class="toc-number">1.1.</span> <span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同一性和相等性"><span class="toc-number">1.2.</span> <span class="toc-text">同一性和相等性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串支持模版"><span class="toc-number">1.3.</span> <span class="toc-text">字符串支持模版</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#导包出现冲突，支持用-as-做本地重命名"><span class="toc-number">2.</span> <span class="toc-text">导包出现冲突，支持用 as 做本地重命名</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#控制流"><span class="toc-number">3.</span> <span class="toc-text">控制流</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本控制结构（循环，条件）"><span class="toc-number">3.1.</span> <span class="toc-text">基本控制结构（循环，条件）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签返回与跳转"><span class="toc-number">3.2.</span> <span class="toc-text">标签返回与跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主构函数，init-初始化块-，次构函数"><span class="toc-number">3.3.</span> <span class="toc-text">主构函数，init 初始化块 ，次构函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主构函数参数"><span class="toc-number">3.3.1.</span> <span class="toc-text">主构函数参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#没有-new-关键字，调用构造函数就可以创建类的实例"><span class="toc-number">3.3.2.</span> <span class="toc-text">没有 new 关键字，调用构造函数就可以创建类的实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承"><span class="toc-number">3.4.</span> <span class="toc-text">继承</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#必须就地初始化"><span class="toc-number">3.4.1.</span> <span class="toc-text">必须就地初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#默认final-可继承的要标注-open"><span class="toc-number">3.4.2.</span> <span class="toc-text">默认final , 可继承的要标注 open</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#覆盖方法"><span class="toc-number">3.4.3.</span> <span class="toc-text">覆盖方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#覆盖属性，var-可覆盖val，反之则不可"><span class="toc-number">3.4.4.</span> <span class="toc-text">覆盖属性，var 可覆盖val，反之则不可</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#属性与字段"><span class="toc-number">4.</span> <span class="toc-text">属性与字段</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#可变var，只读val"><span class="toc-number">4.1.</span> <span class="toc-text">可变var，只读val</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块与-internal"><span class="toc-number">4.2.</span> <span class="toc-text">模块与 internal</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#扩展"><span class="toc-number">5.</span> <span class="toc-text">扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展函数（可结合范型）"><span class="toc-number">5.1.</span> <span class="toc-text">扩展函数（可结合范型）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展的分发接收者、扩展接收者，以及用限定this来解决两个接收者的成员名字冲突"><span class="toc-number">5.2.</span> <span class="toc-text">扩展的分发接收者、扩展接收者，以及用限定this来解决两个接收者的成员名字冲突</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展函数-对扩展接收者静态解析，对分发接收者虚拟可继承；该设计的动机"><span class="toc-number">5.3.</span> <span class="toc-text">扩展函数 对扩展接收者静态解析，对分发接收者虚拟可继承；该设计的动机</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#data-标记数据类，copy复制一个对象并改变它的一些属性"><span class="toc-number">6.</span> <span class="toc-text">data 标记数据类，copy复制一个对象并改变它的一些属性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#密封类——类似于可保持状态的java枚举"><span class="toc-number">7.</span> <span class="toc-text">密封类——类似于可保持状态的java枚举</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#范型，型变（声明处型变、类型型变）（Todo-范型系列没理解透，有空要重看）"><span class="toc-number">8.</span> <span class="toc-text">范型，型变（声明处型变、类型型变）（Todo. 范型系列没理解透，有空要重看）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#声明处型变，out-生产者，in-消费者"><span class="toc-number">8.1.</span> <span class="toc-text">声明处型变，out 生产者，in 消费者</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象"><span class="toc-number">9.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#匿名类"><span class="toc-number">9.1.</span> <span class="toc-text">匿名类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#object-关键字对象声明（使得单例模式极为简易）"><span class="toc-number">9.2.</span> <span class="toc-text">object 关键字对象声明（使得单例模式极为简易）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#companion-伴生对象"><span class="toc-number">9.3.</span> <span class="toc-text">companion 伴生对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象表达式和对象声明之间的语义差异"><span class="toc-number">9.4.</span> <span class="toc-text">对象表达式和对象声明之间的语义差异</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#委托"><span class="toc-number">10.</span> <span class="toc-text">委托</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#类委托"><span class="toc-number">10.1.</span> <span class="toc-text">类委托</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性委托"><span class="toc-number">10.2.</span> <span class="toc-text">属性委托</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标准属性委托"><span class="toc-number">10.2.1.</span> <span class="toc-text">标准属性委托</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#lazy"><span class="toc-number">10.2.1.1.</span> <span class="toc-text">lazy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#observable-和-vetoable"><span class="toc-number">10.2.1.2.</span> <span class="toc-text">observable 和 vetoable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#map-这个委托的用法和场景还是不太理解，碰到了再来看。。"><span class="toc-number">10.2.1.3.</span> <span class="toc-text">map (这个委托的用法和场景还是不太理解，碰到了再来看。。)</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数-fun"><span class="toc-number">11.</span> <span class="toc-text">函数 fun</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#默认参数及其覆写注意项，命名参数解决参数冲突现象"><span class="toc-number">11.1.</span> <span class="toc-text">默认参数及其覆写注意项，命名参数解决参数冲突现象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#星号操作符以命名形式传入可变变量参数（调用-Java-函数时不能使用）"><span class="toc-number">11.2.</span> <span class="toc-text">星号操作符以命名形式传入可变变量参数（调用 Java 函数时不能使用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unit-为什么要设计一个unit，还不明白"><span class="toc-number">11.3.</span> <span class="toc-text">Unit (为什么要设计一个unit，还不明白)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数可以在文件顶层声明，并且可嵌套"><span class="toc-number">11.4.</span> <span class="toc-text">函数可以在文件顶层声明，并且可嵌套</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-number">12.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#限定this"><span class="toc-number">12.1.</span> <span class="toc-text">限定this</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用相等与结构相等，浮点数相等"><span class="toc-number">12.2.</span> <span class="toc-text">引用相等与结构相等，浮点数相等</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#空容纳性声明"><span class="toc-number">12.3.</span> <span class="toc-text">空容纳性声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在条件中检查-null"><span class="toc-number">12.4.</span> <span class="toc-text">在条件中检查 null</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全调用符"><span class="toc-number">12.5.</span> <span class="toc-text">安全调用符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Elvis-操作符"><span class="toc-number">12.6.</span> <span class="toc-text">Elvis 操作符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作符-（如果你想要一个-NPE，你可以得到它，但是你必须显式要求它，否则它不会不期而至）"><span class="toc-number">12.7.</span> <span class="toc-text">!! 操作符 （如果你想要一个 NPE，你可以得到它，但是你必须显式要求它，否则它不会不期而至）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#filterNotNull-过滤非空元素"><span class="toc-number">12.8.</span> <span class="toc-text">filterNotNull 过滤非空元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常类，try-表达式，无受检异常"><span class="toc-number">12.9.</span> <span class="toc-text">异常类，try 表达式，无受检异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注解、反射（有点绕，先放着用到再看）"><span class="toc-number">12.10.</span> <span class="toc-text">注解、反射（有点绕，先放着用到再看）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#typealias-类型别名"><span class="toc-number">12.11.</span> <span class="toc-text">typealias  类型别名</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h1><p>接近Java，但——</p>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p>没有了隐式转换，必须使用显式转换</p>
+<h2 id="同一性和相等性"><a href="#同一性和相等性" class="headerlink" title="同一性和相等性"></a>同一性和相等性</h2><p>基本类型装箱不保留同一性，只保留相等性。 如果显示转换过，那么同一性和相等性都失去 。</p>
+<h2 id="字符串支持模版"><a href="#字符串支持模版" class="headerlink" title="字符串支持模版"></a>字符串支持模版</h2><h1 id="导包出现冲突，支持用-as-做本地重命名"><a href="#导包出现冲突，支持用-as-做本地重命名" class="headerlink" title="导包出现冲突，支持用 as 做本地重命名"></a>导包出现冲突，支持用 as 做本地重命名</h1><h1 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h1><h2 id="基本控制结构（循环，条件）"><a href="#基本控制结构（循环，条件）" class="headerlink" title="基本控制结构（循环，条件）"></a>基本控制结构（循环，条件）</h2><p>if,else,for,while<br>when,(index, value) in array.withIndex(),in,step,down to<br>if 表达式代替三元运算符</p>
+<h2 id="标签返回与跳转"><a href="#标签返回与跳转" class="headerlink" title="标签返回与跳转"></a>标签返回与跳转</h2><p>#类与继承</p>
+<h2 id="主构函数，init-初始化块-，次构函数"><a href="#主构函数，init-初始化块-，次构函数" class="headerlink" title="主构函数，init 初始化块 ，次构函数"></a>主构函数，init 初始化块 ，次构函数</h2><p>主构函数直接跟在类名后面，不带具体函数实现；<br>如有需要的初始化操作，放在init 初始化块即可；<br>也可以用 constructor 在类里面定义次构函数，在这里初始化（一般这种是针对不同构造器有不同初始化才放到这里）。注意如存在主构函数，则次构函数必须间接或直接委托主构函数。</p>
+<h3 id="主构函数参数"><a href="#主构函数参数" class="headerlink" title="主构函数参数"></a>主构函数参数</h3><p>注意，主构造的参数可以在初始化块中使用。它们也可以在类体内声明的属性初始化器中使用.<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Customer(name: String) &#123;</span><br><span class="line">    val customerKey = name.toUpperCase()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>事实上，声明属性以及从主构造函数初始化属性，Kotlin 有简洁的语法：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Person(val firstName: String, val lastName: String, var age: Int) &#123;</span><br><span class="line">    // ……</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>与普通属性一样，主构造函数中声明的属性可以是可变的（var）或只读的（val）。<br>如果构造函数有注解或可见性修饰符，这个 constructor 关键字是必需的，并且这些修饰符在它前面：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Customer public @Inject constructor(name: String) &#123; …… &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="没有-new-关键字，调用构造函数就可以创建类的实例"><a href="#没有-new-关键字，调用构造函数就可以创建类的实例" class="headerlink" title="没有 new 关键字，调用构造函数就可以创建类的实例"></a>没有 new 关键字，调用构造函数就可以创建类的实例</h3><h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">open class <span class="title">Base</span><span class="params">(p: Int)</span></span><br><span class="line">class <span class="title">Derived</span><span class="params">(p: Int)</span> : <span class="title">Base</span><span class="params">(p)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="必须就地初始化"><a href="#必须就地初始化" class="headerlink" title="必须就地初始化"></a>必须就地初始化</h3><h3 id="默认final-可继承的要标注-open"><a href="#默认final-可继承的要标注-open" class="headerlink" title="默认final , 可继承的要标注 open"></a>默认final , 可继承的要标注 open</h3><p>类上的 open 标注与 Java 中 final 相反，它允许其他类从这个类继承。默认情况下，在 Kotlin 中所有的类都是 final， 对应于 Effective Java书中的第 17 条：要么为继承而设计，并提供文档说明，要么就禁止继承。</p>
+<h3 id="覆盖方法"><a href="#覆盖方法" class="headerlink" title="覆盖方法"></a>覆盖方法</h3><p>显示的 open 和 override。<br>默认 final 不可继承。<br>可在子类中用 final 来终止开放的继承权限链。</p>
+<h3 id="覆盖属性，var-可覆盖val，反之则不可"><a href="#覆盖属性，var-可覆盖val，反之则不可" class="headerlink" title="覆盖属性，var 可覆盖val，反之则不可"></a>覆盖属性，var 可覆盖val，反之则不可</h3><h1 id="属性与字段"><a href="#属性与字段" class="headerlink" title="属性与字段"></a>属性与字段</h1><h2 id="可变var，只读val"><a href="#可变var，只读val" class="headerlink" title="可变var，只读val"></a>可变var，只读val</h2><h2 id="模块与-internal"><a href="#模块与-internal" class="headerlink" title="模块与 internal"></a>模块与 internal</h2><p>可见性修饰符，比java的多了internal。<br>internal可见性修饰符意味着成员在同一个模块中可见。更具体的，一个模块是一组被一起编译的Kotlin文件：<br>一个 Intellij IDEA 模块；<br>一个Maven或者Gradle工程；<br>一组用一个Ant任务编译的文件集合。<br>个人理解就是类似于在一个项目库里面可见。比如我写了一个开源库，我在库内部可见自己用。提供库给别人接入的时候不给他们用。</p>
+<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><h2 id="扩展函数（可结合范型）"><a href="#扩展函数（可结合范型）" class="headerlink" title="扩展函数（可结合范型）"></a>扩展函数（可结合范型）</h2><p>优先级低于成员函数，<br>扩展有作用域，要导好包</p>
+<h2 id="扩展的分发接收者、扩展接收者，以及用限定this来解决两个接收者的成员名字冲突"><a href="#扩展的分发接收者、扩展接收者，以及用限定this来解决两个接收者的成员名字冲突" class="headerlink" title="扩展的分发接收者、扩展接收者，以及用限定this来解决两个接收者的成员名字冲突"></a>扩展的分发接收者、扩展接收者，以及用限定this来解决两个接收者的成员名字冲突</h2><h2 id="扩展函数-对扩展接收者静态解析，对分发接收者虚拟可继承；该设计的动机"><a href="#扩展函数-对扩展接收者静态解析，对分发接收者虚拟可继承；该设计的动机" class="headerlink" title="扩展函数 对扩展接收者静态解析，对分发接收者虚拟可继承；该设计的动机"></a>扩展函数 对扩展接收者静态解析，对分发接收者虚拟可继承；该设计的动机</h2><h1 id="data-标记数据类，copy复制一个对象并改变它的一些属性"><a href="#data-标记数据类，copy复制一个对象并改变它的一些属性" class="headerlink" title="data 标记数据类，copy复制一个对象并改变它的一些属性"></a>data 标记数据类，copy复制一个对象并改变它的一些属性</h1><h1 id="密封类——类似于可保持状态的java枚举"><a href="#密封类——类似于可保持状态的java枚举" class="headerlink" title="密封类——类似于可保持状态的java枚举"></a>密封类——类似于可保持状态的java枚举</h1><h1 id="范型，型变（声明处型变、类型型变）（Todo-范型系列没理解透，有空要重看）"><a href="#范型，型变（声明处型变、类型型变）（Todo-范型系列没理解透，有空要重看）" class="headerlink" title="范型，型变（声明处型变、类型型变）（Todo. 范型系列没理解透，有空要重看）"></a>范型，型变（声明处型变、类型型变）（Todo. 范型系列没理解透，有空要重看）</h1><h2 id="声明处型变，out-生产者，in-消费者"><a href="#声明处型变，out-生产者，in-消费者" class="headerlink" title="声明处型变，out 生产者，in 消费者"></a>声明处型变，out 生产者，in 消费者</h2><h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><h2 id="匿名类"><a href="#匿名类" class="headerlink" title="匿名类"></a>匿名类</h2><h2 id="object-关键字对象声明（使得单例模式极为简易）"><a href="#object-关键字对象声明（使得单例模式极为简易）" class="headerlink" title="object 关键字对象声明（使得单例模式极为简易）"></a>object 关键字对象声明（使得单例模式极为简易）</h2><h2 id="companion-伴生对象"><a href="#companion-伴生对象" class="headerlink" title="companion 伴生对象"></a>companion 伴生对象</h2><p>请注意，即使伴生对象的成员看起来像其他语言的静态成员，在运行时他们仍然是真实对象的实例成员，而且，例如还可以实现接口。<br>在 JVM 平台，如果使用 @JvmStatic 注解，你可以将伴生对象的成员生成为真正的静态方法和字段。</p>
+<h2 id="对象表达式和对象声明之间的语义差异"><a href="#对象表达式和对象声明之间的语义差异" class="headerlink" title="对象表达式和对象声明之间的语义差异"></a>对象表达式和对象声明之间的语义差异</h2><p>对象表达式是在使用他们的地方立即执行（及初始化）的；<br>对象声明是在第一次被访问到时延迟初始化的；<br>伴生对象的初始化是在相应的类被加载（解析）时，与 Java 静态初始化器的语义相匹配。</p>
+<h1 id="委托"><a href="#委托" class="headerlink" title="委托"></a>委托</h1><h2 id="类委托"><a href="#类委托" class="headerlink" title="类委托"></a>类委托</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">interface Base &#123;</span><br><span class="line">    fun print()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class BaseImpl(val x: Int) : Base &#123;</span><br><span class="line">    override fun print() &#123; print(x) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Derived(b: Base) : Base by b</span><br><span class="line"></span><br><span class="line">fun main(args: Array&lt;String&gt;) &#123;</span><br><span class="line">    val b = BaseImpl(10)</span><br><span class="line">    Derived(b).print() // 输出 10</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="属性委托"><a href="#属性委托" class="headerlink" title="属性委托"></a>属性委托</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var p: <span class="function">String by <span class="title">Delegate</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="标准属性委托"><a href="#标准属性委托" class="headerlink" title="标准属性委托"></a>标准属性委托</h3><p>有一些常见的属性类型，虽然我们可以在每次需要的时候手动实现它们， 但是如果能够为大家把他们只实现一次并放入一个库会更好。例如包括：</p>
+<h4 id="lazy"><a href="#lazy" class="headerlink" title="lazy"></a>lazy</h4><p>延迟属性（lazy properties）: 其值只在首次访问时计算；</p>
+<h4 id="observable-和-vetoable"><a href="#observable-和-vetoable" class="headerlink" title="observable 和 vetoable"></a>observable 和 vetoable</h4><p>可观察属性（observable properties）: 监听器会收到有关此属性变更的通知；如果你想能够截获一个赋值并“否决”它，就使用 vetoable() 取代 observable()。 在属性被赋新值生效之前会调用传递给 vetoable 的处理程序。</p>
+<h4 id="map-这个委托的用法和场景还是不太理解，碰到了再来看。。"><a href="#map-这个委托的用法和场景还是不太理解，碰到了再来看。。" class="headerlink" title="map (这个委托的用法和场景还是不太理解，碰到了再来看。。)"></a>map (这个委托的用法和场景还是不太理解，碰到了再来看。。)</h4><p>把多个属性储存在一个映射（map）中，而不是每个存在单独x的字段中。</p>
+<h1 id="函数-fun"><a href="#函数-fun" class="headerlink" title="函数 fun"></a>函数 fun</h1><h2 id="默认参数及其覆写注意项，命名参数解决参数冲突现象"><a href="#默认参数及其覆写注意项，命名参数解决参数冲突现象" class="headerlink" title="默认参数及其覆写注意项，命名参数解决参数冲突现象"></a>默认参数及其覆写注意项，命名参数解决参数冲突现象</h2><p>极有效率地减少了重载数量。</p>
+<h2 id="星号操作符以命名形式传入可变变量参数（调用-Java-函数时不能使用）"><a href="#星号操作符以命名形式传入可变变量参数（调用-Java-函数时不能使用）" class="headerlink" title="星号操作符以命名形式传入可变变量参数（调用 Java 函数时不能使用）"></a>星号操作符以命名形式传入可变变量参数（调用 Java 函数时不能使用）</h2><p>伸展（spread）操作符（在数组前面加 *）</p>
+<h2 id="Unit-为什么要设计一个unit，还不明白"><a href="#Unit-为什么要设计一个unit，还不明白" class="headerlink" title="Unit (为什么要设计一个unit，还不明白)"></a>Unit (为什么要设计一个unit，还不明白)</h2><h2 id="函数可以在文件顶层声明，并且可嵌套"><a href="#函数可以在文件顶层声明，并且可嵌套" class="headerlink" title="函数可以在文件顶层声明，并且可嵌套"></a>函数可以在文件顶层声明，并且可嵌套</h2><h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="限定this"><a href="#限定this" class="headerlink" title="限定this"></a>限定this</h2><h2 id="引用相等与结构相等，浮点数相等"><a href="#引用相等与结构相等，浮点数相等" class="headerlink" title="引用相等与结构相等，浮点数相等"></a>引用相等与结构相等，浮点数相等</h2><h2 id="空容纳性声明"><a href="#空容纳性声明" class="headerlink" title="空容纳性声明"></a>空容纳性声明</h2>   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a: String = <span class="string">"abc"</span></span><br><span class="line">a = <span class="keyword">null</span> <span class="comment">// 编译错误</span></span><br><span class="line">var b: String? = <span class="string">"abc"</span></span><br><span class="line">b = <span class="keyword">null</span> <span class="comment">// ok</span></span><br></pre></td></tr></table></figure>
+<h2 id="在条件中检查-null"><a href="#在条件中检查-null" class="headerlink" title="在条件中检查 null"></a>在条件中检查 null</h2><h2 id="安全调用符"><a href="#安全调用符" class="headerlink" title="安全调用符"></a>安全调用符</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//安全调用在链式调用中很有用。例如，如果一个员工 Bob 可能会（或者不会）分配给一个部门， 并且可能有另外一个员工是该部门的负责人，那么获取 Bob 所在部门负责人（如果有的话）的名字，我们写作：</span></span><br><span class="line">bob?.department?.head?.name</span><br></pre></td></tr></table></figure>
+<h2 id="Elvis-操作符"><a href="#Elvis-操作符" class="headerlink" title="Elvis 操作符"></a>Elvis 操作符</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">val l = b?.length ?: -<span class="number">1</span></span><br><span class="line"><span class="comment">//如果 ?: 左侧表达式非空，elvis 操作符就返回其左侧表达式，否则返回右侧表达式。 请注意，当且仅当左侧为空时，才会对右侧表达式求值。</span></span><br><span class="line"></span><br><span class="line"><span class="function">fun <span class="title">foo</span><span class="params">(node: Node)</span>: String? </span>&#123;</span><br><span class="line">    val parent = node.getParent() ?: <span class="keyword">return</span> <span class="keyword">null</span></span><br><span class="line">    val name = node.getName() ?: <span class="keyword">throw</span> IllegalArgumentException(<span class="string">"name expected"</span>)</span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="操作符-（如果你想要一个-NPE，你可以得到它，但是你必须显式要求它，否则它不会不期而至）"><a href="#操作符-（如果你想要一个-NPE，你可以得到它，但是你必须显式要求它，否则它不会不期而至）" class="headerlink" title="!! 操作符 （如果你想要一个 NPE，你可以得到它，但是你必须显式要求它，否则它不会不期而至）"></a>!! 操作符 （如果你想要一个 NPE，你可以得到它，但是你必须显式要求它，否则它不会不期而至）</h2><p>##安全的类型转换<br>如果对象不是目标类型，那么常规类型转换可能会导致 ClassCastException。 另一个选择是使用安全的类型转换，如果尝试转换不成功则返回 null：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val aInt: Int? = a as? Int</span><br></pre></td></tr></table></figure></p>
+<h2 id="filterNotNull-过滤非空元素"><a href="#filterNotNull-过滤非空元素" class="headerlink" title="filterNotNull 过滤非空元素"></a>filterNotNull 过滤非空元素</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">val nullableList: List&lt;Int?&gt; = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="keyword">null</span>, <span class="number">4</span>)</span><br><span class="line">val intList: List&lt;Int&gt; = nullableList.filterNotNull()</span><br></pre></td></tr></table></figure>
+<h2 id="异常类，try-表达式，无受检异常"><a href="#异常类，try-表达式，无受检异常" class="headerlink" title="异常类，try 表达式，无受检异常"></a>异常类，try 表达式，无受检异常</h2><h2 id="注解、反射（有点绕，先放着用到再看）"><a href="#注解、反射（有点绕，先放着用到再看）" class="headerlink" title="注解、反射（有点绕，先放着用到再看）"></a>注解、反射（有点绕，先放着用到再看）</h2><h2 id="typealias-类型别名"><a href="#typealias-类型别名" class="headerlink" title="typealias  类型别名"></a>typealias  类型别名</h2>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Kotlin/">Kotlin</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.greens1995.com/2017/11/14/kotlinsuisuinian/" data-title="个人速查用碎碎念笔记——Kotlin | 一旬一题" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/11/05/cnjnisuisuinian/"  title="个人速查用碎碎念笔记——C、JNI、NDK">
+ <strong>Old:</strong><br/> 
+ <span>个人速查用碎碎念笔记——C、JNI、NDK
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© 振之-Android工程师 @ Nonolive 直播</span>
+		
+	<div>
+ <div align="center"><a href="http://www.amazingcounters.com"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3212273&c=9637132" alt="AmazingCounters.com"></a></div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
