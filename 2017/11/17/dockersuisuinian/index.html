@@ -4,27 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>一旬一题——15天1次，1次1个有价值的问题 | 一旬一题</title>
+    <title>个人速查用碎碎念笔记——Docker | 一旬一题</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="振之(炊事班程序猿小谢)">
     
-    <meta name="description" content="专题目录
-重构
-Android开发中如何使命名更”可读”？——命名语义规范实践
-
-
-单元测试
-实战 - 如何测试 Service ?
-
-
-架构
-多媒体技术
-
-视频
-
-读书：The C Programming Language
-   如果你想把整个视频录制、播放等流程彻底玩转，而不是流连于表面，那肯定">
+    <meta name="description" content="什么是Docker（虚拟系统环境）区别于KVM, Virtualbox, Vmware等虚拟出机器的虚拟机技术，Docker是虚拟出操作系统，实现应用之间的隔离，让各个应用觉得自己有一个自己的操作系统，而且彼此之间隔离。可以让两个进程都觉得自己在一个独立的系统内运行，却又共享网卡，共享IP地址，看到">
     
     
     
@@ -98,10 +83,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/03/1q15d/" title="一旬一题——15天1次，1次1个有价值的问题" itemprop="url">一旬一题——15天1次，1次1个有价值的问题</a>
+      <a href="/2017/11/17/dockersuisuinian/" title="个人速查用碎碎念笔记——Docker" itemprop="url">个人速查用碎碎念笔记——Docker</a>
   </h1>
   <p class="article-time">
-    <time datetime="2017-02-03T05:08:27.000Z" itemprop="datePublished">2017-02-03</time>
+    <time datetime="2017-11-17T10:05:29.000Z" itemprop="datePublished">2017-11-17</time>
   </p>
 </header>
 	<div class="article-content">
@@ -109,71 +94,33 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#专题目录"><span class="toc-number">1.</span> <span class="toc-text">专题目录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关于"><span class="toc-number">2.</span> <span class="toc-text">关于</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是Docker（虚拟系统环境）"><span class="toc-number">1.</span> <span class="toc-text">什么是Docker（虚拟系统环境）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#官网下载安装-Docker、注册docker-hub"><span class="toc-number">2.</span> <span class="toc-text">官网下载安装 Docker、注册docker hub</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#架构"><span class="toc-number">3.</span> <span class="toc-text">架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拉-images"><span class="toc-number">4.</span> <span class="toc-text">拉 images</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#运行镜像"><span class="toc-number">5.</span> <span class="toc-text">运行镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#看当前运行镜像实例"><span class="toc-number">6.</span> <span class="toc-text">看当前运行镜像实例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#退出"><span class="toc-number">7.</span> <span class="toc-text">退出</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#镜像和容器的关系"><span class="toc-number">8.</span> <span class="toc-text">镜像和容器的关系</span></a></li></ol>
 		</div>
 		
-		<h1 id="专题目录"><a href="#专题目录" class="headerlink" title="专题目录"></a>专题目录</h1><ul>
-<li><a href="/tags/重构/">重构</a><ul>
-<li><a href="/2017/02/05/Android开发中如何使命名更可读？——命名语义规范实践/">Android开发中如何使命名更”可读”？——命名语义规范实践</a></li>
-</ul>
-</li>
-<li><a href="/tags/单元测试/">单元测试</a><ul>
-<li><a href="/2017/02/18/how_to_test_service/">实战 - 如何测试 Service ?</a></li>
-</ul>
-</li>
-<li>架构</li>
-<li><p>多媒体技术</p>
-<ul>
-<li><p>视频</p>
-<ol>
-<li><p><a href="https://book.douban.com/subject/1139336/" target="_blank" rel="external">读书：The C Programming Language</a></p>
-<p>   如果你想把整个视频录制、播放等流程彻底玩转，而不是流连于表面，那肯定要接触播放器内核、ffmpeg等。它们已经脱离了 Android Java 层。征服它们，你需要新的武器——C。如果要学 C，推荐看这本，谭老师的书我就不评论了。</p>
-</li>
-<li><p>学习接触 JNI，NDK<br>   推荐看这个<a href="http://www.jianshu.com/c/a25bf14495d7" target="_blank" rel="external">简书专题</a>，从C开始讲（刚好巩固你在1读的书)，一路讲到用NDK实战，并提供源码。此外还会简单讲到 C++。我们使用的很多第三方库 ， 大多数都是使用的C/C++编写的 ， 有些可能是C和C++混编的 。所以补充一些 C++ 知识也是十分必要。</p>
-</li>
-<li><p>补充基本的数字信号音视频理论基础<br> 不需要成为这方面理论的专家，但要理解基本理论。推荐这篇 <a href="https://github.com/leandromoreira/digital_video_introduction" target="_blank" rel="external">introduction</a>，面向软件开发人员/工程师，旨在尽可能使用浅显的词语，丰富的图像和实际例子介绍数字视频概念。</p>
-<ol>
-<li>雷霄骅大神博客入门</li>
-</ol>
-</li>
-</ol>
-</li>
-<li><p>音频</p>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
-<ul>
-<li><p>RxJava</p>
-<p> <strong>入门：</strong></p>
-<ul>
-<li><a href="https://github.com/benjycui/introrx-chinese-edition?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">The introduction to Reactive Programming you’ve been missing 中文版 —— 作者：@andrestaltz 翻译：@benjycui、@jsenjoy</a><br>RxJava是RP(响应式编程)框架。所以学习Rxjava之前，最好先了解一下什么是RP。网上对RP的介绍很多都有点空泛糟糕，推荐看这篇。</li>
-</ul>
-</li>
-<li><p>CodeRview</p>
-</li>
-<li><p><a href="/tags/UI/">UI</a>&amp;动效</p>
-<ul>
-<li><a href="/2017/10/22/listui">列表型布局怎么写？—— 列表型布局套路总结</a><br>手机屏幕尺寸有限，几乎每个 app 的内容区，都会用列表呈现。不信可以打开你手机里的任意一个 app 看看，99%的 app 的内容区都能被抽象成一个大列表。只是根据内容的丰富度，列表的复杂度有所不同。内容区的结构骨架，基本上就是由列表布局奠定的。从这点看，虽然还有其他各种类型的布局，但是它们都没有列表型的布局来得重要。总的来说，必须知道的有 <strong>如何应对多类型复杂结构</strong>、<strong>几个滚动相关的实用的特别交互</strong>、和<strong>使用 RecyclerView 注意要填的坑</strong>。这些足以覆盖 90% 的业务场景。</li>
-</ul>
-</li>
-<li><p>设计模式</p>
-</li>
-<li><a href="/tags/Git/">Git</a></li>
-<li>Kotlin</li>
-</ul>
-<h1 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h1><p>一旬一题是2017年我自己的一个写作计划——15天（一旬）1次，每次探讨1个专题内1个特定问题。以知识体系化为目的，有专题地持续总结。<br>Fighting!! 葱郁自己的技术森林。<br> <img src="/img/forest.jpeg" width="310" height="460" align="center"></p>
+		<h1 id="什么是Docker（虚拟系统环境）"><a href="#什么是Docker（虚拟系统环境）" class="headerlink" title="什么是Docker（虚拟系统环境）"></a>什么是Docker（虚拟系统环境）</h1><p>区别于KVM, Virtualbox, Vmware等虚拟出机器的虚拟机技术，Docker是虚拟出操作系统，实现应用之间的隔离，让各个应用觉得自己有一个自己的操作系统，而且彼此之间隔离。<br>可以让两个进程都觉得自己在一个独立的系统内运行，却又共享网卡，共享IP地址，看到一样的根文件系统（不chroot的情况下）等，可以用Linux IPC手段进程间通信。深圳进程1和进程2的PID还可以一样。<br><img src="http://img.blog.csdn.net/20170221092901909?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvMjFjbmJhbw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""><br>简单来说，虚拟机是双份系统，Docker是单份系统。Docker达到了类似虚拟机的效果，但是又没有虚拟机的开销，它虚拟的层次更加高。Docker不虚拟机器，仅仅虚拟应用的运行环境。</p>
+<h1 id="官网下载安装-Docker、注册docker-hub"><a href="#官网下载安装-Docker、注册docker-hub" class="headerlink" title="官网下载安装 Docker、注册docker hub"></a>官网下载安装 Docker、注册docker hub</h1><p><a href="https://www.docker.com/docker-mac" target="_blank" rel="external">https://www.docker.com/docker-mac</a></p>
+<h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h1><p>Client, Host, 容器，Images, 仓库 (默认 Docker Hub)<br><img src="http://img.blog.csdn.net/20170221093551818?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvMjFjbmJhbw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""><br>做到了要用什么玩意，就拉那个玩意的docker下来，开箱即用。妈妈再也不用担心我搞环境搞依赖搞啥乱七八糟烦躁东西搞崩溃了。</p>
+<h1 id="拉-images"><a href="#拉-images" class="headerlink" title="拉 images"></a>拉 images</h1><p>docker pull[选项] [Docker Registry地址]  &lt;仓库名&gt;:&lt;标签名&gt;<br>默认地址是 DockerHub。 仓库名：这里的仓库名是两段式名称，既 / ，“/”前面一般是用户名。对于 Docker Hub，如果不给出用户名，则默认为 library ，也就是官方镜像。<br>下载 Ubuntu14.04的image（以Ubuntu为例）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">baohua@ubuntu:~$docker pull ubuntu:14.04  </span><br><span class="line">14.04:Pulling from library/ubuntu  </span><br><span class="line">c60055a51d74:Downloading [&gt;                                                 ] 539.8 kB/65.69 MB  </span><br><span class="line">755da0cdb7d2:Download complete  </span><br><span class="line">969d017f67e6:Download complete  </span><br><span class="line">37c9a9113595:Download complete  </span><br><span class="line">a3d9f8479786:Download complete                                                                  </span><br><span class="line">…</span><br></pre></td></tr></table></figure></p>
+<h1 id="运行镜像"><a href="#运行镜像" class="headerlink" title="运行镜像"></a>运行镜像</h1><p>docker run -it –rm ubuntu:14.04 bash  </p>
+<h1 id="看当前运行镜像实例"><a href="#看当前运行镜像实例" class="headerlink" title="看当前运行镜像实例"></a>看当前运行镜像实例</h1><p>docker ps -a </p>
+<h1 id="退出"><a href="#退出" class="headerlink" title="退出"></a>退出</h1><p>用户通过 exit 命令或 Ctrl+d 来退出终端时，所创建的容器立刻终止。终止状态的容器可以用 docker ps -a 命令看到。<br>ctrl+p+q 退出容器但不关闭, docker ps 查看有。</p>
+<h1 id="镜像和容器的关系"><a href="#镜像和容器的关系" class="headerlink" title="镜像和容器的关系"></a>镜像和容器的关系</h1><p>一个静若处子，一个动如脱兔。<br>类似 程序与进程，类与对象 的关系。</p>
+<p>参考：<a href="http://blog.csdn.net/21cnbao/article/details/56275456" target="_blank" rel="external">Docker 最初的2小时</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android/">Android</a><a href="/tags/C/">C</a><a href="/tags/JNI/">JNI</a><a href="/tags/NDK/">NDK</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://www.greens1995.com/2017/02/03/1q15d/" data-title="一旬一题——15天1次，1次1个有价值的问题 | 一旬一题" data-tsina="null" class="share clearfix">
+  <div data-url="http://www.greens1995.com/2017/11/17/dockersuisuinian/" data-title="个人速查用碎碎念笔记——Docker | 一旬一题" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -183,18 +130,18 @@ var _hmt = _hmt || [];
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/02/05/Android开发中如何使命名更可读？——命名语义规范实践/" title="Android开发中如何使命名更可读？——命名语义规范实践">
+ <a href="/2017/12/04/notification-check/" title="如何检测应用通知权限？如何跳转通知权限设置页？">
   <strong>New:</strong><br/>
   <span>
-  Android开发中如何使命名更可读？——命名语义规范实践</span>
+  如何检测应用通知权限？如何跳转通知权限设置页？</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/07/03/thinkingInJava1/"  title="读 Thinking In Java (1) 1～10章的23条笔记">
+<a href="/2017/11/14/kotlinsuisuinian/"  title="个人速查用碎碎念笔记——Kotlin">
  <strong>Old:</strong><br/> 
- <span>读 Thinking In Java (1) 1～10章的23条笔记
+ <span>个人速查用碎碎念笔记——Kotlin
 </span>
 </a>
 </div>

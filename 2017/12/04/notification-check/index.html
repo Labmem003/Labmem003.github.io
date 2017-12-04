@@ -1,0 +1,336 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>如何检测应用通知权限？如何跳转通知权限设置页？ | 一旬一题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="振之(炊事班程序猿小谢)">
+    
+    <meta name="description" content="如何检测应用通知权限？一般情况下，Api 19 以前是没有通知管理的，默认都是开启，不用管。Api 19 – 24 虽加入了通知管理功能，但没有开放检测是否开启了通知的接口，开发者只能用反射来获取权限值。Api 24 以上，NotificationManager 提供了 areNotificatio">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/profile.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.jpg">
+    
+
+  
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="一旬一题">一旬一题</a></h1>
+				<h2 class="blog-motto">在一成不变的内容中，找到自我磨练的题目</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/2017/02/03/1q15d/">专题</a></li>
+					
+						<li><a href="https://juejin.im/user/57ff552d5bbb50005b4e9ef9">掘金</a></li>
+					
+					<li>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/04/notification-check/" title="如何检测应用通知权限？如何跳转通知权限设置页？" itemprop="url">如何检测应用通知权限？如何跳转通知权限设置页？</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-12-04T07:55:44.000Z" itemprop="datePublished">2017-12-04</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何检测应用通知权限？"><span class="toc-number">1.</span> <span class="toc-text">如何检测应用通知权限？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何跳转通知权限设置页？"><span class="toc-number">2.</span> <span class="toc-text">如何跳转通知权限设置页？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#api-版本"><span class="toc-number">2.1.</span> <span class="toc-text">api 版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机型"><span class="toc-number">2.2.</span> <span class="toc-text">机型</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="如何检测应用通知权限？"><a href="#如何检测应用通知权限？" class="headerlink" title="如何检测应用通知权限？"></a>如何检测应用通知权限？</h1><p>一般情况下，Api 19 以前是没有通知管理的，默认都是开启，不用管。<br>Api 19 – 24 虽加入了通知管理功能，但没有开放检测是否开启了通知的接口，开发者只能用反射来获取权限值。<br>Api 24 以上，NotificationManager 提供了 areNotificationsEnabled（）方法检测通知权限。<br>support 包已经考虑了以上场景，在 24.1.0 开放了areNotificationsEnabled（），在19以下默认返回true,19-24返回对应反射值，24以上用原生NotificationManager 检测。</p>
+<hr>
+<p>特殊情况是部分国产机，加入了通知相关定制功能，开发者是无从控制的或检测的，完全瞎子。比如下面这种通知是否显示在 status bar 的管理。<br><img src="https://cloud.githubusercontent.com/assets/1879771/25085820/b3e56ed2-2396-11e7-8f22-752e9213ec32.png" alt=""><br>也就是说，大部分情况，我们用:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NotificationManagerCompat.from(context).areNotificationsEnabled()</span><br></pre></td></tr></table></figure></p>
+<p> 即可适配除部分国产机以外的大部分机型。</p>
+<h1 id="如何跳转通知权限设置页？"><a href="#如何跳转通知权限设置页？" class="headerlink" title="如何跳转通知权限设置页？"></a>如何跳转通知权限设置页？</h1><p>同样与 api 版本和机型有关。</p>
+<h2 id="api-版本"><a href="#api-版本" class="headerlink" title="api 版本"></a>api 版本</h2><p><strong>&gt;=21:</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//21 以上，直接跳通知栏权限设置页</span></span><br><span class="line"><span class="keyword">if</span> (android.os.Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) &#123;</span><br><span class="line">            intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);</span><br><span class="line">            intent.putExtra(<span class="string">"app_package"</span>, context.getPackageName());</span><br><span class="line">            intent.putExtra(<span class="string">"app_uid"</span>, context.getApplicationInfo().uid);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>9&lt;=,&lt;21:</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//9 - 21，只能跳到 app 详情页</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.GINGERBREAD)&#123;</span><br><span class="line">            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);</span><br><span class="line">            intent.setData(Uri.fromParts(<span class="string">"package"</span>, context.getPackageName(), <span class="keyword">null</span>));</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>&lt;9:</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//9以下的 app 详情页</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.GINGERBREAD)&#123;</span><br><span class="line">            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">            intent.setAction(Intent.ACTION_VIEW);</span><br><span class="line">            intent.setClassName(<span class="string">"com.android.settings"</span>,<span class="string">"com.android.settings.InstalledAppDetails"</span>);</span><br><span class="line">            intent.putExtra(<span class="string">"com.android.settings.ApplicationPkgName"</span>, context.getPackageName());</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="机型"><a href="#机型" class="headerlink" title="机型"></a>机型</h2><p>有些国产机是提供自己的权限管家软件管理通知权限的，对于这些机子，尽量跳转到权限对应的管家页面。<br><strong>部分 vivo：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  点击设置图标&gt;加速白名单&gt;我的app</span></span><br><span class="line">       <span class="comment">//      点击软件管理&gt;软件管理权限&gt;软件&gt;我的app&gt;信任该软件</span></span><br><span class="line">       Intent appIntent = context.getPackageManager().getLaunchIntentForPackage(<span class="string">"com.iqoo.secure"</span>);</span><br><span class="line">       <span class="keyword">if</span>(appIntent != <span class="keyword">null</span>)&#123;</span><br><span class="line">           Log.i(<span class="string">"isPushEnable"</span>,<span class="string">"start1"</span>);</span><br><span class="line">           context.startActivity(appIntent);</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>部分 oppo：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// oppo 点击设置图标&gt;应用权限管理&gt;按应用程序管理&gt;我的app&gt;我信任该应用</span></span><br><span class="line">        <span class="comment">//      点击权限隐私&gt;自启动管理&gt;我的app</span></span><br><span class="line">        appIntent = context.getPackageManager().getLaunchIntentForPackage(<span class="string">"com.oppo.safe"</span>);</span><br><span class="line">        <span class="keyword">if</span>(appIntent != <span class="keyword">null</span>)&#123;</span><br><span class="line">            Log.i(<span class="string">"isPushEnable"</span>,<span class="string">"start2"</span>);</span><br><span class="line">            context.startActivity(appIntent);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>其他机型待测试补充…</strong><br>以上跳转业务我集合成了一个小工具 <a href="https://github.com/Labmem003/NotificationPageHelper" target="_blank" rel="external">NotificationPageHelper</a>，安装后 NotificationPageHelper.open(Context context) 即可。</p>
+<p>参考：</p>
+<ol>
+<li><a href="https://developer.android.com/reference/android/support/v4/app/NotificationManagerCompat.html#areNotificationsEnabled(" target="_blank" rel="external">areNotificationsEnabled</a>)</li>
+<li><a href="https://stackoverflow.com/questions/11649151/android-4-1-how-to-check-notifications-are-disabled-for-the-application" target="_blank" rel="external">Android 4.1: How to check notifications are disabled for the application?</a></li>
+<li><a href="http://blog.csdn.net/perarther/article/details/54025042" target="_blank" rel="external">Android如何在app中通过一个按钮直接跳转到的系统的权限设置页面</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android/">Android</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.greens1995.com/2017/12/04/notification-check/" data-title="如何检测应用通知权限？如何跳转通知权限设置页？ | 一旬一题" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/11/17/dockersuisuinian/"  title="个人速查用碎碎念笔记——Docker">
+ <strong>Old:</strong><br/> 
+ <span>个人速查用碎碎念笔记——Docker
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© 振之-Android工程师 @ Nonolive 直播</span>
+		
+	<div>
+ <div align="center"><a href="http://www.amazingcounters.com"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3212273&c=9637132" alt="AmazingCounters.com"></a></div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
