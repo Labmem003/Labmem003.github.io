@@ -1,0 +1,335 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Http碎碎念 —— 报文结构／缓存／持久连接／Chunk | 一旬一题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="振之(炊事班程序猿小谢)">
+    
+    <meta name="description" content="Http报文结构
+Http之缓存Http的缓存技术大致可以分为3种，Cache-Control系，Expires系，Last-Modified系，Etag系。其中Cache-Control的存在会覆盖Expires，其他的同时存在则需要全部的规则都通过检验才能使用缓存。比如带有Cache-Contr">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/profile.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.jpg">
+    
+
+  
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="一旬一题">一旬一题</a></h1>
+				<h2 class="blog-motto">在一成不变的内容中，找到自我磨练的题目</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/2017/02/03/1q15d/">专题</a></li>
+					
+						<li><a href="https://juejin.im/user/57ff552d5bbb50005b4e9ef9">掘金</a></li>
+					
+					<li>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/31/httpsuisuinian/" title="Http碎碎念 —— 报文结构／缓存／持久连接／Chunk" itemprop="url">Http碎碎念 —— 报文结构／缓存／持久连接／Chunk</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-12-31T05:17:34.000Z" itemprop="datePublished">2017-12-31</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Http报文结构"><span class="toc-number">1.</span> <span class="toc-text">Http报文结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Http之缓存"><span class="toc-number">2.</span> <span class="toc-text">Http之缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cache-Control"><span class="toc-number">2.1.</span> <span class="toc-text">Cache-Control</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Expires"><span class="toc-number">3.</span> <span class="toc-text">Expires</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Last-Modified"><span class="toc-number">4.</span> <span class="toc-text">Last-Modified</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#If-Modified-Since：（此标头-仅对Get方法有意义）"><span class="toc-number">4.1.</span> <span class="toc-text">If-Modified-Since：（此标头,仅对Get方法有意义）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#If-Unmodified-Since"><span class="toc-number">4.2.</span> <span class="toc-text">If-Unmodified-Since:</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Etag-HTTP1-1"><span class="toc-number">5.</span> <span class="toc-text">Etag :(HTTP1.1)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端如何获知是否过期，是否使用缓存？"><span class="toc-number">5.1.</span> <span class="toc-text">客户端如何获知是否过期，是否使用缓存？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Http之持久连接-——-Connection-Keep-Alive"><span class="toc-number">6.</span> <span class="toc-text">Http之持久连接 —— Connection: Keep-Alive</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Http之Chunk"><span class="toc-number">7.</span> <span class="toc-text">Http之Chunk</span></a></li></ol>
+		</div>
+		
+		<h1 id="Http报文结构"><a href="#Http报文结构" class="headerlink" title="Http报文结构"></a>Http报文结构</h1><p><img src="/img/http_bao_wen.jpg" alt="Http报文结构"></p>
+<h1 id="Http之缓存"><a href="#Http之缓存" class="headerlink" title="Http之缓存"></a>Http之缓存</h1><p>Http的缓存技术大致可以分为3种，Cache-Control系，Expires系，Last-Modified系，Etag系。<br>其中Cache-Control的存在会覆盖Expires，其他的同时存在则需要全部的规则都通过检验才能使用缓存。比如带有Cache-Control 和 If-Modified-Since，就要通过了 Cache-Control ，而且对比了 Last-Modified 确实在有效期内才可使用缓存。并不是冲突的关系。<br>下面介绍各系概念：</p>
+<h2 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h2><p>Cache-Control主要有以下几种类型：</p>
+<p>(1) 请求Request：<br>[1] no-cache  —- 不要读取缓存中的文件，要求向WEB服务器重新请求<br>[2] no-store    —- 请求和响应都禁止被缓存<br>[3] max-age： —- 表示当访问此网页后的max-age秒内再次访问不会去服务器请求，其功能与Expires类似，只是Expires是根据某个特定日期值做比较。一但缓存者自身的时间不准确.则结果可能就是错误的，而max-age,显然无此问题.。Max-age的优先级也是高于Expires的。<br>[4] max-stale  —- 允许读取过期时间必须小于max-stale 值的缓存对象。<br>[5] min-fresh —- 接受其max-age生命期大于其当前时间 跟 min-fresh 值之和的缓存对象</p>
+<p>[6] only-if-cached —- 告知缓存者,我希望内容来自缓存，我并不关心被缓存响应,是否是新鲜的.</p>
+<p>[7] no-transform   —- 告知代理,不要更改媒体类型,比如jpg,被你改成png.<br>(2) 响应Response：<br>[1] public    —- 数据内容皆被储存起来，就连有密码保护的网页也储存，安全性很低<br>[2] private    —- 数据内容只能被储存到私有的cache，仅对某个用户有效，不能共享<br>[3] no-cache    —- 可以缓存，但是只有在跟WEB服务器验证了其有效后，才能返回给客户端<br>[4] no-store  —- 请求和响应都禁止被缓存<br>[5] max-age：   —– 本响应包含的对象的过期时间<br>[6] Must-revalidate    —- 如果缓存过期了，会再次和原来的服务器确定是否为最新数据，而不是和中间的proxy<br>[7] max-stale  —-  允许读取过期时间必须小于max-stale 值的缓存对象。<br>[8] proxy-revalidate  —- 与Must-revalidate类似，区别在于：proxy-revalidate要排除掉用户代理的缓存的。即其规则并不应用于用户代理的本地缓存上。<br>[9] s-maxage  —- 与max-age的唯一区别是,s-maxage仅仅应用于共享缓存.而不应用于用户代理的本地缓存等针对单用户的缓存. 另外,s-maxage的优先级要高于max-age.<br>[10] no-transform   —- 告知代理,不要更改媒体类型,比如jpg,被你改成png.</p>
+<p>注意在请求和响应中是不同的。<br>还有请求中的 no-cache 并非让服务器不使用缓存，这时候服务器还是有可能使用缓存的。这个命令意思是不能直接返回缓存，必须跟源服务器确认过返回最新的资源，假如确认了没有更新，那么可以返回缓存。<br>响应中类似的命令是must-revalidate 搭配max-age=10。<br><a href="https://segmentfault.com/a/1190000007317481" target="_blank" rel="external">no-cache与must-revalidate深入探究</a><br>想绝对完全不存储和使用缓存的话，用 no-store。</p>
+<h1 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h1><p>Expires 字段指定的时间之前都会使用缓存。类似 Cache-Control:max-age。事实上， Cache-Control:max-age 存在时就会忽略 Expires。</p>
+<h1 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h1><p>指明资源的最终修改的时间，一个GMT时间,告知,被请求实体的最后修改时间.用于客户端校验其缓存副本是否仍然可以信任.与其相关的两个条件请求标头：</p>
+<h2 id="If-Modified-Since：（此标头-仅对Get方法有意义）"><a href="#If-Modified-Since：（此标头-仅对Get方法有意义）" class="headerlink" title="If-Modified-Since：（此标头,仅对Get方法有意义）"></a>If-Modified-Since：（此标头,仅对Get方法有意义）</h2><p>如果实体在指定时间后,没有修改则返回一个304,否则返回一个常规的Get请求的响应(比如200). 另外,如果该标头的值是一个非法的值,那么也同样返回一个常规的Get请求的响应.<br>  PS:用户代理发起 If-Modified-Since尝试握手的条件，可能会有不同,比如IE系,如果该实体第一次响应头中包含Cache-Control:no-cache.则 IE不会使用If-Modified-Since请求资源.而其他浏览器则会. 但是如果使用Cache-Control:no-store.则所有用户代理的表现一致.都不使用If-Modified-Since(因为no-store的语义十分强烈.不允许任何缓存,这个在后续有专门介绍.)</p>
+<h2 id="If-Unmodified-Since"><a href="#If-Unmodified-Since" class="headerlink" title="If-Unmodified-Since:"></a>If-Unmodified-Since:</h2><p>如果实体在指定时间后,没有任何修改,那么就可以直接执行该请求使用方法的对应行为. 而如果有修改,则返回一个412 Precondition Failed状态码,并且抛弃该方法对应的行为操作(GET方法除外).<br>Last-Modified: Wed, 04 Jul 2016 09:26:05 GMT</p>
+<h1 id="Etag-HTTP1-1"><a href="#Etag-HTTP1-1" class="headerlink" title="Etag :(HTTP1.1)"></a>Etag :(HTTP1.1)</h1><p>生成一段可代表实体版本的字串.默认就是一段hash + 时间戳的形式.其实我们是可以使用自己的算法来生成Etag值.比如md5.<br>Apache的默认Etag包含Inode,Mtime,Size三部分.而且Etag有强弱之分.比如一般的弱Etag,是以W/开头的,如:W/”abcde12”,这部分不是我们关注的焦点.因为弱Etag和强Etag的区别只在于算法.比如某种弱Etag关注的时间精度,为秒.而我们在项目中,最常见的做法是使用MD5.是一种忽略时间维度的,强Etag.为的是保证精确度.以及负载均衡设备的同步.除非我们的项目有特殊需求.但是往往我们可以根据需求,来调整算法.而不是沿用一些传统的弱Etag算法.<br>这东西,是要和客户端的两个请求标头配合使用的:<br>(1)     If-Match:<br>语义:如果有匹配,或者值为”<em>”,才可以能去执行,请求所使用的方法,所对应的行为.<br>If-Match,可以看做是一个过滤器,主要应用于资源多版本共存的解决方案.比如服务器端对同一实体，有多个版本.那么客户端，即可按照指定版本来获取实体.<br>If-Match的值就是对应指定版本的Etag值.这个值可以是多选的.典型的应用场景是,客户端使用put方式请求服务器端,并带有多个If-Match的值.服务器端检查所有该实体的版本.找到匹配项,就立刻更新服务器端的对应版本.如果无一匹配,则发送一个412 Precondition Failed状态码.<br>(2)     If-None-Match:<br>语义:如果有任何匹配,或值是”</em>”,并且原始服务器存在其请求的实体,则不允许执行该请求所使用放的对应行为,如果此时,该请求使用的get,或head方法.则返回一个304状态码.以及其他一些相关的缓存控制的标头.<br>与If-Match相反 .但它的典型应用,也是我们要关注的部分.支持http1.1的现代浏览器,以及web server,应用If-None-Match头用于,缓存新鲜度校验.典型应用场景就是,一但原始服务器的某个响应中包含Etag时,如果浏览器本地缓存了该实体.那么在第二次的常规的get或head请求时,就会自动带上 If-None-Match头.当原始服务器上该实体的版本对应的Etag值与之匹配时,则原始服务器会返回304状态码.然后浏览器认为本地缓存是新鲜的.则继续使用缓存的实体. 但,其实Etag的本意是版本管理.而并不是缓存有效性校验.这应该是一个衍生出来的使用方式. 而这种方式相比Last-Modified校验方式的好处是,如果我们消除时间戳部分,仅使用hash作为Etag值. 就可以方便做负载均衡同步.</p>
+<h2 id="客户端如何获知是否过期，是否使用缓存？"><a href="#客户端如何获知是否过期，是否使用缓存？" class="headerlink" title="客户端如何获知是否过期，是否使用缓存？"></a>客户端如何获知是否过期，是否使用缓存？</h2><p>缓存有效返回304状态码。无效返回200和含有最新实体的body。</p>
+<h1 id="Http之持久连接-——-Connection-Keep-Alive"><a href="#Http之持久连接-——-Connection-Keep-Alive" class="headerlink" title="Http之持久连接 —— Connection: Keep-Alive"></a>Http之持久连接 —— Connection: Keep-Alive</h1><p>初期版本的Http协议中，每进行一次Http通讯就要断开一次TCP连接。当并发访问资源的时候，无形中造成了大量无谓的TCP连接建立和断开，增加通讯开销。<br>为解决这个问题，Http 1.1 搞出了持久连接（Presistent Connections, keep-alive,或connection reuse）。特点是，只要任意一端没有明确提出断开连接，则保持TCP连接状态。<br><img src="/img/http_reuse_connection.jpeg" alt="http_reuse_connection"><br>持久连接由 Connection: Keep-Alive 控制，Http 1.1 默认连接都是持久连接。之前的版本需要主动指定 Connection: Keep-Alive 。<br>当服务器想明确断开连接时，可指定 Connection: close。</p>
+<h1 id="Http之Chunk"><a href="#Http之Chunk" class="headerlink" title="Http之Chunk"></a>Http之Chunk</h1><p>在回复消息的Headers有transfer-coding域值为chunked，表示将用chunked编码传输内容。这时候 Content-Length 无效。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/http/">http</a><a href="/tags/计算机网络/">计算机网络</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.greens1995.com/2017/12/31/httpsuisuinian/" data-title="Http碎碎念 —— 报文结构／缓存／持久连接／Chunk | 一旬一题" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/12/04/notification-check/"  title="如何检测应用通知权限？如何跳转通知权限设置页？">
+ <strong>Old:</strong><br/> 
+ <span>如何检测应用通知权限？如何跳转通知权限设置页？
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© 振之-Android工程师 @ Nonolive 直播</span>
+		
+	<div>
+ <div align="center"><a href="http://www.amazingcounters.com"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3212273&c=9637132" alt="AmazingCounters.com"></a></div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
