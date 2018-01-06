@@ -1,0 +1,352 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>运输层碎碎念 | 一旬一题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="振之(炊事班程序猿小谢)">
+    
+    <meta name="description" content="运输层是整个网络体系结构中的关键层次之一，其中有以下几个概念必须弄清楚：
+
+运输层为相互通信的应用进程提供逻辑通信
+端口和套接字的意义跨操作系统的进程间通信终点，不依赖于具体程序。程序未运行也可以使用，端点就在那里。
+无连接的UDP 的特点，后面详述
+面向连接的TCP 的特点，后面详述
+在不可靠的网">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/profile.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.jpg">
+    
+
+  
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="一旬一题">一旬一题</a></h1>
+				<h2 class="blog-motto">在一成不变的内容中，找到自我磨练的题目</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/2017/02/03/1q15d/">专题</a></li>
+					
+						<li><a href="https://juejin.im/user/57ff552d5bbb50005b4e9ef9">掘金</a></li>
+					
+					<li>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/01/06/yunshucengsuisuinian/" title="运输层碎碎念" itemprop="url">运输层碎碎念</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2018-01-06T15:07:07.000Z" itemprop="datePublished">2018-01-06</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#端口号"><span class="toc-number">1.</span> <span class="toc-text">端口号</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UDP"><span class="toc-number">2.</span> <span class="toc-text">UDP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#主要特点："><span class="toc-number">2.1.</span> <span class="toc-text">主要特点：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP用户数据报构成"><span class="toc-number">2.2.</span> <span class="toc-text">UDP用户数据报构成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#纠错用的伪首部"><span class="toc-number">2.3.</span> <span class="toc-text">纠错用的伪首部</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP"><span class="toc-number">3.</span> <span class="toc-text">TCP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#理想的可靠网络和传输，在不可靠网络实现可靠传输的原理"><span class="toc-number">3.1.</span> <span class="toc-text">理想的可靠网络和传输，在不可靠网络实现可靠传输的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-除了实现可靠传输，还增加的其他功能"><span class="toc-number">3.2.</span> <span class="toc-text">TCP 除了实现可靠传输，还增加的其他功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#报文结构"><span class="toc-number">3.3.</span> <span class="toc-text">报文结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#滑动窗口（连续ARQ协议、实现可靠传输）"><span class="toc-number">3.4.</span> <span class="toc-text">滑动窗口（连续ARQ协议、实现可靠传输）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#发送窗口和接收窗口的滑动机制"><span class="toc-number">3.4.1.</span> <span class="toc-text">发送窗口和接收窗口的滑动机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#确认、延迟确认和捎带确认，选择确认（优化不按序到达的分组确认）"><span class="toc-number">3.4.2.</span> <span class="toc-text">确认、延迟确认和捎带确认，选择确认（优化不按序到达的分组确认）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超时重传时间的选择（指出优化的部分）"><span class="toc-number">3.4.3.</span> <span class="toc-text">超时重传时间的选择（指出优化的部分）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流量控制（窗口大小控制，传输速率控制之“把事情搞大”）"><span class="toc-number">3.5.</span> <span class="toc-text">流量控制（窗口大小控制，传输速率控制之“把事情搞大”）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拥塞控制"><span class="toc-number">3.6.</span> <span class="toc-text">拥塞控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#拥塞控制和流量控制的区别（出发点，影响面）"><span class="toc-number">3.6.1.</span> <span class="toc-text">拥塞控制和流量控制的区别（出发点，影响面）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法"><span class="toc-number">3.6.2.</span> <span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#慢开始-拥塞避免（指数增加-加法增加-乘法减小）"><span class="toc-number">3.6.2.1.</span> <span class="toc-text">慢开始 + 拥塞避免（指数增加+加法增加+乘法减小）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#快重传-快恢复"><span class="toc-number">3.6.2.2.</span> <span class="toc-text">快重传 + 快恢复</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结合流量控制的最终的发送窗口大小"><span class="toc-number">3.6.3.</span> <span class="toc-text">结合流量控制的最终的发送窗口大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RED-随机早期检测-网络层避免全局同步问题"><span class="toc-number">3.6.4.</span> <span class="toc-text">RED 随机早期检测(网络层避免全局同步问题)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接管理"><span class="toc-number">3.7.</span> <span class="toc-text">连接管理</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>运输层是整个网络体系结构中的关键层次之一，其中有以下几个概念必须弄清楚：</p>
+<ol>
+<li>运输层为相互通信的应用进程提供逻辑通信<br><img src="/img/luojitongxin.jpg" alt="逻辑通信"></li>
+<li>端口和套接字的意义<br>跨操作系统的进程间通信终点，不依赖于具体程序。程序未运行也可以使用，端点就在那里。</li>
+<li>无连接的UDP 的特点，后面详述</li>
+<li>面向连接的TCP 的特点，后面详述</li>
+<li>在不可靠的网络上实现可靠传输的工作原理，停止等待协议和ARQ协议，后面详述</li>
+<li>TCP 的滑动窗口、流量控制、拥塞控制和连接管理（还有确认与重传、计时器），后面详述</li>
+</ol>
+<h1 id="端口号"><a href="#端口号" class="headerlink" title="端口号"></a>端口号</h1><p>熟知端口0-1023，登记端口1024-49151，客户端口49152-65535.</p>
+<h1 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h1><p>在IP的基础上增加 分用复用(端口机制)、差错检测（伪首部和检验和）。</p>
+<h2 id="主要特点："><a href="#主要特点：" class="headerlink" title="主要特点："></a>主要特点：</h2><ul>
+<li>无连接</li>
+<li>尽最大努力交付但不保证可靠交付</li>
+<li>面向报文（无拆分），所以应用程序必须选择好合适大小的报文，以避免过长或过段带来的性能问题或性能浪费。（TCP就是典型的智能拆分传送，程序可以不太关心发送的数据长度）<h2 id="UDP用户数据报构成"><a href="#UDP用户数据报构成" class="headerlink" title="UDP用户数据报构成"></a>UDP用户数据报构成</h2>两个字段：8字节首部+数据。<br><img src="/img/udphead.jpg" alt="UDP构成"><h2 id="纠错用的伪首部"><a href="#纠错用的伪首部" class="headerlink" title="纠错用的伪首部"></a>纠错用的伪首部</h2>既不向上，也不向下传递，只在差错检测的时候临时生成使用，用完就丢弃。</li>
+</ul>
+<h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h1><h2 id="理想的可靠网络和传输，在不可靠网络实现可靠传输的原理"><a href="#理想的可靠网络和传输，在不可靠网络实现可靠传输的原理" class="headerlink" title="理想的可靠网络和传输，在不可靠网络实现可靠传输的原理"></a>理想的可靠网络和传输，在不可靠网络实现可靠传输的原理</h2><p>理想的传输条件：（1）传输信道不产生差错，（2）不管发送方发多快，接收方都处理得过来。只要符合这两个条件，不需要任何措施就可以可靠传输。<br>然而理想是丰满的，现实是骨感的，并不存在这么美好的传输条件。在现实中要想可靠地传输，我们得耍点手段：</p>
+<ol>
+<li>用停止等待协议（差错检测、ARQ确认与自动重传）来解决（1）问题。</li>
+<li>用流量控制通知窗口解决（2）。<br>到这里，已经简陋地实现了可靠传输。但是跟TCP还是有点差距。<h2 id="TCP-除了实现可靠传输，还增加的其他功能"><a href="#TCP-除了实现可靠传输，还增加的其他功能" class="headerlink" title="TCP 除了实现可靠传输，还增加的其他功能"></a>TCP 除了实现可靠传输，还增加的其他功能</h2></li>
+<li>滑动窗口</li>
+<li>基于滑动窗口的连续ARQ</li>
+<li>拥塞控制<h2 id="报文结构"><a href="#报文结构" class="headerlink" title="报文结构"></a>报文结构</h2><img src="/img/tcphead.jpg" alt="TCP构成"><h2 id="滑动窗口（连续ARQ协议、实现可靠传输）"><a href="#滑动窗口（连续ARQ协议、实现可靠传输）" class="headerlink" title="滑动窗口（连续ARQ协议、实现可靠传输）"></a>滑动窗口（连续ARQ协议、实现可靠传输）</h2><h3 id="发送窗口和接收窗口的滑动机制"><a href="#发送窗口和接收窗口的滑动机制" class="headerlink" title="发送窗口和接收窗口的滑动机制"></a>发送窗口和接收窗口的滑动机制</h3><h3 id="确认、延迟确认和捎带确认，选择确认（优化不按序到达的分组确认）"><a href="#确认、延迟确认和捎带确认，选择确认（优化不按序到达的分组确认）" class="headerlink" title="确认、延迟确认和捎带确认，选择确认（优化不按序到达的分组确认）"></a>确认、延迟确认和捎带确认，选择确认（优化不按序到达的分组确认）</h3><h3 id="超时重传时间的选择（指出优化的部分）"><a href="#超时重传时间的选择（指出优化的部分）" class="headerlink" title="超时重传时间的选择（指出优化的部分）"></a>超时重传时间的选择（指出优化的部分）</h3></li>
+<li>往返时间RTT,加权往返时间，计算超时重传时间RTO。</li>
+<li>引入Karn算法使运输层区分开有效的和无效的往返时间样本从而改进往返时间的估测。</li>
+<li>对Karn算法优化区分超时重传场景和正常传输场景来更准确及时更新合适的RTO（解决时延突然增大很多的情况）。<h2 id="流量控制（窗口大小控制，传输速率控制之“把事情搞大”）"><a href="#流量控制（窗口大小控制，传输速率控制之“把事情搞大”）" class="headerlink" title="流量控制（窗口大小控制，传输速率控制之“把事情搞大”）"></a>流量控制（窗口大小控制，传输速率控制之“把事情搞大”）</h2><h2 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h2><h3 id="拥塞控制和流量控制的区别（出发点，影响面）"><a href="#拥塞控制和流量控制的区别（出发点，影响面）" class="headerlink" title="拥塞控制和流量控制的区别（出发点，影响面）"></a>拥塞控制和流量控制的区别（出发点，影响面）</h3>流量控制是抑制发送方的发送速率，使接收端来得及处理数据。而拥塞控制是调控整片网络，避免拥塞，在疑似拥塞发生的时候，降低注入网络的数据。<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><h4 id="慢开始-拥塞避免（指数增加-加法增加-乘法减小）"><a href="#慢开始-拥塞避免（指数增加-加法增加-乘法减小）" class="headerlink" title="慢开始 + 拥塞避免（指数增加+加法增加+乘法减小）"></a>慢开始 + 拥塞避免（指数增加+加法增加+乘法减小）</h4><h4 id="快重传-快恢复"><a href="#快重传-快恢复" class="headerlink" title="快重传 + 快恢复"></a>快重传 + 快恢复</h4><h3 id="结合流量控制的最终的发送窗口大小"><a href="#结合流量控制的最终的发送窗口大小" class="headerlink" title="结合流量控制的最终的发送窗口大小"></a>结合流量控制的最终的发送窗口大小</h3><h3 id="RED-随机早期检测-网络层避免全局同步问题"><a href="#RED-随机早期检测-网络层避免全局同步问题" class="headerlink" title="RED 随机早期检测(网络层避免全局同步问题)"></a>RED 随机早期检测(网络层避免全局同步问题)</h3>小于最小门限时不丢弃分组，大于最大门限时直接丢弃分组，中间时按概率丢弃分组。<h2 id="连接管理"><a href="#连接管理" class="headerlink" title="连接管理"></a>连接管理</h2>3次握手和4次挥手那点事情。</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/计算机网络/">计算机网络</a><a href="/tags/TCP/">TCP</a><a href="/tags/UDP/">UDP</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.greens1995.com/2018/01/06/yunshucengsuisuinian/" data-title="运输层碎碎念 | 一旬一题" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/12/31/httpsuisuinian/"  title="Http碎碎念 —— 报文结构／缓存／持久连接／Chunk">
+ <strong>Old:</strong><br/> 
+ <span>Http碎碎念 —— 报文结构／缓存／持久连接／Chunk
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© 振之-Android工程师 @ Nonolive 直播</span>
+		
+	<div>
+ <div align="center"><a href="http://www.amazingcounters.com"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3212273&c=9637132" alt="AmazingCounters.com"></a></div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
