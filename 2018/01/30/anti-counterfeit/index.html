@@ -4,27 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>一旬一题——15天1次，1次1个有价值的问题 | 一旬一题</title>
+    <title>恶意用户识别？——Java 层反模拟器、反Hook、反多开技巧 | 一旬一题</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="振之(炊事班程序猿小谢)">
     
-    <meta name="description" content="专题目录
-重构
-Android开发中如何使命名更”可读”？——命名语义规范实践
-
-
-单元测试
-实战 - 如何测试 Service ?
-
-
-架构
-多媒体技术
-
-视频
-
-读书：The C Programming Language
-   如果你想把整个视频录制、播放等流程彻底玩转，而不是流连于表面，那肯定">
+    <meta name="description" content="近两年，Android端的虚拟化技术和群控技术发展急速，带来很多好玩产品和便利工具。但是作为App开发者就头疼了，恶意用户（比如不文明用户、比如刷单）利用这些技术，作恶门槛低得不知道哪里去。我们需要思考怎么识别和防御了。下文介绍一些简单但是有效的恶意用户识别（方便后续封号）方案。
+Anti 模拟器这">
     
     
     
@@ -98,10 +84,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/03/1q15d/" title="一旬一题——15天1次，1次1个有价值的问题" itemprop="url">一旬一题——15天1次，1次1个有价值的问题</a>
+      <a href="/2018/01/30/anti-counterfeit/" title="恶意用户识别？——Java 层反模拟器、反Hook、反多开技巧" itemprop="url">恶意用户识别？——Java 层反模拟器、反Hook、反多开技巧</a>
   </h1>
   <p class="article-time">
-    <time datetime="2017-02-03T05:08:27.000Z" itemprop="datePublished">2017-02-03</time>
+    <time datetime="2018-01-30T10:02:59.000Z" itemprop="datePublished">2018-01-30</time>
   </p>
 </header>
 	<div class="article-content">
@@ -109,72 +95,33 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#专题目录"><span class="toc-number">1.</span> <span class="toc-text">专题目录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关于"><span class="toc-number">2.</span> <span class="toc-text">关于</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Anti-模拟器"><span class="toc-number">1.</span> <span class="toc-text">Anti 模拟器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Anti-多开"><span class="toc-number">2.</span> <span class="toc-text">Anti 多开</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Anti-Hook"><span class="toc-number">3.</span> <span class="toc-text">Anti Hook</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#服务器分析数据相似性"><span class="toc-number">4.</span> <span class="toc-text">服务器分析数据相似性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SD卡存储自制ID"><span class="toc-number">5.</span> <span class="toc-text">SD卡存储自制ID</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#手机号短信认证"><span class="toc-number">6.</span> <span class="toc-text">手机号短信认证</span></a></li></ol>
 		</div>
 		
-		<h1 id="专题目录"><a href="#专题目录" class="headerlink" title="专题目录"></a>专题目录</h1><ul>
-<li><a href="/tags/重构/">重构</a><ul>
-<li><a href="/2017/02/05/Android开发中如何使命名更可读？——命名语义规范实践/">Android开发中如何使命名更”可读”？——命名语义规范实践</a></li>
-</ul>
-</li>
-<li><a href="/tags/单元测试/">单元测试</a><ul>
-<li><a href="/2017/02/18/how_to_test_service/">实战 - 如何测试 Service ?</a></li>
-</ul>
-</li>
-<li>架构</li>
-<li><p>多媒体技术</p>
-<ul>
-<li><p>视频</p>
-<ol>
-<li><p><a href="https://book.douban.com/subject/1139336/" target="_blank" rel="external">读书：The C Programming Language</a></p>
-<p>   如果你想把整个视频录制、播放等流程彻底玩转，而不是流连于表面，那肯定要接触播放器内核、ffmpeg等。它们已经脱离了 Android Java 层。征服它们，你需要新的武器——C。如果要学 C，推荐看这本，谭老师的书我就不评论了。</p>
-</li>
-<li><p>学习接触 JNI，NDK<br>   推荐看这个<a href="http://www.jianshu.com/c/a25bf14495d7" target="_blank" rel="external">简书专题</a>，从C开始讲（刚好巩固你在1读的书)，一路讲到用NDK实战，并提供源码。此外还会简单讲到 C++。我们使用的很多第三方库 ， 大多数都是使用的C/C++编写的 ， 有些可能是C和C++混编的 。所以补充一些 C++ 知识也是十分必要。<br>JNI是什么？为什么会有这个东西？NDK又是什么？为什么会有这个东西？它们俩的使用流程能捋清楚吗？看完后至少应该要能回答这些问题。</p>
-</li>
-<li><p>补充基本的数字信号音视频理论基础<br> 不需要成为这方面理论的专家，但要理解基本理论。推荐这篇 <a href="https://github.com/leandromoreira/digital_video_introduction" target="_blank" rel="external">introduction</a>，面向软件开发人员/工程师，旨在尽可能使用浅显的词语，丰富的图像和实际例子介绍数字视频概念。</p>
-<ol>
-<li>雷霄骅大神博客入门（再列几个其他博客）</li>
-</ol>
-</li>
-</ol>
-</li>
-<li><p>音频</p>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
-<ul>
-<li><p>RxJava</p>
-<p> <strong>入门：</strong></p>
-<ul>
-<li><a href="https://github.com/benjycui/introrx-chinese-edition?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">The introduction to Reactive Programming you’ve been missing 中文版 —— 作者：@andrestaltz 翻译：@benjycui、@jsenjoy</a><br>RxJava是RP(响应式编程)框架。所以学习Rxjava之前，最好先了解一下什么是RP。网上对RP的介绍很多都有点空泛糟糕，推荐看这篇。</li>
-</ul>
-</li>
-<li><p>CodeRview</p>
-</li>
-<li><p><a href="/tags/UI/">UI</a>&amp;动效</p>
-<ul>
-<li><a href="/2017/10/22/listui">列表型布局怎么写？—— 列表型布局套路总结</a><br>手机屏幕尺寸有限，几乎每个 app 的内容区，都会用列表呈现。不信可以打开你手机里的任意一个 app 看看，99%的 app 的内容区都能被抽象成一个大列表。只是根据内容的丰富度，列表的复杂度有所不同。内容区的结构骨架，基本上就是由列表布局奠定的。从这点看，虽然还有其他各种类型的布局，但是它们都没有列表型的布局来得重要。总的来说，必须知道的有 <strong>如何应对多类型复杂结构</strong>、<strong>几个滚动相关的实用的特别交互</strong>、和<strong>使用 RecyclerView 注意要填的坑</strong>。这些足以覆盖 90% 的业务场景。</li>
-</ul>
-</li>
-<li><p>设计模式</p>
-</li>
-<li><a href="/tags/Git/">Git</a></li>
-<li>Kotlin</li>
-<li>工程<br>  <a href="https://github.com/GcsSloop/AndroidNote/blob/master/Course/ReleaseLibraryByJitPack.md" target="_blank" rel="external">如何优雅的发布Android开源库？</a></li>
-</ul>
-<h1 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h1><p>一旬一题是2017年开始的我自己的一个写作计划——15天（一旬）1次，每次探讨1个专题内1个特定问题。以知识体系化为目的，有专题地持续总结。<br>Fighting!! 葱郁自己的技术森林。<br> <img src="/img/forest.jpeg" width="310" height="460" align="center"></p>
+		<p>近两年，Android端的虚拟化技术和群控技术发展急速，带来很多好玩产品和便利工具。但是作为App开发者就头疼了，恶意用户（比如不文明用户、比如刷单）利用这些技术，作恶门槛低得不知道哪里去。我们需要思考怎么识别和防御了。<br>下文介绍一些简单但是有效的恶意用户识别（方便后续封号）方案。</p>
+<h1 id="Anti-模拟器"><a href="#Anti-模拟器" class="headerlink" title="Anti 模拟器"></a>Anti 模拟器</h1><p>这个很容易理解，模拟出来的机器，每次模拟的时候生成的设备ID，只存在模拟器使用的生命周期里。可能下一次模拟时又不一样了。<br>应对方法：主要是检测运行模拟器的一些特征，比如驱动文件，Build类内的硬件讯息等。<br>参考：<a href="http://blog.csdn.net/earbao/article/details/51455564" target="_blank" rel="external">Android反调试之 AntiEmulator 检测安卓模拟器</a>，<a href="https://mp.weixin.qq.com/s/sl33d2pnyLMJ-fUY_DfBDw" target="_blank" rel="external">基于文件特征的Android模拟器检测</a>。</p>
+<h1 id="Anti-多开"><a href="#Anti-多开" class="headerlink" title="Anti 多开"></a>Anti 多开</h1><p>多开麻烦在于真机多开，具备真机特征，模拟器的检测就失效了，因为它就是真机。<br>应对方法：普通的软多开，一般绕不过uid，还是用宿主的。因此，如果满足同一uid下的两个进程对应的包名，在”/data/data”下有两个私有目录，则违背了系统 “只为一个应用创建唯一一个私有目录”的设定，则该应用被多开了。<br>但是有一些多开，比如小米自带的多开这种，进程好像都是隔离的独立uid的，暂时识别不了。<br>具体实现参考文末Demo或此链接：<a href="https://www.jianshu.com/p/216d65d9971e" target="_blank" rel="external">Android虚拟机多开检测</a>。</p>
+<h1 id="Anti-Hook"><a href="#Anti-Hook" class="headerlink" title="Anti Hook"></a>Anti Hook</h1><p>不多说了，方法都被你Hook了，你就是大爷，你说啥就是啥。<br>应对方法：检测是否安装了xposed相关应用，检测调用栈道的可疑方法，检测并不应该native的native方法，通过/proc/[pid]/maps检测可疑的共享对象或者JAR。<br>具体实现参考文末Demo或此链接：<a href="http://www.droidsec.cn/android-java%E5%B1%82%E7%9A%84anti-hooking%E6%8A%80%E5%B7%A7/" target="_blank" rel="external">Android Java层的anti-hooking技巧</a></p>
+<h1 id="服务器分析数据相似性"><a href="#服务器分析数据相似性" class="headerlink" title="服务器分析数据相似性"></a>服务器分析数据相似性</h1><p>可用于识别设备的标识有很多，除了Android ID，还有imei、mac、pseduo_id，aaid，gsf_id等。由于谷歌是反对唯一绝对追踪用户的，所以这些id或难或简单都是可能被修改的。比如，通过adb命令就可以无root直接修改Android ID。但是，这些标识全部都修改的话还是优点麻烦的。客户端可以把这些id都上报给服务器，服务器再结合地理位置、ip等其他信息做一个相似度判定，可以找出一些疑似同一恶意用户的账号。</p>
+<h1 id="SD卡存储自制ID"><a href="#SD卡存储自制ID" class="headerlink" title="SD卡存储自制ID"></a>SD卡存储自制ID</h1><p>如果你有SD卡写权限的话，按自己的规则生成id并加密，在自己应用私有目录之外的隐蔽地方偷偷写成一个隐藏文件（只要在文件名或者文件夹名字前加一个点号即可）。只要生成过一次，就以这个为准，无论用户修改设备信息注册多少个马甲，都能识别为同一设备用户。</p>
+<h1 id="手机号短信认证"><a href="#手机号短信认证" class="headerlink" title="手机号短信认证"></a>手机号短信认证</h1><p>所有登录用户都必须绑定手机号。从产品流程上提高了马甲成本，但是也提高了用户注册门槛。</p>
+<p>当然了，以上方法只能防小白不防大师，这些方法很容易就可以被有经验的逆向人员绕过。<br>写出来，是希望能集思广益，获得更多的反制思路，提高恶意分子伪造设备的成本。（其实是希望碰到大佬指点，提高下本不成器菜鸟的知识水平😄）有更深入实践的同学，求评论，求私信。</p>
+<p>多开、模拟器、hook的检测参考Demo: <a href="https://github.com/Labmem003/anti-counterfeit-android" target="_blank" rel="external">anti-counterfeit-android</a>。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/一旬一题/">一旬一题</a><a href="/tags/Android/">Android</a><a href="/tags/安全/">安全</a><a href="/tags/反模拟器/">反模拟器</a><a href="/tags/反Hook/">反Hook</a><a href="/tags/反多开/">反多开</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://www.greens1995.com/2017/02/03/1q15d/" data-title="一旬一题——15天1次，1次1个有价值的问题 | 一旬一题" data-tsina="null" class="share clearfix">
+  <div data-url="http://www.greens1995.com/2018/01/30/anti-counterfeit/" data-title="恶意用户识别？——Java 层反模拟器、反Hook、反多开技巧 | 一旬一题" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -183,19 +130,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/05/Android开发中如何使命名更可读？——命名语义规范实践/" title="Android开发中如何使命名更可读？——命名语义规范实践">
-  <strong>新一篇:</strong><br/>
-  <span>
-  Android开发中如何使命名更可读？——命名语义规范实践</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/07/03/thinkingInJava1/"  title="读 Thinking In Java (1) 1～10章的23条笔记">
+<a href="/2018/01/06/yunshucengsuisuinian/"  title="个人速查用碎碎念笔记——网络运输层">
  <strong>旧一篇:</strong><br/> 
- <span>读 Thinking In Java (1) 1～10章的23条笔记
+ <span>个人速查用碎碎念笔记——网络运输层
 </span>
 </a>
 </div>
