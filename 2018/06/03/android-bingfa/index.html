@@ -1,0 +1,366 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Android 并发／多线程 的基础与应用 | 一旬一题</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="振之(炊事班程序猿小谢)">
+    
+    <meta name="description" content="本篇文章主要目的为总结 覆盖80%场景的20% Android端并发所需基础知识和应用。Android 端应用主要使用 Java 语言开发，所以基础与 Java 的并发基础基本一样，深入了解推荐细读《Java并发编程实践》。应用部分就会掺杂 Android 的东西了。
+并发与线程、线程与线程不安全讨">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/profile.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.jpg">
+    
+
+  
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="一旬一题">一旬一题</a></h1>
+				<h2 class="blog-motto">在一成不变的内容中，找到自我磨练的题目</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/2017/02/03/1q15d/">专题</a></li>
+					
+						<li><a href="https://juejin.im/user/57ff552d5bbb50005b4e9ef9">掘金</a></li>
+					
+						<li><a href="https://m.okjike.com/topics/59d87b074f43da0016d58a00?username=babbf576-97bc-4f0f-bc70-8fa63721ceed">即刻</a></li>
+					
+					<li>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/06/03/android-bingfa/" title="Android 并发／多线程 的基础与应用" itemprop="url">Android 并发／多线程 的基础与应用</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2018-06-03T04:57:15.000Z" itemprop="datePublished">2018-06-03</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#并发与线程、线程与线程不安全"><span class="toc-number">1.</span> <span class="toc-text">并发与线程、线程与线程不安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程世界安全局核心领导人物——Volatile-Synchronize"><span class="toc-number">2.</span> <span class="toc-text">线程世界安全局核心领导人物——Volatile\Synchronize</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Volatil-（“曼哈顿博士，直接观察基本粒子”），解决可见性问题"><span class="toc-number">2.1.</span> <span class="toc-text">Volatil （“曼哈顿博士，直接观察基本粒子”），解决可见性问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#物理内存-高速缓存"><span class="toc-number">2.1.1.</span> <span class="toc-text">物理内存+高速缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Jvm-内存-线程本地内存副本"><span class="toc-number">2.1.2.</span> <span class="toc-text">Jvm 内存+线程本地内存副本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可见性"><span class="toc-number">2.1.3.</span> <span class="toc-text">可见性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Synchronize（“游侠锁罗”），同时解决-可见性、原子性-问题"><span class="toc-number">2.2.</span> <span class="toc-text">Synchronize（“游侠锁罗”），同时解决 可见性、原子性 问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#内置锁"><span class="toc-number">2.2.1.</span> <span class="toc-text">内置锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#需要多把锁的时候"><span class="toc-number">2.2.2.</span> <span class="toc-text">需要多把锁的时候</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#锁的持有者是线程，锁可重入"><span class="toc-number">2.2.3.</span> <span class="toc-text">锁的持有者是线程，锁可重入</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程世界安全局马仔"><span class="toc-number">3.</span> <span class="toc-text">线程世界安全局马仔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程世界的资源局——线程池、-HabdlerThread、IntentService"><span class="toc-number">4.</span> <span class="toc-text">线程世界的资源局——线程池、 HabdlerThread、IntentService</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#辣鸡-new-Thread"><span class="toc-number">4.1.</span> <span class="toc-text">辣鸡 new Thread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程池"><span class="toc-number">4.2.</span> <span class="toc-text">线程池</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HabdlerThread——轻量级任务处理器"><span class="toc-number">4.3.</span> <span class="toc-text">HabdlerThread——轻量级任务处理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IntentService"><span class="toc-number">4.4.</span> <span class="toc-text">IntentService</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通讯-工作线程干活后怎么在必要的时候切回主线程？"><span class="toc-number">5.</span> <span class="toc-text">通讯: 工作线程干活后怎么在必要的时候切回主线程？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Future-FutureTask和Callable"><span class="toc-number">5.1.</span> <span class="toc-text">Future,FutureTask和Callable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AsyncTask"><span class="toc-number">5.2.</span> <span class="toc-text">AsyncTask</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程优先级调整"><span class="toc-number">6.</span> <span class="toc-text">线程优先级调整</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-number">7.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SharePreference是否线程安全？多线程操作是否存在隐患？"><span class="toc-number">7.1.</span> <span class="toc-text">SharePreference是否线程安全？多线程操作是否存在隐患？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#android中数据库支持多线程吗？"><span class="toc-number">7.2.</span> <span class="toc-text">android中数据库支持多线程吗？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Final-Tips"><span class="toc-number">8.</span> <span class="toc-text">Final Tips</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#“同构任务”和“并行”更配哦😯"><span class="toc-number">8.1.</span> <span class="toc-text">“同构任务”和“并行”更配哦😯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异步时要注意Activity的生命周期"><span class="toc-number">8.2.</span> <span class="toc-text">异步时要注意Activity的生命周期</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>本篇文章主要目的为总结 覆盖80%场景的20% Android端并发所需基础知识和应用。<br>Android 端应用主要使用 Java 语言开发，所以基础与 Java 的并发基础基本一样，深入了解推荐细读《Java并发编程实践》。应用部分就会掺杂 Android 的东西了。</p>
+<h2 id="并发与线程、线程与线程不安全"><a href="#并发与线程、线程与线程不安全" class="headerlink" title="并发与线程、线程与线程不安全"></a>并发与线程、线程与线程不安全</h2><p>讨论并发其实就是在讨论多线程。<br>而并发这个编程主题长久地被人拎出来讨论的原因，被前人们总结成一个词 “线程安全”。<br>没接触过多线程编程的小白，很容易会掉进像下面这样的不安全陷阱：<br>读取-修改-写入 的中途打断；<br>单例模式意外怀孕（多个线程同时初始化获取第一个单例）；<br>同一个变量，在不同线程读取到的值不一样。<br>更多的例子不写了，我总结为：<br>1.非原子性状态变更的中途打断；2.多线程对同一状态的观察失去同步。<br>这两点，也对应着后文提到的并发编程核心问题和核心关键词。</p>
+<h2 id="线程世界安全局核心领导人物——Volatile-Synchronize"><a href="#线程世界安全局核心领导人物——Volatile-Synchronize" class="headerlink" title="线程世界安全局核心领导人物——Volatile\Synchronize"></a>线程世界安全局核心领导人物——Volatile\Synchronize</h2><h3 id="Volatil-（“曼哈顿博士，直接观察基本粒子”），解决可见性问题"><a href="#Volatil-（“曼哈顿博士，直接观察基本粒子”），解决可见性问题" class="headerlink" title="Volatil （“曼哈顿博士，直接观察基本粒子”），解决可见性问题"></a>Volatil （“曼哈顿博士，直接观察基本粒子”），解决可见性问题</h3><p>说到可见性问题，首先要理解几个概念。</p>
+<h4 id="物理内存-高速缓存"><a href="#物理内存-高速缓存" class="headerlink" title="物理内存+高速缓存"></a>物理内存+高速缓存</h4><p>计算机运行一个程序的时候，变量最终还是需要存储在一个物理位置的。这就导致了每次对变量的操作，比如 i++，就需要 T(i++ 一次循环) = T(读IO) + T(+1运算)+T(写IO)。运算往往很快，拖后腿的是IO。<br>为此，物理层加入了一个高速缓存层。这个层读写速度飞快，在初始化的时候从内存拷一次变量值到高速缓存，之后程序再改这个变量就不用再等乌龟内存层了，直接跟高速缓存打交道，高速缓存先处理了再跟乌龟慢慢交涉。</p>
+<h4 id="Jvm-内存-线程本地内存副本"><a href="#Jvm-内存-线程本地内存副本" class="headerlink" title="Jvm 内存+线程本地内存副本"></a>Jvm 内存+线程本地内存副本</h4><p>当理解了 物理内存与高速缓存 ，问题就好说了。我告诉你，JVM 也用了类似的设计： 物理内存–&gt;JVM内存，高速缓存–&gt;本地内存副本。<br>物理内存+高速缓存 服务与程序；Jvm 内存+线程本地内存副本 服务于线程。<br>设计的维度和颗粒度不一样，但理念是相通的。</p>
+<h4 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h4><p>可见性问题就是，两个线程都分别从主内存拷贝了一个变量A副本，然后各自修改的就其实都是自己线程工作空间上的那个副本，对主内存的变量A没有影响，对其他线程的那个变量A更没有影响。<br>Volatile 就可以让他们修改后同步到主内存，读取时主动从主内存读取。还可以禁止指令重排。<br>通过汇编指令“lock”前缀做到，具体的原理可细读《深入学习Java虚拟机》。</p>
+<h3 id="Synchronize（“游侠锁罗”），同时解决-可见性、原子性-问题"><a href="#Synchronize（“游侠锁罗”），同时解决-可见性、原子性-问题" class="headerlink" title="Synchronize（“游侠锁罗”），同时解决 可见性、原子性 问题"></a>Synchronize（“游侠锁罗”），同时解决 可见性、原子性 问题</h3><p>当它用来修饰一个方法或者一个代码块时，保证在同一时刻最多只有一个线程执行该段代码。<br>通过使用内置锁，来实现对变量的同步操作，进而实现了对变量擦偶哦的【原子性】和其他线程对变量的【可见性】。</p>
+<h4 id="内置锁"><a href="#内置锁" class="headerlink" title="内置锁"></a>内置锁</h4><p>Java 中每一个对象都有一个与之关联的锁，称为内置锁。<br>个人将内置锁分为 实例锁 和 类锁<br>Synchronize 修饰非静态方法时，用的就是该方法实例的内置锁，也就是this。修饰静态方法时用的就是类锁。</p>
+<h4 id="需要多把锁的时候"><a href="#需要多把锁的时候" class="headerlink" title="需要多把锁的时候"></a>需要多把锁的时候</h4><p>随便 new 个 object 就可以当锁。也有显示的锁 Lock lock = …；（形形式式的各种加了特效的显式锁）</p>
+<h4 id="锁的持有者是线程，锁可重入"><a href="#锁的持有者是线程，锁可重入" class="headerlink" title="锁的持有者是线程，锁可重入"></a>锁的持有者是线程，锁可重入</h4><p>持有对应的锁，就可以进入所有被锁的地方，无论这个地方在哪里，在子类还是在父类等。</p>
+<h2 id="线程世界安全局马仔"><a href="#线程世界安全局马仔" class="headerlink" title="线程世界安全局马仔"></a>线程世界安全局马仔</h2><p>ConcurrentHashMap<br>CopyonWriteArrayList<br>LinkedBlockingQueue</p>
+<h2 id="线程世界的资源局——线程池、-HabdlerThread、IntentService"><a href="#线程世界的资源局——线程池、-HabdlerThread、IntentService" class="headerlink" title="线程世界的资源局——线程池、 HabdlerThread、IntentService"></a>线程世界的资源局——线程池、 HabdlerThread、IntentService</h2><h3 id="辣鸡-new-Thread"><a href="#辣鸡-new-Thread" class="headerlink" title="辣鸡 new Thread"></a>辣鸡 new Thread</h3><p>Runnable作为匿名内部类还持有了外部类的引用，在线程退出之前，该引用会一直存在，阻碍外部类对象被GC回收，在一段时间内造成内存泄漏。<br>1.每次都需要new Thread，新建对象性能差。<br>2.线程缺乏统一管理，可能无限制新建线程，相互之间竞争，极可能占用过多系统资源导致死机或OOM。<br>3.缺乏更多功能，如定时执行、定期执行、线程中断</p>
+<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">final</span> ExecutorService executor = Executors.newCachedThreadPool();</span><br><span class="line">        executor.execute(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">final</span> Bitmap bitmap = downloadImage(beautyUrl);</span><br><span class="line">                runOnUiThread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                        mBeautyImageView.setImageBitmap(bitmap);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                executor.shutdown();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<p>引入的好处：<br>1.提升性能，创建和消耗对象费时费CPU资源。<br>2.防止内存过度消耗，控制活动线程的数量，防止并发线程过多。<br>如何选择？<br>使用Excutors.newCashedThreadpool通常是个不错的选择，因为它不需要配置，并且一般情况下都能够正确地完成工作。但是对于大负载的服务器来说，缓存的线程池就不是很好的选择了！在缓存的线程池中，被提交的任务没有排成队列。而是直接交给线程执行。如果没有线程可用，就创建一个新的线程。如果服务器负载的太重，以致他所有的CPU都完全被占用了，当有更多的任务时，就会创建更多的线程，这样只会使情况变得更糟。因此在大负载的产品服务器中，最好使用Excutors.newFixedThreadPool，它为你提供了一个包含固定线程数目的线程池，或者为了最大的限度地控制它，就直接使用ThreadPoolExcutor类。</p>
+<h3 id="HabdlerThread——轻量级任务处理器"><a href="#HabdlerThread——轻量级任务处理器" class="headerlink" title="HabdlerThread——轻量级任务处理器"></a>HabdlerThread——轻量级任务处理器</h3><p>HandlerThread是Android中提供特殊的线程类，使用这个类我们可以轻松创建一个带有Looper的线程，同时利用Looper我们可以结合Handler实现任务的控制与调度。以Handler的post方法为例，我们可以封装一个轻量级的任务处理器。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Handler mHandler;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">LightTaskManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    HandlerThread workerThread = <span class="keyword">new</span> HandlerThread(<span class="string">"LightTaskThread"</span>);</span><br><span class="line">    workerThread.start();</span><br><span class="line">    mHandler = <span class="keyword">new</span> Handler(workerThread.getLooper());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">post</span><span class="params">(Runnable run)</span> </span>&#123;</span><br><span class="line">    mHandler.post(run);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postAtFrontOfQueue</span><span class="params">(Runnable runnable)</span> </span>&#123;</span><br><span class="line">    mHandler.postAtFrontOfQueue(runnable);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postDelayed</span><span class="params">(Runnable runnable, <span class="keyword">long</span> delay)</span> </span>&#123;</span><br><span class="line">    mHandler.postDelayed(runnable, delay);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postAtTime</span><span class="params">(Runnable runnable, <span class="keyword">long</span> time)</span> </span>&#123;</span><br><span class="line">    mHandler.postAtTime(runnable, time);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在本例中，我们可以按照如下规则提交任务</p>
+<p>post 提交优先级一般的任务<br>postAtFrontOfQueue 将优先级较高的任务加入到队列前端<br>postAtTime 指定时间提交任务<br>postDelayed 延后提交优先级较低的任务<br>上面的轻量级任务处理器利用HandlerThread的单一线程 + 任务队列的形式，可以处理类似本地IO（文件或数据库读取）的轻量级任务。在具体的处理场景下，可以参考如下做法：</p>
+<p>对于本地IO读取，并显示到界面，建议使用postAtFrontOfQueue<br>对于本地IO写入，不需要通知界面，建议使用postDelayed<br>一般操作，可以使用post。<br>（实验怎么回调）<br>（强化参考：<a href="http://blog.csdn.net/javazejian/article/details/52426353）" target="_blank" rel="external">http://blog.csdn.net/javazejian/article/details/52426353）</a><br>过handlerThread.quit()或者quitSafely()使线程结束自己的生命周期。</p>
+<h3 id="IntentService"><a href="#IntentService" class="headerlink" title="IntentService"></a>IntentService</h3><p>耗时逻辑应放在onHandleIntent(Intent intent)的方法体里，它同样有着退出启动它的Activity后不会被系统杀死的特点，而且当任务执行完后会自动停止，无须手动去终止它。例如在APP里我们要实现一个下载功能，当退出页面后下载不会被中断，那么这时候IntentService就是一个不错的选择了。<br>IntentService背后其实也有一个HandlerThread来串行的处理Message Queue，从IntentService的onCreate方法可以看出。跟我们的轻量任务处理器类似。</p>
+<h2 id="通讯-工作线程干活后怎么在必要的时候切回主线程？"><a href="#通讯-工作线程干活后怎么在必要的时候切回主线程？" class="headerlink" title="通讯: 工作线程干活后怎么在必要的时候切回主线程？"></a>通讯: 工作线程干活后怎么在必要的时候切回主线程？</h2><h3 id="Future-FutureTask和Callable"><a href="#Future-FutureTask和Callable" class="headerlink" title="Future,FutureTask和Callable"></a>Future,FutureTask和Callable</h3><p><a href="http://blog.csdn.net/nugongahou110/article/details/49967495" target="_blank" rel="external">http://blog.csdn.net/nugongahou110/article/details/49967495</a><br>这个还没深入研究过。</p>
+<h3 id="AsyncTask"><a href="#AsyncTask" class="headerlink" title="AsyncTask"></a>AsyncTask</h3><p>恕我直言，一坨一坨的💩一样好烦人。只能从UIThread发出, 也有隐式的持有外部类对象引用的问题，需要特别注意防止出现意外的内存泄漏。在不同的系统版本上串行与并行的执行行为不一致。反正我是不爱用。</p>
+<p>###Thread+Handler+MessageQueue+Looper<br>（！todo 原理解析，案例）<br>内置UI线程操作底层也是利用了这个原理。</p>
+<p>###内置UI线程操作<br>Activity.runOnUiThread(Runnable)<br>View.post(Runnable) ，View.postDelayed(Runnable, long)<br>Handler（UI线程的）的postDelayed<br>Boardcast</p>
+<h2 id="线程优先级调整"><a href="#线程优先级调整" class="headerlink" title="线程优先级调整"></a>线程优先级调整</h2><p>在Android应用中，将耗时任务放入异步线程是一个不错的选择，那么为异步线程调整应有的优先级则是一件锦上添花的事情。众所周知，线程的并行通过CPU的时间片切换实现，对线程优先级调整，最主要的策略就是降低异步线程的优先级，从而使得主线程获得更多的CPU资源。<br>Android中的线程优先级和Linux系统进程优先级有些类似，其值都是从-20至19。其中Android中，开发者可以控制的优先级有：</p>
+<ul>
+<li>THREAD_PRIORITY_DEFAULT，默认的线程优先级，值为0</li>
+<li>THREAD_PRIORITY_LOWEST，最低的线程级别，值为19</li>
+<li>THREAD_PRIORITY_BACKGROUND 后台线程建议设置这个优先级，值为10</li>
+<li>THREAD_PRIORITY_MORE_FAVORABLE 相对</li>
+<li>THREAD_PRIORITY_DEFAULT稍微优先，值为-1</li>
+<li>THREAD_PRIORITY_LESS_FAVORABLE 相对</li>
+<li>THREAD_PRIORITY_DEFAULT稍微落后一些，值为1<br>为线程设置优先级也比较简单，通用的做法是在run方法体的开始部分加入下列代码<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在我们决定新启一个线程执行任务的时候，首先要问自己这个任务在完成时间上是否重要到要和UI线程争夺CPU资源。如果不是，降低线程优先级将其归于background group，如果是，则需要进一步的profile看这个线程是否造成UI线程的卡顿。<br>通常设置优先级的规则如下：</p>
+<ul>
+<li>一般的工作者线程，设置成THREAD_PRIORITY_BACKGROUND</li>
+<li>对于优先级很低的线程，可以设置THREAD_PRIORITY_LOWEST</li>
+<li>其他特殊需求，视业务应用具体的优先级</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="SharePreference是否线程安全？多线程操作是否存在隐患？"><a href="#SharePreference是否线程安全？多线程操作是否存在隐患？" class="headerlink" title="SharePreference是否线程安全？多线程操作是否存在隐患？"></a>SharePreference是否线程安全？多线程操作是否存在隐患？</h3><p>线程安全。可以用作线程间少量数据共享，但是不能用在进程间。<br>进程不安全。虽然在API Level&gt;=11即Android 3.0可以通过Context.MODE_MULTI_PROCESS属性来实现SharedPreferences多进程共享。但每个进程操作的SharedPreferences其实都是一个单独的实例， 也不能通过锁来解决，这导致了多进程间通过SharedPreferences来共享数据是不安全的，这个问题只能通过多进程间其它的通信方式或者是在确保不会同时操作SharedPreferences数据的前提下使用SharedPreferences来解决。<br><a href="http://stackoverflow.com/questions/27827678/use-sharedpreferences-on-multi-process-mode" target="_blank" rel="external">Use SharedPreferences on multi-process mode</a><br><a href="http://weishu.me/2016/10/13/sharedpreference-advices/" target="_blank" rel="external">请不要滥用SharedPreference</a></p>
+<h3 id="android中数据库支持多线程吗？"><a href="#android中数据库支持多线程吗？" class="headerlink" title="android中数据库支持多线程吗？"></a>android中数据库支持多线程吗？</h3><p>sqlite支持多线程。但是安卓在封装sqlite的java接口的时候加了表锁，所以会造成多个线程读一个表的时候阻塞。这也是为什么读写数据库的操作要放到线程里做，防止ANR。</p>
+<p>默认情况下，同一应用的所有组件均在相同的进程中运行，且大多数应用都不会改变这一点。 但是，如果您发现需要控制某个组件所属的进程，则可在清单文件中执行此操作。</p>
+<h2 id="Final-Tips"><a href="#Final-Tips" class="headerlink" title="Final Tips"></a>Final Tips</h2><h3 id="“同构任务”和“并行”更配哦😯"><a href="#“同构任务”和“并行”更配哦😯" class="headerlink" title="“同构任务”和“并行”更配哦😯"></a>“同构任务”和“并行”更配哦😯</h3><h3 id="异步时要注意Activity的生命周期"><a href="#异步时要注意Activity的生命周期" class="headerlink" title="异步时要注意Activity的生命周期"></a>异步时要注意Activity的生命周期</h3><p>异步时最容易出错的就是忽略Activity的生命周期。比如，当异步执行完成了，Activity却退出了前台，或者已经结束，如果异步完成时要操作UI，那么这种情况下肯定会报错，具体的错误取决于场景。这个问题的解法就是在异步操作完成后要用Activity.isFinishing()来判断下Activity是否还是alive的。或者设置一个变量来查看Activity是否还在前台。<br>另外，即使异步操作中不涉及UI，那么当Activity转入后台，或者退出时，也要及时的终止工作线程，否则也会造成Activity的对象无法及时销毁而最终导致内存泄露。这个问题需要在设计异步task时把可取消考虑进去，当Activity退出前台时发送消息给线程，让其终止执行。对于常见的费时操作，比如IO，网络，复杂计算等在都要考虑取消，每一个小步骤执行前都要判断取消标志位，以及时终止操作。通常这需要在Activity中持有任务的引用，或者使用Executors来管理任务，或者有一个类似的对象来管理异步任务，当Activity退出时，来终止任务。或者使用EventBus这类工具来降低耦合。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/一旬一题/">一旬一题</a><a href="/tags/Android/">Android</a><a href="/tags/并发/">并发</a><a href="/tags/多线程/">多线程</a><a href="/tags/语言基本功/">语言基本功</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.greens1995.com/2018/06/03/android-bingfa/" data-title="Android 并发／多线程 的基础与应用 | 一旬一题" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/02/23/androidzhidekan/"  title="值得看的 Android 技术文章来源小结">
+ <strong>Old:</strong><br/> 
+ <span>值得看的 Android 技术文章来源小结
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© 振之-Android工程师 @ Nonolive 直播</span>
+		
+	<div>
+ <div align="center"><a href="http://www.amazingcounters.com"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3212273&c=9637132" alt="AmazingCounters.com"></a></div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
