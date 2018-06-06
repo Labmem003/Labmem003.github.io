@@ -121,7 +121,8 @@ var _hmt = _hmt || [];
 <h3 id="IntentService"><a href="#IntentService" class="headerlink" title="IntentService"></a>IntentService</h3><p>耗时逻辑应放在onHandleIntent(Intent intent)的方法体里，它同样有着退出启动它的Activity后不会被系统杀死的特点，而且当任务执行完后会自动停止，无须手动去终止它。例如在APP里我们要实现一个下载功能，当退出页面后下载不会被中断，那么这时候IntentService就是一个不错的选择了。<br>IntentService背后其实也有一个HandlerThread来串行的处理Message Queue，从IntentService的onCreate方法可以看出。跟我们的轻量任务处理器类似。</p>
 <h2 id="通讯-工作线程干活后怎么在必要的时候切回主线程？"><a href="#通讯-工作线程干活后怎么在必要的时候切回主线程？" class="headerlink" title="通讯: 工作线程干活后怎么在必要的时候切回主线程？"></a>通讯: 工作线程干活后怎么在必要的时候切回主线程？</h2><h3 id="Future-FutureTask和Callable"><a href="#Future-FutureTask和Callable" class="headerlink" title="Future,FutureTask和Callable"></a>Future,FutureTask和Callable</h3><p><a href="http://blog.csdn.net/nugongahou110/article/details/49967495" target="_blank" rel="external">http://blog.csdn.net/nugongahou110/article/details/49967495</a><br>这个还没深入研究过。</p>
 <h3 id="AsyncTask"><a href="#AsyncTask" class="headerlink" title="AsyncTask"></a>AsyncTask</h3><p>恕我直言，一坨一坨的💩一样好烦人。只能从UIThread发出, 也有隐式的持有外部类对象引用的问题，需要特别注意防止出现意外的内存泄漏。在不同的系统版本上串行与并行的执行行为不一致。反正我是不爱用。</p>
-<p>###Thread+Handler+MessageQueue+Looper<br>（！todo 原理解析，案例）<br>内置UI线程操作底层也是利用了这个原理。</p>
+<p>###Thread+Handler+MessageQueue+Looper<br>（！todo 原理解析，案例）<br>内置UI线程操作底层也是利用了这个原理。<br>简易用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Handler mainHandler = <span class="keyword">new</span> Handler(Looper.getMainLooper());</span><br><span class="line">  mainHandler.post(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
 <p>###内置UI线程操作<br>Activity.runOnUiThread(Runnable)<br>View.post(Runnable) ，View.postDelayed(Runnable, long)<br>Handler（UI线程的）的postDelayed<br>Boardcast</p>
 <h2 id="线程优先级调整"><a href="#线程优先级调整" class="headerlink" title="线程优先级调整"></a>线程优先级调整</h2><p>在Android应用中，将耗时任务放入异步线程是一个不错的选择，那么为异步线程调整应有的优先级则是一件锦上添花的事情。众所周知，线程的并行通过CPU的时间片切换实现，对线程优先级调整，最主要的策略就是降低异步线程的优先级，从而使得主线程获得更多的CPU资源。<br>Android中的线程优先级和Linux系统进程优先级有些类似，其值都是从-20至19。其中Android中，开发者可以控制的优先级有：</p>
 <ul>
@@ -150,7 +151,7 @@ var _hmt = _hmt || [];
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/一旬一题/">一旬一题</a><a href="/tags/Android/">Android</a><a href="/tags/语言基本功/">语言基本功</a><a href="/tags/并发/">并发</a><a href="/tags/多线程/">多线程</a>
+  <span></span> <a href="/tags/一旬一题/">一旬一题</a><a href="/tags/语言基本功/">语言基本功</a><a href="/tags/Android/">Android</a><a href="/tags/并发/">并发</a><a href="/tags/多线程/">多线程</a>
   </div>
 
 
