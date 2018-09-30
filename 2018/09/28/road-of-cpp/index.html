@@ -9,7 +9,7 @@
     
     <meta name="author" content="振之(炊事班程序猿小谢)">
     
-    <meta name="description" content="真人试验通过！小白的 C++ 入门并发疯学习路线真人就是我自己，这是我的 C++ 学习之路总结。具体总结前，想先回答一个问题——要不要先学C，再学C++？我作为小白时疑惑过这个问题，在此给后来的小白和当年的自己一个答案。个人看法是，学习C++，就直接学习C++，不用先学C。在微软维护STL的Step">
+    <meta name="description" content="小白 C++ 入门并发疯学习路线这是根据我自身入门经验总结的，尽量少废话的C++入门指南。具体总结前，想先回答一个问题——要不要先学C，再学C++？我作为小白时疑惑过这个问题，在此给后来的小白和当年的自己一个答案。个人看法是，学习C++，就直接学习C++，不用先学C。在微软维护STL的Stephen">
     
     
     
@@ -54,7 +54,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="一旬一题">一旬一题</a></h1>
 				<h2 class="blog-motto">在一成不变的内容中，找到自我磨练的题目</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -73,7 +73,7 @@ var _hmt = _hmt || [];
 					<li>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -96,10 +96,10 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#真人试验通过！小白的-C-入门并发疯学习路线"><span class="toc-number">1.</span> <span class="toc-text">真人试验通过！小白的 C++ 入门并发疯学习路线</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#入门"><span class="toc-number">1.1.</span> <span class="toc-text">入门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统化"><span class="toc-number">1.2.</span> <span class="toc-text">系统化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数库"><span class="toc-number">1.3.</span> <span class="toc-text">函数库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#追逐性能与优雅"><span class="toc-number">1.4.</span> <span class="toc-text">追逐性能与优雅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哲学"><span class="toc-number">1.5.</span> <span class="toc-text">哲学</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#小白-C-入门并发疯学习路线"><span class="toc-number">1.</span> <span class="toc-text">小白 C++ 入门并发疯学习路线</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#入门"><span class="toc-number">1.1.</span> <span class="toc-text">入门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统化"><span class="toc-number">1.2.</span> <span class="toc-text">系统化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数库"><span class="toc-number">1.3.</span> <span class="toc-text">函数库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#追逐性能与优雅"><span class="toc-number">1.4.</span> <span class="toc-text">追逐性能与优雅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哲学"><span class="toc-number">1.5.</span> <span class="toc-text">哲学</span></a></li></ol></li></ol>
 		</div>
 		
-		<h1 id="真人试验通过！小白的-C-入门并发疯学习路线"><a href="#真人试验通过！小白的-C-入门并发疯学习路线" class="headerlink" title="真人试验通过！小白的 C++ 入门并发疯学习路线"></a>真人试验通过！小白的 C++ 入门并发疯学习路线</h1><p>真人就是我自己，这是我的 C++ 学习之路总结。<br>具体总结前，想先回答一个问题——要不要先学C，再学C++？<br>我作为小白时疑惑过这个问题，在此给后来的小白和当年的自己一个答案。<br>个人看法是，学习C++，就直接学习C++，不用先学C。在微软维护STL的Stephen Thomas Lavavej都说他当年学C++之前学C语言浪费了大量的时间，早知道就直接从C++开始。</p>
+		<h1 id="小白-C-入门并发疯学习路线"><a href="#小白-C-入门并发疯学习路线" class="headerlink" title="小白 C++ 入门并发疯学习路线"></a>小白 C++ 入门并发疯学习路线</h1><p>这是根据我自身入门经验总结的，尽量少废话的C++入门指南。<br>具体总结前，想先回答一个问题——要不要先学C，再学C++？<br>我作为小白时疑惑过这个问题，在此给后来的小白和当年的自己一个答案。<br>个人看法是，学习C++，就直接学习C++，不用先学C。在微软维护STL的Stephen Thomas Lavavej都说他当年学C++之前学C语言浪费了大量的时间，早知道就直接从C++开始。</p>
 <p>因此，我这篇文章基本不提C的学习，直接硬刚C++。不赞同的看客勿喷，右上叉叉就是了。赞同的同学可以往下看。</p>
 <h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><p>《Accelerated C++》，《A Tour of C++》，《Essential C++》三选一精读。读完有时间可以翻翻未读的其他两本。<br>主看书，同时辅以这几个网站的资料，交叉印证——</p>
 <ul>
@@ -140,7 +140,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2018/06/03/android-bingfa/"  title="Android 并发／多线程 的基础与应用">
- <strong>旧一篇:</strong><br/> 
+ <strong>Old:</strong><br/> 
  <span>Android 并发／多线程 的基础与应用
 </span>
 </a>
