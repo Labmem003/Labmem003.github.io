@@ -4,13 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>值得看的 Android 技术文章来源小结 | 一旬一题</title>
+    <title>Gson使用小窍门：干涉序列化和反序列化过程，实现动态解析 | 一旬一题</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="振之(炊事班程序猿小谢)">
     
-    <meta name="description" content="网上太多复制黏贴和拼凑的文章了，看了也是浪费时间，要筛出好的来也很费时间。为此做了个自用的Android干货推送机器人。优质Android技术周报，筛选过的牛人和大公司博客烧制的Rss源，由即刻自动追踪和推送。适合所有患有资讯焦虑症、气血循环不顺的Android工程师们。有需要的小伙伴拿去[奸笑]
-">
+    <meta name="description" content="Gson 最基本的使用，就是你写好了一个Java类模型，然后调一下 Gson 的基本 api 就可以实现类对象与json字符串的互转，这个我就不多说了。但是有时候可能想定制这个互转的过程，比如根据某个字段，动态解析成不同的json模型，或者对某些数据加密等。比如下面的栗子：12345&amp;#123;  ">
     
     
     
@@ -86,10 +85,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/02/23/androidzhidekan/" title="值得看的 Android 技术文章来源小结" itemprop="url">值得看的 Android 技术文章来源小结</a>
+      <a href="/2019/01/28/gson-tips/" title="Gson使用小窍门：干涉序列化和反序列化过程，实现动态解析" itemprop="url">Gson使用小窍门：干涉序列化和反序列化过程，实现动态解析</a>
   </h1>
   <p class="article-time">
-    <time datetime="2018-02-23T03:01:09.000Z" itemprop="datePublished">2018-02-23</time>
+    <time datetime="2019-01-28T09:02:39.000Z" itemprop="datePublished">2019-01-28</time>
   </p>
 </header>
 	<div class="article-content">
@@ -97,22 +96,18 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#周报类："><span class="toc-number">1.</span> <span class="toc-text"> 周报类：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网站／博客-自制-Rss："><span class="toc-number">2.</span> <span class="toc-text">网站／博客 /自制 Rss：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#公众号："><span class="toc-number">3.</span> <span class="toc-text">公众号：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#即刻机器人"><span class="toc-number">4.</span> <span class="toc-text">即刻机器人</span></a></li></ol>
+		
 		</div>
 		
-		<p>网上太多复制黏贴和拼凑的文章了，看了也是浪费时间，要筛出好的来也很费时间。<br>为此做了个自用的Android干货推送机器人。优质Android技术周报，筛选过的牛人和大公司博客烧制的Rss源，由即刻自动追踪和推送。适合所有患有资讯焦虑症、气血循环不顺的Android工程师们。有需要的小伙伴拿去[奸笑]</p>
-<p>其配方（内容来源）小结如下：</p>
-<h1 id="周报类："><a href="#周报类：" class="headerlink" title=" 周报类："></a><strong> 周报类：</strong></h1><p><a href="https://www.androidweekly.cn/" target="_blank" rel="external">脉脉不得语的 AndroidWeekly 技术周报</a><br><a href="http://www.androidblog.cn/" target="_blank" rel="external">陆镇生大神的 Android 博客周刊</a></p>
-<h1 id="网站／博客-自制-Rss："><a href="#网站／博客-自制-Rss：" class="headerlink" title="网站／博客 /自制 Rss："></a><strong>网站／博客 /自制 Rss：</strong></h1><p><a href="https://tech.meituan.com/" target="_blank" rel="external">美团点评技术团队博客 Android 关键词文章</a><br><a href="http://gank.io/" target="_blank" rel="external">干货集中营</a><br><a href="https://droidyue.com/" target="_blank" rel="external">技术小黑屋</a><br><a href="http://drakeet.me/" target="_blank" rel="external">Drakeet 的博客</a><br><a href="https://zhuanlan.zhihu.com/andlib" target="_blank" rel="external">Android 科学院知乎专栏</a><br><a href="http://b.codekk.com/" target="_blank" rel="external">CodeKK</a><br>Android 新 Github 项目推介自制 RssFeed<br>AndroidStudio 有新版本自制 RssFeed</p>
-<h1 id="公众号："><a href="#公众号：" class="headerlink" title="公众号："></a><strong>公众号：</strong></h1><p>HenCoder<br>QQ 空间开发团队<br>流利说技术团队<br>QQ 音乐技术团队<br>Android 群英传<br>Android 安全技术大本营<br>郭霖<br>移动开发前线<br>WeMobileDev<br>Open 软件开发小组</p>
-<h1 id="即刻机器人"><a href="#即刻机器人" class="headerlink" title="即刻机器人"></a>即刻机器人</h1><p><img src="/img/androidzhidekan.jpg" alt="有新的Android干货"></p>
+		<p>Gson 最基本的使用，就是你写好了一个Java类模型，然后调一下 Gson 的基本 api 就可以实现类对象与json字符串的互转，这个我就不多说了。<br>但是有时候可能想定制这个互转的过程，比如根据某个字段，动态解析成不同的json模型，或者对某些数据加密等。<br>比如下面的栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;type&quot;: 1   // 类型，可取 1,2,3。 1和2使用d字段，但2的d的值要加密；3的话使用city字段。</span><br><span class="line"> &quot;d&quot;: &quot;data, gzip compressed when type == 2&quot;,</span><br><span class="line"> &quot;city&quot;:&quot;only use when type ==3&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>只要分别继承实现 JsonSerializer 和 JsonDeserializer，重写里面的序列化／反序列化方法，然后用GsonBuilder().registerTypeAdapter(Type type, Object typeAdapter) 注册给Gson。即可实现随意解析。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Android/">Android</a>
+  <span></span> <a href="/tags/Gson/">Gson</a>
   </div>
 
 
@@ -120,7 +115,7 @@ var _hmt = _hmt || [];
 
 <div class="article-share" id="share">
 
-  <div data-url="http://www.greens1995.com/2018/02/23/androidzhidekan/" data-title="值得看的 Android 技术文章来源小结 | 一旬一题" data-tsina="null" class="share clearfix">
+  <div data-url="http://www.greens1995.com/2019/01/28/gson-tips/" data-title="Gson使用小窍门：干涉序列化和反序列化过程，实现动态解析 | 一旬一题" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -129,19 +124,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2018/06/03/android-bingfa/" title="Android 并发／多线程 的基础与应用">
-  <strong>New:</strong><br/>
-  <span>
-  Android 并发／多线程 的基础与应用</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/01/30/anti-counterfeit/"  title="恶意用户识别？——Java 层反模拟器、反Hook、反多开技巧">
+<a href="/2018/09/28/road-of-cpp/"  title="小白 C++ 入门并发疯学习路线(书单)">
  <strong>Old:</strong><br/> 
- <span>恶意用户识别？——Java 层反模拟器、反Hook、反多开技巧
+ <span>小白 C++ 入门并发疯学习路线(书单)
 </span>
 </a>
 </div>
